@@ -10,13 +10,13 @@
 							<nav class="breadcrumb-area">
 								<ul class="breadcrumb">
 									<li>
-										<a href="/">Home</a>
+										<a href="/">Trang chủ</a>
 									</li>
 									<li class="breadcrumb-sep">/</li>
-									<li>Your Order</li>
+									<li>Gio hàng</li>
 								</ul>
 							</nav>
-							<h4 class="title">Order Information</h4>
+							<h4 class="title">Thông tin mua hàng</h4>
 						</div>
 					</div>
 				</div>
@@ -25,22 +25,22 @@
 		<div class="container my-3" th:object="${order}">
 			<div class="account-form-wrap" style="padding: 0; box-shadow: none;">
 				<div class="login-form">
-					<div class="bg-success text-white p-3">ORDER INFOMATION</div>
+					<div class="bg-success text-white p-3">THÔNG TIN MUA HÀNG</div>
 					<div class="row mt-2 mx-2">
 						<div class="form-group col-sm-4">
-							<label class="form-label">Order Number:</label>
+							<label class="form-label">Mã mua:</label>
 							<input th:field="*{id}" class="form-control" readonly>
 						</div>
 						<div class="form-group col-sm-4">
-							<label class="form-label">Purchase:</label>
+							<label class="form-label">Tên ngưởi đặt:</label>
 							<input th:field="*{account.username}" class="form-control" readonly>
 						</div>
 						<div class="form-group col-sm-4">
-							<label class="form-label">Purchased Date:</label>
+							<label class="form-label">Ngày đặt:</label>
 							<input th:field="*{createDate}" class="form-control" readonly>
 						</div>
 						<div class="form-group col-sm-12 mb-3">
-							<label class="form-label">Shipping Address:</label>
+							<label class="form-label">Địa chỉ mua hàng:</label>
 							<input th:field="*{address}" class="form-control" readonly>
 						</div>
 					</div>
@@ -49,17 +49,18 @@
 			<section class="product-area shopping-cart-area">
 				<div class="row my-3">
 					<div class="col-12">
-						<div class="bg-success text-white p-3">ORDER INFOMATION</div>
+						<div class="bg-success text-white p-3">THÔNG TIN ĐẶT HÀNG</div>
 						<div class="shopping-cart-wrap">
 							<div class="cart-table table-responsive">
 								<table class="table">
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th>Name</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Total</th>
+											<th>Tên sản phẩm</th>
+											<th>Gía</th>
+											<th>Số lượng</th>
+											<th>Tổng tiền</th>
+											<th>Trạng thái</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -69,6 +70,7 @@
 											<td class="align-middle price">$[[*{#numbers.formatDecimal(price,0,'COMMA',2,'POINT')}]]</td>
 											<td class="align-middle">[[*{quantity}]]</td>
 											<td class="align-middle price">$[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',2,'POINT')}]]</td>
+											<td class="align-middle price" > Chờ xác nhận</td>
 										</tr>
 									</tbody>
 								</table>
@@ -77,7 +79,7 @@
 					</div>
 				</div>
 			</section>
-			<a th:href="@{/order/list}" class="btn-theme pull-right my-2">Back to Your order</a>
+			<a th:href="@{/order/list}" class="btn-theme pull-right my-2">Quay lại giỏ hàng</a>
 		</div>
 	</main>
 </body>
