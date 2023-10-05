@@ -22,6 +22,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/authority/unauthorized.html",
             controller: "authority-ctrl"
         })
+        .when("/order", {
+            templateUrl: "/admin/order/index.html",
+            controller: "order-ctrl"
+        })
         .otherwise({
             templateUrl: "/admin/dashboard.html"
         });
