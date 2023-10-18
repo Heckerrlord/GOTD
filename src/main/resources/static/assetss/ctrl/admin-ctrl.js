@@ -10,6 +10,32 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/product/index.html",
             controller: "product-ctrl"
         })
+        //bd
+        .when("/color", {
+            templateUrl: "/admin/phu/color/index.html",
+            controller: "colors-ctrl"
+        })
+        .when("/kichco", {
+            templateUrl: "/admin/phu/kichco/index.html",
+            controller: "kichco-ctrl"
+        })
+        .when("/chatlieu", {
+            templateUrl: "/admin/phu/chatlieu/index.html",
+            controller: "chatlieu-ctrl"
+        })
+        .when("/coao", {
+            templateUrl: "/admin/phu/coao/index.html",
+            controller: "coao-ctrl"
+        })
+        .when("/loaikhachhang", {
+            templateUrl: "/admin/phu/loaikhachhang/index.html",
+            controller: "loaikhachhang-ctrl"
+        })
+        .when("/thuonghieu", {
+            templateUrl: "/admin/phu/thuonghieu/index.html",
+            controller: "thuonghieu-ctrl"
+        })
+        //het
         .when("/category", {
             templateUrl: "/admin/category/index.html",
             controller: "category-ctrl"
