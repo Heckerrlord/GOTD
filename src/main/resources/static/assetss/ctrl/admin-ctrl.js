@@ -52,6 +52,11 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/order/index.html",
             controller: "order-ctrl"
         })
+
+        .when("/sanpham", {
+            templateUrl: "/admin/sanpham/index.html",
+            controller: "sanpham-ctrl"
+        })
         .otherwise({
             templateUrl: "/admin/dashboard.html"
         });
