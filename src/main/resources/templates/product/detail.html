@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+<style>
+	.thumbnail-image img {
+		width: 100px;
+		height: 100px;
+	}
+</style>
+
 <body>
 	<main class="main-content" th:object="${item}">
 		<div class="page-header-area">
@@ -32,20 +39,43 @@
 								<div class="col-lg-6">
 									<div class="product-thumb">
 										<div class="zoom zoom-hover">
-											<a class="lightbox-image" data-fancybox="gallery" th:src="@{|/assets/images/*{image}|}">
-												<img class="m-auto d-block my-5" th:src="@{|/assets/images/*{image}|}">
-											</a>
+											<div class="image-gallery">
+												<div class="main-image">
+													<a class="lightbox-image" data-fancybox="gallery" th:href="@{|/assets/images/${item.getSanPham().getImage()[0].ma}|}">
+														<img id="main-image" class="m-auto d-block my-5" th:src="@{|/assets/images/${item.getSanPham().getImage()[0].ma}|}" alt="Image" />
+													</a>
+												</div>
+												<div class="thumbnail-images">
+													<div class="row">
+														<div th:each="image, iterStat : ${item.getSanPham().getImage()}" th:if="${!iterStat.first}" class="col-3">
+															<a class="thumbnail-image" data-fancybox="gallery" th:href="@{|/assets/images/${image.ma}|}" th:data-index="${iterStat.index}" style="width: 100px;
+		height: 100px;">
+																<img th:src="@{|/assets/images/${image.ma}|}" alt="Image" style="width: 100px;
+		height: 100px;" />
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
+
+
+
+
+
+
+
+
 								<div class="col-lg-6">
 									<div class="product-single-info">
-										<h4 class="title">[[*{name}]]</h4>
-										<span class="prices"> DDIDAS</span>
+										<h4 class="title">[[*{SanPham.Ten}]]</h4>
+										<div class="prices">[[*{CoAo.name}]]</div>
 										<div class="prices">
-											<span class="price">$[[*{#numbers.formatDecimal(price,0,'COMMA',2,'POINT')}]]</span>
+											<span class="price">$[[*{#numbers.formatDecimal(GiaBan,0,'COMMA',2,'POINT')}]]</span>
 										</div>
-										<div class="prices">Danh mục: [[*{category.name}]]</div>
+										<div class="prices">Danh mục: [[*{ThuongHieu.name}]]</div>
 
 										<div class="rating-box-wrap">
 											<div class="rating-box">
@@ -53,10 +83,7 @@
 													class="fa fa-star"></i> <i class="fa fa-star"></i>
 											</div>
 										</div>
-										<p> On the other hand, we denounce with righteous indignation and dislike men who are so
-											beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that
-											they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to
-											those who fail in their duty through weakness of will</p>
+										<p> [[*{CoAo.name}]],[[*{ChatLieu.name}]],[[*{ChatLieu.name}]]</p>
 										<input type="radio" id="sizeS" name="size" value="S">
 										<label class="radio-label" for="sizeS">S</label>
 
@@ -117,12 +144,7 @@
 								<div class="tab-pane fade show active" id="description" role="tabpanel"
 									aria-labelledby="description-tab">
 									<div class="product-description">
-										<p class="mb-0">There are many variations of passages of Lorem Ipsum available, but the
-											majority have suffered alteration in some form, by injected humour, or randomised words which
-											don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem
-											Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this
-											the first true generator on the Internet.</p>
+										<p class="mb-0">[[*{SanPham.MoTa}]]</p>
 									</div>
 								</div>
 								<div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
@@ -184,29 +206,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="swiper-container swiper-slide-gap product-slider-container">
-							<div class="swiper-wrapper">
-								<div class="swiper-slide" th:each="p:*{category.products}">
-									<div class="product-item">
-										<div class="inner-content">
-											<div class="product-thumb">
-												<a th:href="@{|/product/detail/${p.id}|}">
-													<img class="product-item m-auto d-block" th:src="@{|/assets/images/${p.image}|}">
-												</a>
-											</div>
-											<div class="product-desc">
-												<div class="product-info">
-													<h4 class="title">
-														<a th:href="@{|/product/detail/${p.id}|}">[[${p.name}]]</a>
-													</h4>
-													<div class="prices">
-														<span class="price">$[[${#numbers.formatDecimal(p.price,0,'COMMA',2,'POINT')}]]</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+
 							<div class="swiper-button-prev">
 								<i class="zmdi zmdi-chevron-left"></i>
 							</div>
@@ -219,5 +219,27 @@
 			</div>
 		</section>
 	</main>
+	<script>
+		var images = /*[[${item.getSanPham().getImage()}]]*/ [];
+		var currentImageIndex = 0;
+		var mainImage = document.getElementById("main-image");
+		var thumbnailImages = document.querySelectorAll(".thumbnail-image");
+
+		function displayImage(index) {
+			mainImage.src = images[index].ma;
+			currentImageIndex = index;
+		}
+
+		thumbnailImages.forEach(function(thumbnailImage, index) {
+			thumbnailImage.addEventListener("click", function() {
+				displayImage(index);
+			});
+		});
+
+		displayImage(currentImageIndex);
+	</script>
+
+
+
 </body>
 </html>

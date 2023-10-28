@@ -18,10 +18,10 @@ public class AnhRestController {
         return anhService.findAll();
     }
 
-    @GetMapping("{id}")
-    public Anh getOne(@PathVariable("id") Integer id) {
-        return anhService.findById(id);
-    }
+//    @GetMapping("{id}")
+//    public Anh getOne(@PathVariable("id") Integer id) {
+//        return anhService.findById(id);
+//    }
 
     @PostMapping
     public Anh create(@RequestBody Anh anh) {
@@ -32,9 +32,9 @@ public class AnhRestController {
     public Anh update(@PathVariable("id") Integer id, @RequestBody Anh anh) {
         return anhService.update(anh);
     }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        anhService.delete(id);
-    }
+//
+//    @DeleteMapping("{id}")
+//    public void delete(@PathVariable("id") Integer id) {
+//        anhService.delete(id);
+//    }
 }

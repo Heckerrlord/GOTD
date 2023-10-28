@@ -35,9 +35,9 @@ public class Account implements Serializable {
 	String email;
 	String photo;
 	String token;
-	@JsonIgnore
-	@OneToMany(mappedBy = "account")
-	List<Order> orders;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "account")
+//	List<Order> orders;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)

@@ -1,6 +1,5 @@
 package com.poly.service.impl;
 
-import com.poly.dao.ProductDAO;
 import com.poly.dao.SanPhamDAO;
 import com.poly.entity.SanPham;
 import com.poly.service.SanPhamService;

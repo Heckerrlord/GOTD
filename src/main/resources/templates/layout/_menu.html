@@ -114,6 +114,9 @@
 												<a th:href="@{/admin}">Adminstrator</a>
 											</li>
 											<li>
+												<a th:href="@{/admin}" name="username" th:text="${#request.remoteUser}"></a>
+											</li>
+											<li>
 												<a th:href="@{/order/list}">Giỏ hàng</a>
 											</li>
 											<li>

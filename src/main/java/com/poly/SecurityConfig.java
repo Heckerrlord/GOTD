@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(username -> {
 			try {
 				Account user = accountService.findById(username);
+				System.out.println(user.getUsername()+"config");
 				String password = pe.encode(user.getPassword()); // Mã hóa mật khấu
 				String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId())
 						.collect(Collectors.toList()).toArray(new String[0]);
@@ -65,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				session.setAttribute("authentication", authentication);
 				return User.withUsername(username).password(password).roles(roles).build();
 			} catch (NoSuchElementException e) {
+				e.printStackTrace();
 				throw new UsernameNotFoundException(username + " not found!");
 			}
 		});

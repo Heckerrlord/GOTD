@@ -22,8 +22,20 @@ public class UploadServiceImpl implements UploadService {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		String s = System.currentTimeMillis() + file.getOriginalFilename();
-		String name = Integer.toHexString(s.hashCode()) + s.substring(s.lastIndexOf("."));
+
+		// Tạo một biến đếm để đảm bảo số cộng dồn
+		int count = 0;
+
+		// Tạo một tên duy nhất cho tệp
+		String name;
+		do {
+			String timestamp = String.valueOf(System.currentTimeMillis());
+			String originalFilename = file.getOriginalFilename();
+			String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+			name = timestamp + "_" + count + extension;
+			count++;
+		} while (new File(dir, name).exists());
+
 		try {
 			File savedFile = new File(dir, name);
 			file.transferTo(savedFile);
@@ -33,5 +45,6 @@ public class UploadServiceImpl implements UploadService {
 			throw new RuntimeException(e);
 		}
 	}
+
 
 }

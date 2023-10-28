@@ -52,10 +52,17 @@ public class AuthController {
 	}
 
 	@RequestMapping("/auth/login/success")
-	public String logInSuccess(Model model, @ModelAttribute("account") Account account) {
+	public String logInSuccess(HttpSession session, Model model, @ModelAttribute("account") Account account) {
+		// Đối tượng `account` ở đây là tài khoản đã được xác thực
+
+		// Lưu tài khoản vào session
+		session.setAttribute("authenticatedAccount", account);
+		System.out.println(account.getFullname());
+
 		model.addAttribute("message", "Logged in successfully");
 		return "redirect:/index";
 	}
+
 
 	@RequestMapping("/auth/login/error")
 	public String logInError(Model model, @Validated @ModelAttribute("account") Account account, Errors errors) {
@@ -63,6 +70,7 @@ public class AuthController {
 			model.addAttribute("message", "Wrong login information!");
 			return "auth/login";
 		}
+		System.out.println(account.getUsername());
 		return "auth/login";
 	}
 

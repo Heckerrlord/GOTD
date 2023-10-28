@@ -13,6 +13,10 @@
     element.css('background-image', 'url(' + bgSource + ')');
   });
 
+
+
+
+
   // Margin Bottom
   $('[data-margin-bottom]').each(function () {
     $(this).css('margin-bottom', $(this).data("margin-bottom"));

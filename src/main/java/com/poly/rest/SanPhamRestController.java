@@ -1,8 +1,6 @@
 package com.poly.rest;
 
-import com.poly.entity.Product;
 import com.poly.entity.SanPham;
-import com.poly.service.ProductService;
 import com.poly.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

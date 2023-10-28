@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,4 +27,8 @@ public class ChatLieu implements Serializable {
 
     @Column(name = "TrangThai")
     private Integer tt;
+
+//    @OneToMany(mappedBy = "chatLieu")
+//    private List<ChiTietSanPham> chiTietSanPhams;
+
 }
