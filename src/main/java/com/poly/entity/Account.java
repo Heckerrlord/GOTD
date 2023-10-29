@@ -33,8 +33,10 @@ public class Account implements Serializable {
 	@NotBlank(message = "Không được để trống")
 	@Email(message = "Email không đúng định dạng")
 	String email;
+	String SoDienThoai;
 	String photo;
 	String token;
+	int TrangThai;
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "account")
 //	List<Order> orders;
