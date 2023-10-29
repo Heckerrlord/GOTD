@@ -10,13 +10,13 @@
 							<nav class="breadcrumb-area">
 								<ul class="breadcrumb">
 									<li>
-										<a href="index.html">Home</a>
+										<a href="index.html">Trang chủ</a>
 									</li>
 									<li class="breadcrumb-sep">/</li>
-									<li>Account</li>
+									<li>Tài Khoản</li>
 								</ul>
 							</nav>
-							<h4 class="title">Registration</h4>
+							<h4 class="title">Đăng kí</h4>
 						</div>
 					</div>
 				</div>
@@ -30,8 +30,8 @@
 						<div class="account-form-wrap">
 							<div class="login-form">
 								<div class="content">
-									<h4 class="title">Account Registration</h4>
-									<p>Please register using account detail bellow.</p>
+									<h4 class="title">Đăng kí tài khoản mới</h4>
+									<p>Vui lòng đăng kí tài khoản mật khẩu ở bên dưới.</p>
 								</div>
 								<form th:object="${account}" th:action="@{/auth/register}" method="post">
 									<div class="row">
@@ -42,23 +42,23 @@
 										</div>
 										<div class="col-12">
 											<div class="form-group">
-												<label class="form-label">Username</label>
+												<label class="form-label">Tên đăng nhập</label>
 												<input class="form-control" th:field="*{username}" type="text"
-													placeholder="Enter your username">
+													placeholder="Nhập tên đăng nhập">
 												<small th:errors="*{username}" style="color: red"></small>
 											</div>
 										</div>
 										<div class="col-12">
 											<div class="form-group">
-												<label class="form-label">Password</label>
+												<label class="form-label">Mật khẩu</label>
 												<input class="form-control" th:field="*{password}" type="password"
-													placeholder="Enter your password">
+													placeholder="Nhập mật khẩu">
 												<small th:errors="*{password}" style="color: red"></small>
 											</div>
 										</div>
 										<div class="col-12">
 											<div class="form-group">
-												<label class="form-label">Fullname</label>
+												<label class="form-label">Họ và tên</label>
 												<input class="form-control" th:field="*{fullname}" type="text"
 													placeholder="Enter your fullname">
 												<small th:errors="*{fullname}" style="color: red"></small>
@@ -66,24 +66,25 @@
 										</div>
 										<div class="col-12">
 											<div class="form-group">
-												<label class="form-label">Email address</label>
-												<input class="form-control" th:field="*{email}" type="email" placeholder="Enter your email">
+												<label class="form-label">Địa chỉ email</label>
+												<input class="form-control" th:field="*{email}" type="email" placeholder="Nhập email">
 												<small th:errors="*{email}" style="color: red"></small>
 											</div>
 										</div>
+
 										<div class="col-12">
 											<div class="login-form-group">
-												<button class="btn-sign" type="submit">Sign Up</button>
+												<button class="btn-sign" type="submit">Đăng kí</button>
 											</div>
 										</div>
 										<div class="col-12">
 											<div class="account-optional-group">
 												<div class="text-center">
-													Already have an account?
-													<a class="btn-create fw-bold" th:href="@{/auth/login/form}">Sign In</a>
+													Bạn đã có tài khoản?
+													<a class="btn-create fw-bold" th:href="@{/auth/login/form}">Đăng nhập</a>
 												</div>
 												<div class="text-center my-3">
-													<p class="fw-bold">OR</p>
+													<p class="fw-bold">Hoặc</p>
 													<a href="/oauth2/authorization/google" class="btn btn-danger rounded-0">
 														<i class="fa fa-google"></i>
 														Google
