@@ -37,6 +37,11 @@ public class Home2Controller {
 		return "redirect:/admin/index.html";
 	}
 
+	@RequestMapping("sanpham")
+	public String sanpham(){
+		return "sanpham";
+	}
+
 	@RequestMapping("about")
 	public String about() {
 		return "about";

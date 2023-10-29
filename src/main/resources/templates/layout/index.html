@@ -7,6 +7,19 @@
 <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
 <title>DSTORE</title>
 <link th:href="@{assets/css/style.css}" rel="stylesheet" />
+	<link th:href="@{assetss/css/main.css}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" th:href="@{assetss/css/components/pagination/simplePagination.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{assetss/css/components/products.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{assetss/css/components/shop/filter-bar.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{assetss/css/components/shop/product-showing.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{assetss/css/components/shop/filter-bar-small.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{assetss/css/components/except-home-page.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{assetss/css/components/used-in-js.css}"/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+	<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+			rel="stylesheet"
+	/>
 </head>
 <body ng-app="shopping-app" ng-controller="shopping-ctrl">
 	<div class="wrapper">
@@ -133,11 +146,17 @@
 		</div>
 	</aside>
 
+
 	<script src="assets/js/jquery-3.6.0.min.js"></script>
+	<script src="assetss/css/components/pagination/jquery.simplePagination.js"></script>
+	<script src="assetss/js/shop.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assetss/js/except-home-page.js"></script>
+	<script src="assetss/js/toastr.min.js"></script>
 	<script src="assets/js/modernizr.min.js"></script>
 	<script src="assets/js/jquery-migrate.js"></script>
 	<script src="assets/js/jquery.slicknav.min.js"></script>
-    <script src="assets/js/sweetalert2.all.min.js"></script>
+	<script src="assets/js/sweetalert2.all.min.js"></script>
 	<script src="assets/js/jquery-zoom.min.js"></script>
 	<script src="assets/js/popper.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
@@ -147,6 +166,242 @@
 	<script src="assets/js/custom.js"></script>
 	<script src="assets/js/angular.min.js"></script>
 	<script src="assets/js/main.js"></script>
+
+	<script th:inline="javascript">
+		let brandIds = [[${brandIds}]];
+		let categoryIds = [[${categoryIds}]];
+		let currentPage = [[${currentPage}]];
+		let totalPages = [[${totalPages}]];
+		let checkedCategories = [];
+		let checkedBrands = [];
+		let checkedSizes = [];
+		let minPrice = 0;
+		let maxPrice = 0;
+
+		$(function () {
+			pagination();
+		});
+
+		function pagination() {
+			if (totalPages > 0) {
+				$('#pagination').show();
+				$('#pagination').pagination({
+					pages: totalPages,
+					currentPage: currentPage,
+					cssStyle: '',
+					prevText: '<span aria-hidden="true">&laquo;</span>',
+					nextText: '<span aria-hidden="true">&raquo;</span>',
+					onInit: function () {
+						// fire first page loading
+					},
+					onPageClick: function (page, evt) {
+						currentPage = page;
+						searchProduct();
+						$('body,html').animate({scrollTop: 0}, 800);
+					}
+				});
+
+				$('#pagination .active .current').addClass('page-link');
+				$('#pagination .ellipse.clickable').addClass('page-link');
+				$('#pagination .disabled .current.prev').addClass('page-link');
+				$('#pagination .disabled .current.next').addClass('page-link');
+			} else {
+				$('#pagination').hide();
+			}
+		}
+
+		// Filter function
+		$(".check-brand").change(function () {
+			checkedBrands = $(".check-brand:checked").map(function () {
+				return $(this).val();
+			}).get();
+
+			if (!$(this).hasClass('checkbox-mobile')) {
+				currentPage = 1;
+				searchProduct();
+			}
+		});
+
+		$(".check-category").change(function () {
+			checkedCategories = $("check-category:checked").map(function () {
+				return $(this).val();
+			}).get();
+
+			if (!$(this).hasClass('checkbox-mobile')) {
+				currentPage = 1;
+				searchProduct();
+			}
+		});
+
+		$(".check-size").click(function () {
+			$(this).toggleClass('size-choose');
+
+			checkedSizes = $(".check-size.size-choose").map(function () {
+				return $(this).data("id");
+			}).get();
+
+			if (!$(this).hasClass('checkbox-mobile')) {
+				currentPage = 1;
+				searchProduct();
+			}
+		});
+
+		$('#apply-price-web').click(function () {
+			minPrice = parseInt($('.price-input#from-price').val());
+			maxPrice = parseInt($('.price-input#to-price').val());
+
+			if (isNaN(minPrice) && isNaN(maxPrice)) {
+				toastr.warning("Khoảng giá không hợp lệ");
+				return;
+			}
+			if (minPrice > 999999999999 || maxPrice > 999999999999) {
+				toastr.warning("Khoảng giá quá lớn");
+				return;
+			}
+
+			currentPage = 1;
+			searchProduct();
+		})
+
+		$('#apply-price-mobile').click(function () {
+			minPrice = parseInt($('.price-input#from-price-small').val());
+			maxPrice = parseInt($('.price-input#to-price-small').val());
+
+			if (isNaN(minPrice)) {
+				minPrice = 0;
+			}
+			if (isNaN(maxPrice)) {
+				maxPrice = 0;
+			}
+			if (minPrice > 999999999999 || maxPrice > 999999999999) {
+				toastr.warning("Khoảng giá quá lớn");
+				return;
+			}
+
+			currentPage = 1;
+			searchProduct();
+		})
+
+		function searchProduct() {
+			if (checkedSizes.length > 0 || checkedBrands.length > 0 || checkedCategories.length > 0 || minPrice > 0 || maxPrice > 0) {
+				$('.clear-filter')
+						.removeAttr('disabled');
+			} else {
+				$('.clear-filter')
+						.attr('disabled', 'disabled');
+			}
+
+			if (checkedBrands.length == 0) {
+				checkedBrands = brandIds;
+			}
+			if (checkedCategories.length == 0) {
+				checkedCategories = categoryIds;
+			}
+			if (maxPrice == 0) {
+				maxPrice = 999999999999;
+			}
+			req = {
+				brands: checkedBrands,
+				categories: checkedCategories,
+				sizes: checkedSizes,
+				min_price: minPrice,
+				max_price: maxPrice,
+				page: currentPage
+			}
+			var myJSON = JSON.stringify(req);
+			$.ajax({
+				url: '/api/san-pham/loc',
+				type: 'POST',
+				data: myJSON,
+				contentType: "application/json; charset=utf-8",
+				success: function (data) {
+					genProductList(data.items);
+					currentPage = data.currentPage;
+					totalPages = data.totalPages;
+					pagination();
+					$('#filterModal').modal('hide');
+				},
+				error: function (data) {
+					toastr.warning(data.responseJSON.message);
+				},
+			});
+		}
+
+		function genProductList(products) {
+			if (products.length > 0) {
+				let html = '';
+				for (product of products) {
+					html += `<a class="product position-relative" target="_blank" href="/san-pham/${product.slug}/${product.id}">
+                            <div class="card"><img class="card-img-top"
+                                                   src="${product.image}"
+                                                   alt="${product.name}"/>
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>`
+					if (product.promotionPrice > 0) {
+						html += `<p class="price"><span class="text-price">${product.promotionPrice}</span> &#x20AB;</p>
+                                 <p class="old-price"><span class="text-price">${product.price}</span> &#x20AB;</p>`
+					} else {
+						html += `<p class="price"><span class="text-price">${product.price}</span> &#x20AB;</p>`
+					}
+					html += `
+                                    <p class="card-text sold">Đã bán <span>${product.totalSold}</span> đôi</p>
+                                </div>
+                            </div>
+                            <div class="shadow mx-auto position-absolute"></div>
+                        </a>`
+				}
+				$('.product-row').html(html);
+				$('.no-products').css('display', 'none');
+				formatMoney();
+			} else {
+				$('.product-row').html("");
+				$('.no-products').css('display', 'flex');
+			}
+		}
+
+		$("#from-price").keyup(function () {
+			if (
+					$('.price-input#from-price').val() == '' &&
+					$('.price-input#to-price').val() == ''
+			) {
+				$('.apply-price:not(.small)').attr('disabled', 'disabled');
+			} else {
+				$('.apply-price:not(.small)').removeAttr('disabled');
+			}
+		});
+
+		$("#to-price").keyup(function () {
+			if (
+					$('.price-input#from-price').val() == '' &&
+					$('.price-input#to-price').val() == ''
+			) {
+				$('.apply-price:not(.small)').attr('disabled', 'disabled');
+			} else {
+				$('.apply-price:not(.small)').removeAttr('disabled');
+			}
+		});
+
+		$(".clear-filter").click(function () {
+			checkedSizes = [];
+			checkedBrands = [];
+			checkedCategories = [];
+			minPrice = 0;
+			maxPrice = 0;
+			currentPage = 1;
+			searchProduct();
+
+			$('.filter-bar input').prop('checked', false);
+			$('.clear-filter')
+					.not('.modal-footer .clear-filter')
+					.attr('disabled', 'disabled');
+
+			$('.filter-bar input').prop('checked', false);
+			$('.size .item').removeClass('size-choose');
+			$('.price-input').val('');
+			$('.price-input.small').val('');
+			$('.apply-price:not(.small)').attr('disabled', 'disabled');
+		})
+	</script>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
