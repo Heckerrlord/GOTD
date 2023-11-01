@@ -30,7 +30,7 @@
 				</div>
 			</div>
 		</div>
-		<main class="main-content">
+		<main class="main-content" >
 			<div th:replace="/layout/_menu.html"></div>
 			<div th:replace="${main}"></div>
 		</main>
@@ -162,6 +162,7 @@
 	<script src="assets/js/fancybox.min.js"></script>
 	<script src="assets/js/custom.js"></script>
 	<script src="assets/js/angular.min.js"></script>
+	<script src="assets/js/angular-route.min.js"></script>
 	<script src="assets/js/main.js"></script>
 
 	<script th:inline="javascript">
@@ -399,8 +400,50 @@
 			$('.apply-price:not(.small)').attr('disabled', 'disabled');
 		})
 	</script>
+	<!--hiển thị ảnh khi chọn-->
+	<script th:inline="javascript">
+		function previewImage(input) {
+			var preview = document.getElementById('previewImage');
+			var file = input.files[0];
+			var reader = new FileReader();
+
+			reader.onload = function() {
+				preview.src = reader.result;
+			};
+
+			if (file) {
+				reader.readAsDataURL(file);
+			} else {
+				preview.src = "";
+			}
+		}
+	</script>
+	<!--thông báo khio cập nhật tài khoản-->
+	<script th:inline="javascript">
+		var sweetalert = function (text) {
+			Swal.fire({
+				icon: "success",
+				title: text,
+				showConfirmButton: false,
+				timer: 2000,
+			});
+		}
+
+		var updateSuccess = [[${updateSuccess}]];
+		var udpatefalse = [[${updateFalse}]]
+		if (updateSuccess) {
+			// Gọi mã JavaScript để hiển thị cửa sổ nổi
+			sweetalert("Cập nhật tài khoản thành công");
+		}if (udpatefalse){
+			sweetalert("Lỗi khi cập nhật tài khoản");
+		}
+	</script>
+
+
+
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
 
 </body>
 </html>

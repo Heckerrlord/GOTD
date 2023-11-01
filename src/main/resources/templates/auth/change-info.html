@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+<body>
+<main class="main-content">
+    <div class="page-header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <nav class="breadcrumb-area">
+                            <ul class="breadcrumb">
+                                <li>
+                                    <a href="/">Trang chủ</a>
+                                </li>
+                                <li class="breadcrumb-sep">/</li>
+                                <li>Tài Khoản</li>
+                            </ul>
+                        </nav>
+                        <h4 class="title">Thông tin cá nhân</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="account-area">
+        <div class="container">
+            <div class="row mx-0 bg-white">
+
+                <div class="col-md-4 text-center">
+
+                    <!--<span ng-if="form.image == null">
+			 <img  ng-src="{{'/assets/images/cloud-upload.jpg'}}" alt=""
+                  style="width: 50%; margin-top: 5rem">-->
+                    </span>
+                    <span>
+                             <img id="previewImage" th:src="@{'/assets/images/' + ${account.photo}}" alt=""
+                             style="width: 70%; margin-top: 5rem">
+                    </span>
+
+
+                </div>
+                <div class="col-md-8">
+                    <form class="form p-3" th:object="${account}" th:action="@{/auth/change-info}" method="post"
+                          enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label class="form-label">Tên đăng nhập</label>
+                            <input type="text" class="form-control" name="username" th:value="*{username}" readonly>
+                        </div>
+                        <div class="form-group row">
+                            <label class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" name="fullname" th:field="*{fullname}">
+                        </div>
+                        <div class="form-group row">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" th:field="*{email}">
+                        </div>
+                        <div class="form-group row">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control" name="soDienThoai" th:field="*{soDienThoai}">
+                        </div>
+                        <div class="form-group row">
+                            <input type="text" class="form-control" name="password" th:field="*{password}" hidden>
+                        </div>
+                        <div class="form-group row">
+                            <input type="text" class="form-control" name="token" th:field="*{token}" hidden>
+                        </div>
+                        <div class="form-group row">
+                            <label class="form-label">Ảnh</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="photo" name="photo"
+                                       onchange="previewImage(this)">
+                                <label class="custom-file-label" for="photo">Chọn ảnh</label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="card-header text-center">
+                            <button type="submit" class="btn btn-success">
+                                <i class="far fa-save"></i> Cập nhật thông tin
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+</body>
+</html>
