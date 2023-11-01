@@ -118,33 +118,39 @@
                     <img th:src="@{assetss/img/noresult.png}" alt="noresult.png">
                     <h4>Không tìm thấy sản phẩm phù hợp</h4>
                 </div>
-<!--                <div class="product-row">-->
-<!--                    <th:block th:each="product : ${listProduct}">-->
-<!--                        <a class="product position-relative" target="_blank"-->
-<!--                           th:href="@{/san-pham/{slug}/{id}(id=${product.id} )}">-->
-<!--                            <div class="card"><img class="card-img-top"-->
-<!--                                                   th:src="${product.image}"-->
-<!--                                                   th:alt="${product.name}"/>-->
-<!--                                <div class="card-body">-->
-<!--                                    <h5 class="card-title" th:text="${product.name}"></h5>-->
-<!--                                    <th:block th:if="${product.promotionPrice}">-->
-<!--                                        <p class="price"><span class="text-price"-->
-<!--                                                               th:text="${product.promotionPrice}"></span> &#x20AB;</p>-->
-<!--                                        <p class="old-price"><span class="text-price" th:text="${product.price}"></span>-->
-<!--                                            &#x20AB;</p>-->
-<!--                                    </th:block>-->
-<!--                                    <th:block th:unless="${product.promotionPrice}">-->
-<!--                                        <p class="price"><span class="text-price" th:text="${product.price}"></span>-->
-<!--                                            &#x20AB;</p>-->
-<!--                                    </th:block>-->
-<!--                                    <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span-->
-<!--                                            th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="shadow mx-auto position-absolute"></div>-->
-<!--                        </a>-->
-<!--                    </th:block>-->
-<!--                </div>-->
+                                <div class="row">
+                                    <div class="col-md-4" th:each="p:${items}">
+                                        <div class="product-item">
+                                            <div class="inner-content">
+                                                <div class="product-thumb">
+                                                    <a th:href="@{|/product/detail/${p.id}|}">
+                                                        <img class="product-item m-auto d-block" th:src="@{|/assets/images/${p.sanPham.getImage().get(0).ma}|}"
+                                                             th:title="${p.sanPham.ten}">
+                                                    </a>
+                                                    <div class="product-action">
+                                                        <div class="addto-wrap">
+                                                            <a class="add-wishlist" href="javascript:(0);">
+                                                                <i class="zmdi zmdi-favorite-outline zmdi-hc-fw icon"></i>
+                                                            </a>
+                                                            <a class="add-cart" th:href="@{|/product/detail/${p.id}|}"
+                                                               th:attr="ng-click=@{|cart.add(${p.id})|}">
+                                                                <i class="zmdi zmdi-shopping-cart-plus icon"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-desc">
+                                                    <div class="product-info">
+                                                        <h4 class="title">
+                                                            <a th:href="@{|/product/detail/${p.id}|}">[(${p.sanPham.ten})]</a>
+                                                        </h4>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                </div>
                 <br>
                 <!-- Pagination -->
                 <nav aria-label="Page navigation">

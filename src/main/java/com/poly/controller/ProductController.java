@@ -1,11 +1,15 @@
 package com.poly.controller;
 
+import com.poly.dao.CTSPDAO;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.phu.CoAo;
+import com.poly.entity.phu.KichCo;
 import com.poly.entity.phu.MauSac;
 import com.poly.entity.phu.ThuongHieu;
 import com.poly.service.CTSPService;
+import com.poly.service.SanPhamService;
 import com.poly.service.serPhu.CoAoService;
+import com.poly.service.serPhu.KichCoService;
 import com.poly.service.serPhu.MauSacService;
 import com.poly.service.serPhu.ThuongHieuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,12 @@ import java.util.List;
 public class ProductController {
 	@Autowired
 	CTSPService productService;
-
+	@Autowired
+	CTSPDAO pdao;
+	@Autowired
+	MauSacService mausacService;
+	@Autowired
+	KichCoService kichcoService;
 	@Autowired
 	private ThuongHieuService thuongHieuService;
 
@@ -31,14 +40,16 @@ public class ProductController {
 
 	@Autowired
 	private MauSacService mauSacService;
-
 	@RequestMapping("/product/detail/{id}")
 	public String detail(Model model, @PathVariable("id") Long id) {
 		ChiTietSanPham item = productService.findById(id);
+		List<MauSac> m = mausacService.findAll();
+		List<KichCo> kc = kichcoService.findAll();
 		model.addAttribute("item", item);
+		model.addAttribute("m", m);
+		model.addAttribute("kc", kc);
 		return "product/detail";
 	}
-
 	@GetMapping("/sanpham")
 	public String getShopPage(Model model) {
 		// Get list brand
@@ -62,12 +73,8 @@ public class ProductController {
 		List<MauSac> sizeVn = mauSacService.findAll();
 		model.addAttribute("sizeVn", sizeVn);
 
-		// Get list product
-//		FilterProductReq req = new FilterProductReq(brandIds, categoryIds, new ArrayList<>(), (long) 0, Long.MAX_VALUE, 1);
-//		PageableDto result = productService.filterProduct(req);
-//		model.addAttribute("totalPages", result.getTotalPages());
-//		model.addAttribute("currentPage", result.getCurrentPage());
-//		model.addAttribute("listProduct", result.getItems());
+		List<ChiTietSanPham> list = pdao.findDistinctByMasp();
+		model.addAttribute("items", list);
 		return "sanpham";
 	}
 }

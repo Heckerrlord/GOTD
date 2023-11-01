@@ -12,7 +12,7 @@ app.run(function ($http, $rootScope) {
 app.controller("shopping-ctrl", function ($scope, $http) {
     var url = "/rest/products";
     var url1 = "/rest/orders";
-    
+
     var sweetalert = function (text) {
         Swal.fire({
             icon: "success",
@@ -21,11 +21,9 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             timer: 2000,
         });
     }
-    
-    // Quan ly gio hang
+
     $scope.cart = {
         items: [],
-        // Them sp vao gio hang
         add(id) {
             var item = this.items.find(item => item.id == id);
             if (item) {
@@ -37,69 +35,86 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                     resp.data.qty = 1;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
-                })
+                }).catch(error => {
+                    console.error("Lỗi trong quá trình thêm sản phẩm vào giỏ hàng:", error);
+                });
             }
         },
-        // Xoa sp khoi gio hang
         remove(id) {
             var index = this.items.findIndex(item => item.id == id);
-            this.items.splice(index, 1);// xoa phan tu
+            this.items.splice(index, 1);
             this.saveToLocalStorage();
         },
-        // Xoa sach sp trong gio hang
         clear() {
             this.items = [];
             this.saveToLocalStorage();
         },
-        // Tinh thanh tien cua 1 sp
         amt_of(item) { },
-        // Tinh tong so luong cac mat hang trong gio
         get count() {
             return this.items
                 .map(item => item.qty)
                 .reduce((total, qty) => total += qty, 0);
         },
-        // Tong thanh tien cac mat hang trong gio
         get amount() {
             return this.items
                 .map(item => item.qty * item.price)
                 .reduce((total, qty) => total += qty, 0);
         },
-        // Luu gio hang vao localstorage
         saveToLocalStorage() {
             var json = JSON.stringify(angular.copy(this.items));
             localStorage.setItem("cart", json);
         },
-        // Doc gio hang vao local storage
         loadFromLocalStorage() {
             var json = localStorage.getItem("cart");
             this.items = json ? JSON.parse(json) : [];
         }
     }
-    // Lưu giỏ hàng
+
     $scope.cart.loadFromLocalStorage();
-    $scope.order = {
-        createDate: new Date(),
-        address: "",
+
+
+    $scope.cart.loadFromLocalStorage();
+
+    $scope.DonHang = {
+        ngayDatHang: new Date(),
+        soDienThoai: "",
+        dcChiTiet: "",
+        maGiamGia: "",
+        tienGiam: 0, // Sửa thành giá trị số hạ giảm
+        phiGiaoHang: 0, // Sửa thành giá trị phí giao hàng
         account: { username: $("#username").text() },
-        get orderDetails() {
-            return $scope.cart.items.map(item => {
+        tongTien: 0, // Sửa thành giá trị tổng tiền
+        DonHangChiTiet: [], // Sửa thành một mảng chi tiết đơn hàng
+        purchase() {
+            // Tạo mảng chi tiết đơn hàng từ các sản phẩm trong giỏ hàng
+            this.DonHangChiTiet = $scope.cart.items.map(item => {
                 return {
-                    product: { id: item.id },
-                    price: item.price,
-                    quantity: item.qty
+                    chiTietSanPham: { id: item.id },
+                    donGia: item.price,
+                    soLuong: item.qty,
+                    trangThai: 1
                 }
             });
-        },
-        purchase() {
-            var order = angular.copy(this);
-            // Thực hiện đặt hàng
+
+            // Tạo đối tượng đơn hàng
+            var order = {
+                ngayDatHang: this.ngayDatHang,
+                soDienThoai: this.soDienThoai,
+                dcChiTiet: this.dcChiTiet,
+                soDienThoai: this.soDienThoai,
+                tienGiam: this.tienGiam,
+                phiGiaoHang: this.phiGiaoHang,
+                account: this.account,
+                tongTien: this.tongTien,
+                DonHangChiTiet: this.DonHangChiTiet
+            };
+
             $http.post(url1, order).then(resp => {
-            	sweetalert("Đặt hàng thành công!");
-                $scope.cart.clear();// xóa
-                location.href = "/order/detail/" + resp.data.id; // chuyển đến tảng chi tiết dơn hàng
+                sweetalert("Đặt hàng thành công!");
+                $scope.cart.clear();
+                location.href = "/order/detail/" + resp.data.id;
             }).catch(error => {
-            	sweetalert("Đặt hàng lỗi!");
+                sweetalert("Đặt hàng lỗi!");
                 console.log("Error", error);
             })
         }

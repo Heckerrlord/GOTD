@@ -1,9 +1,12 @@
 package com.poly.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Data
 @Table(name = "DonHangChiTiet")
 public class DonHangChiTiet {
     @Id

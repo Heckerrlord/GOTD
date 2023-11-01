@@ -32,6 +32,6 @@ public class SanPham implements Serializable {
     @OneToMany(mappedBy = "sanPham")
     private List<Anh> image;
 
-//    @OneToMany(mappedBy = "sanPham")
-//    private List<ChiTietSanPham> chiTietSanPhamList;
+    @OneToMany(mappedBy = "sanPham")
+    private List<ChiTietSanPham> chiTietSanPhamList;
 }

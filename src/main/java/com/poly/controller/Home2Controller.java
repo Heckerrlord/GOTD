@@ -3,6 +3,7 @@ package com.poly.controller;
 import com.poly.dao.CTSPDAO;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.service.CTSPService;
+import com.poly.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ public class Home2Controller {
 	@Autowired
 	CTSPService ctspService;
 	@Autowired
-	CTSPService productService;
+	SanPhamService productService;
 
 	@RequestMapping({ "/", "/index" })
 	public String home(Model model, @RequestParam("cid") Optional<String> cid) {

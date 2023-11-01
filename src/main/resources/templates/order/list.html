@@ -34,8 +34,14 @@
 										<tr>
 											<th class="text-center">STT.</th>
 											<th>Mã đặt hàng.</th>
+											<th>Người mua</th>
 											<th>Ngày mua</th>
 											<th>Địa chỉ giao hàng</th>
+											<th class="text-center">Số điện thoại</th>
+											<th class="text-center">Tiền giảm</th>
+											<th class="text-center">Phí ship</th>
+											<th class="text-center">Tổng tiền</th>
+											<th class="text-center">Trạng thái</th>
 											<th class="text-center">#</th>
 										</tr>
 									</thead>
@@ -43,8 +49,14 @@
 										<tr th:each="order,state : *{orders}">
 											<td class="align-middle">[[${state.index}]]</td>
 											<td class="align-middle">[[${order.id}]]</td>
-											<td class="align-middle">[[${#dates.format(order.createDate, 'dd/MM/yyyy')}]]</td>
-											<td class="align-middle text-start">[[${order.address}]]</td>
+											<td class="align-middle">[[${order.account.username}]]</td>
+											<td class="align-middle">[[${order.ngayDatHang}]]</td>
+											<td class="align-middle">[[${order.thanhPho}]],[[${order.quan}]],[[${order.dcChiTiet}]]</td>
+											<td class="align-middle">[[${order.soDienThoai}]]</td>
+											<td class="align-middle">[[${order.tienGiam}]]</td>
+											<td class="align-middle">[[${order.phiGiaoHang}]]</td>
+											<td class="align-middle">[[${order.tongTien}]]</td>
+											<td class="align-middle">[[${order.trangThai}]]</td>
 											<td class="align-middle">
 												<a th:href="@{|/order/detail/${order.id}|}" class="btn btn-sm btn-default border-0"
 													title="View your Order Details">

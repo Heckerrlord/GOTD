@@ -1,10 +1,15 @@
 package com.poly.entity;
+import lombok.Data;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Data
+@Getter
 @Table(name = "DonHang")
 public class DonHang {
     @Id
@@ -21,15 +26,6 @@ public class DonHang {
     @Column(name = "SoDienThoai")
     private String soDienThoai;
 
-    @Column(name = "ThanhPho")
-    private String thanhPho;
-
-    @Column(name = "Quan")
-    private String quan;
-
-    @Column(name = "Phuong")
-    private String phuong;
-
     @Column(name = "DCChiTiet")
     private String dcChiTiet;
 
@@ -42,8 +38,6 @@ public class DonHang {
     @Column(name = "PhiGiaoHang")
     private BigDecimal phiGiaoHang;
 
-    @Column(name = "TenKhachHang")
-    private String tenKhachHang;
 
     @Column(name = "TongTien")
     private BigDecimal tongTien;
