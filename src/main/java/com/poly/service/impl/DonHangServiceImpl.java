@@ -30,7 +30,7 @@ public class DonHangServiceImpl implements DonHangService {
 			dao.save(order);
 			TypeReference<List<DonHangChiTiet>> type = new TypeReference<List<DonHangChiTiet>>() {
 			};
-			List<DonHangChiTiet> details = mapper.convertValue(orderData.get("orderDetails"), type).stream()
+			List<DonHangChiTiet> details = mapper.convertValue(orderData.get("chiTietDonHangList"), type).stream()
 					.peek(d -> d.setDonHang(order)).collect(Collectors.toList());
 			ddao.saveAll(details);
 			return order;

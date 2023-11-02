@@ -35,9 +35,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                     resp.data.qty = 1;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
-                }).catch(error => {
-                    console.error("Lỗi trong quá trình thêm sản phẩm vào giỏ hàng:", error);
-                });
+                })
             }
         },
         remove(id) {
@@ -57,7 +55,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         },
         get amount() {
             return this.items
-                .map(item => item.qty * item.price)
+                .map(item => item.qty * item.giaBan)
                 .reduce((total, qty) => total += qty, 0);
         },
         saveToLocalStorage() {
@@ -69,9 +67,6 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             this.items = json ? JSON.parse(json) : [];
         }
     }
-
-    $scope.cart.loadFromLocalStorage();
-
 
     $scope.cart.loadFromLocalStorage();
 

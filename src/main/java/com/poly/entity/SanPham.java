@@ -1,5 +1,6 @@
 package com.poly.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,6 +33,4 @@ public class SanPham implements Serializable {
     @OneToMany(mappedBy = "sanPham")
     private List<Anh> image;
 
-    @OneToMany(mappedBy = "sanPham")
-    private List<ChiTietSanPham> chiTietSanPhamList;
 }

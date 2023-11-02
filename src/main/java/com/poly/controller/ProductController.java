@@ -75,6 +75,8 @@ public class ProductController {
 
 		List<ChiTietSanPham> list = pdao.findDistinctByMasp();
 		model.addAttribute("items", list);
+
 		return "sanpham";
 	}
+
 }

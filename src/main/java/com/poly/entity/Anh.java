@@ -1,5 +1,6 @@
 package com.poly.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ public class Anh implements Serializable {
     private String ma;
     @ManyToOne
     @JoinColumn(name = "MaSP",referencedColumnName = "Ma")
+    @JsonBackReference
     private SanPham sanPham;
     private int trangThai;
 }

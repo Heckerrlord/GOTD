@@ -31,11 +31,10 @@
 //    HttpServletRequest request;
 //
 //
-//    @GetMapping("/cart")
-//    public String showCart(Model model,
-//                           @RequestParam("idChiTietSanPham") Long idChiTietSanPham) {
-//        Long idDonHang = donHangDAO.findByAccount_UsernameAndTrangThai(request.getRemoteUser(),0).getId();
-//        List<DonHangChiTiet> cartItems = donHangCTDAO.findByIdDonHangAndIdChiTietSanPhamAndTrangThai(idDonHang,idChiTietSanPham,0);
+//    @GetMapping("/cart/view")
+//    public String showCart(Model model) {
+//        Long idDonHang=donHangDAO.findByUsernameAndTrangThai("admin",0).getId();
+//        List<DonHangChiTiet> cartItems = donHangCTDAO.findByIdDonHangAndTrangThai(idDonHang,0);
 //                model.addAttribute("cartItems", cartItems);
 //        return "/cart/view";
 //    }

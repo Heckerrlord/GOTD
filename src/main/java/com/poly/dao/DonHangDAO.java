@@ -10,5 +10,6 @@ import java.util.List;
 public interface DonHangDAO extends JpaRepository<DonHang, Long> {
     @Query("SELECT o FROM DonHang o WHERE o.account.username=?1")
     List<DonHang> findByUsername(String username);
-    DonHang findByAccount_UsernameAndTrangThai (String username,Integer tt);
+    @Query("SELECT o FROM DonHang o WHERE o.account.username=?1 and o.trangThai=?2")
+    DonHang findByUsernameAndTrangThai (String username,Integer tt);
 }

@@ -71,12 +71,12 @@
 							<div class="mini-cart-dropdown">
 								<div class="cart-item" ng-repeat="item in cart.items">
 									<div class="thumb">
-										<img class="w-100" src="assets/images/{{item.image}}">
+										<img class="w-100" src="assets/images/{{item.sanPham.image[0].ma}}">
 									</div>
 									<div class="content">
-										<h5 class="title">{{item.name}}</h5>
+										<h5 class="title">{{item.sanPham.ten}}</h5>
 										<span class="product-quantity">x{{item.qty}}</span>
-										<span class="product-price">${{item.price | number:2}}</span>
+										<span class="product-price">${{item.giaBan | number:2}}</span>
 										<a class="cart-trash" ng-click="cart.remove(item.id)">
 											<i class="fa fa-trash"></i>
 										</a>

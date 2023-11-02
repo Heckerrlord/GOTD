@@ -43,7 +43,7 @@
 										</div>
 										<div class="col-lg-6">
 											<div class="form-floating">
-												<span class="form-control" style="line-height: 2.25;">{{order.createDate |
+												<span class="form-control" style="line-height: 2.25;">{{order.ngayDatHang |
 													date:'dd-MM-yyyy'}}</span>
 												<label>Order date</label>
 											</div>
@@ -131,13 +131,13 @@
 								<div class="shipping-cart-subtotal">
 									<div class="shipping-cart-item" ng-repeat="item in cart.items">
 										<div class="thumb">
-											<img src="assets/images/{{item.image}}">
+											<img src="assets/images/{{item.sanPham.image[0].ma}}">
 											<span class="quantity">{{item.qty}}</span>
 										</div>
 										<div class="content">
-											<h4 class="title">{{item.name}}</h4>
-											<span class="info">${{item.price | number:2}}</span>
-											<span class="price">${{item.qty*item.price | number:2}}</span>
+											<h4 class="title">{{item.sanPham.ten}}</h4>
+											<span class="info">${{item.giaBan | number:2}}</span>
+											<span class="price">${{item.qty*item.giaBan | number:2}}</span>
 										</div>
 									</div>
 									<div class="shipping-subtotal">

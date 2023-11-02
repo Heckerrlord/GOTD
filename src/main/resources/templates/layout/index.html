@@ -328,18 +328,18 @@
 		function genProductList(products) {
 			if (products.length > 0) {
 				let html = '';
-				for (product of ChiTietSanPham) {
+				for (product of products) {
 					html += `<a class="product position-relative" target="_blank" href="/san-pham/${product.slug}/${product.id}">
                             <div class="card"><img class="card-img-top"
-                                                   src="${product.SanPham.image[0]}"
-                                                   alt="${product.SanPham.ten}"/>
+                                                   src="${product.image}"
+                                                   alt="${product.name}"/>
                                 <div class="card-body">
-                                    <h5 class="card-title">${product.SanPham.ten}</h5>`
+                                    <h5 class="card-title">${product.name}</h5>`
 					if (product.promotionPrice > 0) {
 						html += `<p class="price"><span class="text-price">${product.promotionPrice}</span> &#x20AB;</p>
-                                 <p class="old-price"><span class="text-price">${product.giaBan}</span> &#x20AB;</p>`
+                                 <p class="old-price"><span class="text-price">${product.price}</span> &#x20AB;</p>`
 					} else {
-						html += `<p class="price"><span class="text-price">${product.giaBan}</span> &#x20AB;</p>`
+						html += `<p class="price"><span class="text-price">${product.price}</span> &#x20AB;</p>`
 					}
 					html += `
                                     <p class="card-text sold">Đã bán <span>${product.totalSold}</span> đôi</p>

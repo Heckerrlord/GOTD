@@ -26,10 +26,8 @@ public class Home2Controller {
 
 	@RequestMapping({ "/", "/index" })
 	public String home(Model model, @RequestParam("cid") Optional<String> cid) {
-
 			List<ChiTietSanPham> list = pdao.findDistinctByMasp();
 			model.addAttribute("items", list);
-
 		return "index";
 	}
 
