@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th>STT</th>
-                <th>Id</th>
+                <th hidden>Id</th>
                 <th>Tên</th>
                 <th>Tỉnh-Thành phố</th>
                 <th>Quận-Huyện</th>
@@ -19,7 +19,7 @@
             <tbody>
             <tr ng-repeat="item in items">
                 <td class="align-center">{{$index+1}}</td>
-                <td class="align-center">{{item.id}}</td>
+                <td hidden class="align-center">{{item.id}}</td>
                 <td class="align-center">{{item.ten}}</td>
                 <td class="align-center">{{item.thanhpho}}</td>
                 <td class="align-center">{{item.huyen}}</td>

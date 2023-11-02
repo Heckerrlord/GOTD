@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th>STT</th>
-                <th>Id</th>
+                <th hidden>Id</th>
                 <th>Mã cổ áo</th>
                 <th>Tên cổ áo</th>
                 <th>Trạng thái</th>
@@ -14,7 +14,7 @@
             <tbody>
             <tr ng-repeat="item in items">
                 <td class="align-center">{{$index+1}}</td>
-                <td class="align-center">{{item.id}}</td>
+                <td hidden class="align-center">{{item.id}}</td>
                 <td class="align-center">{{item.code}}</td>
                 <td class="align-center">{{item.name}}</td>
                 <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
