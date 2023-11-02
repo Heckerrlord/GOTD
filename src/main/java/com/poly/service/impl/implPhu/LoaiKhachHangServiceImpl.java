@@ -1,9 +1,7 @@
 package com.poly.service.impl.implPhu;
 
-import com.poly.dao.daoPhu.LoaiKhachHangDao;
-import com.poly.dao.daoPhu.MauSacDAO;
+import com.poly.dao.daoPhu.LoaiKhachHangDAO;
 import com.poly.entity.phu.LoaiKhachHang;
-import com.poly.entity.phu.MauSac;
 import com.poly.service.serPhu.LoaiKhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LoaiKhachHangServiceimpl implements LoaiKhachHangService {
+public class LoaiKhachHangServiceImpl implements LoaiKhachHangService {
     @Autowired
-    private LoaiKhachHangDao loaiKhachHangDao;
+    private LoaiKhachHangDAO loaiKhachHangDao;
 
     @Override
     public List<LoaiKhachHang> findAll() {

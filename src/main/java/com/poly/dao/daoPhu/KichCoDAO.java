@@ -4,5 +4,5 @@ import com.poly.entity.phu.KichCo;
 import com.poly.entity.phu.MauSac;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface KichCoDao extends JpaRepository<KichCo, Integer> {
+public interface KichCoDAO extends JpaRepository<KichCo, Integer> {
 }

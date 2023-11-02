@@ -1,6 +1,6 @@
 package com.poly.service.impl.implPhu;
 
-import com.poly.dao.daoPhu.CoAoDao;
+import com.poly.dao.daoPhu.CoAoDAO;
 import com.poly.entity.phu.CoAo;
 import com.poly.service.serPhu.CoAoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CoAoServiceimpl implements CoAoService {
+public class CoAoServiceImpl implements CoAoService {
     @Autowired
-    private CoAoDao coAoDao;
+    private CoAoDAO coAoDao;
 
     @Override
     public List<CoAo> findAll() {

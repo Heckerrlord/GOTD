@@ -3,6 +3,7 @@
         <table id="datatable-buttons" class="table table-collapse table-bordered dt-responsive">
             <thead>
             <tr>
+                <th>STT</th>
                 <th>Id</th>
                 <th>Mã màu sắc</th>
                 <th>Tên màu sắc</th>
@@ -12,6 +13,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in items">
+                <td class="align-center">{{$index+1}}</td>
                 <td class="align-center">{{item.id}}</td>
                 <td class="align-center">{{item.code}}</td>
                 <td class="align-center">{{item.name}}</td>
@@ -21,7 +23,7 @@
                         <button ng-click="edit(item)" class="btn btn-icon">
                             <i class="fa fa-xs fa-pen"></i>
                         </button>
-                        <button ng-click="delete(item)" class="btn btn-danger">
+                        <button ng-click="delete(item)"  class="btn btn-danger">
                             <i class="fa fa-xs fa-times"></i>
                         </button>
                     </div>

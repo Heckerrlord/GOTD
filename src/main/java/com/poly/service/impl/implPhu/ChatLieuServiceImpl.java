@@ -1,9 +1,7 @@
 package com.poly.service.impl.implPhu;
 
-import com.poly.dao.daoPhu.ChatLieuDao;
-import com.poly.dao.daoPhu.MauSacDAO;
+import com.poly.dao.daoPhu.ChatLieuDAO;
 import com.poly.entity.phu.ChatLieu;
-import com.poly.entity.phu.MauSac;
 import com.poly.service.serPhu.ChatLieuSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ChatLieuServiceimpl implements ChatLieuSer {
+public class ChatLieuServiceImpl implements ChatLieuSer {
     @Autowired
-    private ChatLieuDao chatLieuDao;
+    private ChatLieuDAO chatLieuDao;
 
     @Override
     public List<ChatLieu> findAll() {

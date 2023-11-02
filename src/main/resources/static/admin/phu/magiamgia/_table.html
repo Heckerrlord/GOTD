@@ -5,8 +5,15 @@
             <tr>
                 <th>STT</th>
                 <th>Id</th>
-                <th>Mã thương hiệu</th>
-                <th>Tên thương hiệu</th>
+                <th>Tên giảm giá</th>
+                <th>Mã giảm giá</th>
+                <th>Sự kiện</th>
+                <th>Hình thức giảm</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Giảm tối thiểu</th>
+                <th>Giảm tối đa</th>
+                <th>Số lượng</th>
                 <th>Trạng thái</th>
                 <th>#</th>
             </tr>
@@ -15,14 +22,22 @@
             <tr ng-repeat="item in items">
                 <td class="align-center">{{$index+1}}</td>
                 <td class="align-center">{{item.id}}</td>
-                <td class="align-center">{{item.code}}</td>
-                <td class="align-center">{{item.name}}</td>
+                <td class="align-center">{{item.ten}}</td>
+                <td class="align-center">{{item.ma}}</td>
+                <td class="align-center">{{item.sk}}</td>
+                <td class="align-center">{{item.htg == 0 ?'Giảm phần trăm':'Giảm tiền mặt'}}</td>
+                <td class="align-center">{{item.ngayBatDau | date:'dd/MM/yyyy'}}</td>
+                <td class="align-center">{{item.ngayKetThuc | date:'dd/MM/yyyy'}}</td>
+                <td class="align-center">{{item.gtt}}</td>
+                <td class="align-center">{{item.gtd}}</td>
+                <td class="align-center">{{item.sl}}</td>
                 <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
                 <td class="align-center">
                     <div class="btn-group btn-group-xs">
                         <button ng-click="edit(item)" class="btn btn-icon">
                             <i class="fa fa-xs fa-pen"></i>
                         </button>
+                        <button ng-click="delete(item)"  class="btn btn-danger">
                             <i class="fa fa-xs fa-times"></i>
                         </button>
                     </div>

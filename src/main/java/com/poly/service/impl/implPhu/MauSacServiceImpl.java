@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MauSacServiceimpl implements MauSacService {
+public class MauSacServiceImpl implements MauSacService {
 
     @Autowired
     private MauSacDAO mauSacDAO;

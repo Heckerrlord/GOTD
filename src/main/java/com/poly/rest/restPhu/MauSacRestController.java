@@ -41,4 +41,5 @@ public class MauSacRestController {
     public void delete(@PathVariable("id") Integer id) {
         mauSacService.delete(id);
     }
+
 }

@@ -5,8 +5,13 @@
             <tr>
                 <th>STT</th>
                 <th>Id</th>
-                <th>Mã thương hiệu</th>
-                <th>Tên thương hiệu</th>
+                <th>Tên</th>
+                <th>Tỉnh-Thành phố</th>
+                <th>Quận-Huyện</th>
+                <th>Xã-Phường</th>
+                <th>Chi tiết</th>
+                <th>Mã tài khoản</th>
+                <th>Ghi chú</th>
                 <th>Trạng thái</th>
                 <th>#</th>
             </tr>
@@ -15,14 +20,20 @@
             <tr ng-repeat="item in items">
                 <td class="align-center">{{$index+1}}</td>
                 <td class="align-center">{{item.id}}</td>
-                <td class="align-center">{{item.code}}</td>
-                <td class="align-center">{{item.name}}</td>
+                <td class="align-center">{{item.ten}}</td>
+                <td class="align-center">{{item.thanhpho}}</td>
+                <td class="align-center">{{item.huyen}}</td>
+                <td class="align-center">{{item.xa}}</td>
+                <td class="align-center">{{item.chiTiet}}</td>
+                <td class="align-center"></td>
+                <td class="align-center">{{item.gc}}</td>
                 <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
                 <td class="align-center">
                     <div class="btn-group btn-group-xs">
                         <button ng-click="edit(item)" class="btn btn-icon">
                             <i class="fa fa-xs fa-pen"></i>
                         </button>
+                        <button ng-click="delete(item)"  class="btn btn-danger">
                             <i class="fa fa-xs fa-times"></i>
                         </button>
                     </div>

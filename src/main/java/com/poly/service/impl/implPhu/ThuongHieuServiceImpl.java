@@ -1,7 +1,7 @@
 package com.poly.service.impl.implPhu;
 
 
-import com.poly.dao.daoPhu.ThuongHieuDao;
+import com.poly.dao.daoPhu.ThuongHieuDAO;
 import com.poly.entity.phu.ThuongHieu;
 import com.poly.service.serPhu.ThuongHieuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ThuongHieuServiceimpl implements ThuongHieuService {
+public class ThuongHieuServiceImpl implements ThuongHieuService {
     @Autowired
-    private ThuongHieuDao thuongHieuDao;
+    private ThuongHieuDAO thuongHieuDao;
 
     @Override
     public List<ThuongHieu> findAll() {

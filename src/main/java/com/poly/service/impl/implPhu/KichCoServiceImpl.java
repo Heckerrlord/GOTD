@@ -1,7 +1,7 @@
 package com.poly.service.impl.implPhu;
 
 
-import com.poly.dao.daoPhu.KichCoDao;
+import com.poly.dao.daoPhu.KichCoDAO;
 import com.poly.entity.phu.KichCo;
 import com.poly.service.serPhu.KichCoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class KichCoServiceimpl implements KichCoService {
+public class KichCoServiceImpl implements KichCoService {
     @Autowired
-    private KichCoDao kichCoDao;
+    private KichCoDAO kichCoDao;
 
     @Override
     public List<KichCo> findAll() {
