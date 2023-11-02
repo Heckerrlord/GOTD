@@ -35,6 +35,14 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/phu/thuonghieu/index.html",
             controller: "thuonghieu-ctrl"
         })
+        .when("/diachi", {
+            templateUrl: "/admin/phu/diachi/index.html",
+            controller: "diachi-ctrl"
+        })
+        .when("/magiamgia", {
+            templateUrl: "/admin/phu/magiamgia/index.html",
+            controller: "magiamgia-ctrl"
+        })
         //het
         .when("/category", {
             templateUrl: "/admin/category/index.html",
