@@ -47,6 +47,8 @@ public class AuthController {
 
     @Autowired
     UploadService uploadService;
+    @Autowired
+    HttpServletRequest rq;
 
 
     @CrossOrigin("*")

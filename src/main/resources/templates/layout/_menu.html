@@ -20,12 +20,8 @@
 							<a href="sanpham">Sản phẩm</a>
 						</li>
 						<li class="has-submenu">
-							<a>Danh mục</a>
-							<ul class="submenu-nav">
-								<li th:each="c:${cates}">
-									<a th:href="@{|/index?cid=${c.id}|}">[[${c.name}]]</a>
-								</li>
-							</ul>
+							<a th:href="@{/favorites}">Yêu Thích</a>
+
 						</li>
 						<li>
 							<a href="contact">Liên hệ</a>
