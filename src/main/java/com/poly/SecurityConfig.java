@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Tắt thuật tấn công giả mạo
 		http.csrf().disable();
 		// Quyền yêu cầu truy cập
-		http.authorizeRequests().antMatchers("/order/**", "/auth/change-password","/auth/change-info").authenticated()
+		http.authorizeRequests().antMatchers("/order/**", "/auth/change-password","/auth/change-info","/favorites/**").authenticated()
 				.antMatchers("/admin/**").hasAnyRole("STAF", "DIRE").antMatchers("/rest/authorities").hasRole("DIRE")
 				.anyRequest().permitAll();
 		// Đăng nhập

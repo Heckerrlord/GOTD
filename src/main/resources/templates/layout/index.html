@@ -430,13 +430,17 @@
 		}
 
 		var updateSuccess = [[${updateSuccess}]];
-		var udpatefalse = [[${updateFalse}]]
+		var udpatefalse = [[${updateFalse}]];
+
+		var userLogin = [[${#request.remoteUser}]]
+
 		if (updateSuccess) {
 			// Gọi mã JavaScript để hiển thị cửa sổ nổi
 			sweetalert("Cập nhật tài khoản thành công");
 		}if (udpatefalse){
 			sweetalert("Lỗi khi cập nhật tài khoản");
 		}
+
 	</script>
 
 

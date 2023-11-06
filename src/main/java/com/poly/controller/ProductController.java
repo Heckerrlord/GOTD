@@ -1,7 +1,9 @@
 package com.poly.controller;
 
 import com.poly.dao.CTSPDAO;
+import com.poly.dao.DSYTDAO;
 import com.poly.entity.ChiTietSanPham;
+import com.poly.entity.DanhSachYeuThich;
 import com.poly.entity.phu.CoAo;
 import com.poly.entity.phu.KichCo;
 import com.poly.entity.phu.MauSac;
@@ -40,6 +42,10 @@ public class ProductController {
 
 	@Autowired
 	private MauSacService mauSacService;
+
+
+	@Autowired
+	private DSYTDAO dsytdao;
 	@RequestMapping("/product/detail/{id}")
 	public String detail(Model model, @PathVariable("id") Long id) {
 		ChiTietSanPham item = productService.findById(id);
@@ -48,6 +54,8 @@ public class ProductController {
 		model.addAttribute("item", item);
 		model.addAttribute("m", m);
 		model.addAttribute("kc", kc);
+		List<DanhSachYeuThich> list1 = dsytdao.findAll();
+		model.addAttribute("favorite",list1);
 		return "product/detail";
 	}
 	@GetMapping("/sanpham")
@@ -75,6 +83,9 @@ public class ProductController {
 
 		List<ChiTietSanPham> list = pdao.findDistinctByMasp();
 		model.addAttribute("items", list);
+
+		List<DanhSachYeuThich> list1 = dsytdao.findAll();
+		model.addAttribute("favorite",list1);
 
 		return "sanpham";
 	}

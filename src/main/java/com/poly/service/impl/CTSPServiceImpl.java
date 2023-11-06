@@ -42,4 +42,8 @@ public class CTSPServiceImpl implements CTSPService {
 		return pdao.findChiTietSanPhamBySanPhamMa(ma);
 	};
 
+	@Override
+	public List<ChiTietSanPham> findFavorites(String username) {
+		return pdao.findFavorite(username);
+	}
 }

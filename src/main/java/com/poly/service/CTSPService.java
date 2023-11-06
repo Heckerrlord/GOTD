@@ -16,5 +16,6 @@ public interface CTSPService {
 	ChiTietSanPham update(ChiTietSanPham product);
 
 	void delete(Long id);
+	List<ChiTietSanPham> findFavorites(String username);
 
 }

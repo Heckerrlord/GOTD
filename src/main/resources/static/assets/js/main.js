@@ -9,7 +9,7 @@ app.run(function ($http, $rootScope) {
     });
 })
 
-app.controller("shopping-ctrl", function ($scope, $http) {
+app.controller("shopping-ctrl", function ($scope, $http,$window) {
     var url = "/rest/products";
     var url1 = "/rest/orders";
 
@@ -29,13 +29,14 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             if (item) {
                 item.qty++;
                 this.saveToLocalStorage();
-            }
-            else {
+            } else {
                 $http.get(`${url}/${id}`).then(resp => {
                     resp.data.qty = 1;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
-                })
+                }).catch(error => {
+                    console.error("Lỗi trong quá trình thêm sản phẩm vào giỏ hàng:", error);
+                });
             }
         },
         remove(id) {
@@ -47,7 +48,8 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             this.items = [];
             this.saveToLocalStorage();
         },
-        amt_of(item) { },
+        amt_of(item) {
+        },
         get count() {
             return this.items
                 .map(item => item.qty)
@@ -55,7 +57,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         },
         get amount() {
             return this.items
-                .map(item => item.qty * item.giaBan)
+                .map(item => item.qty * item.price)
                 .reduce((total, qty) => total += qty, 0);
         },
         saveToLocalStorage() {
@@ -70,6 +72,9 @@ app.controller("shopping-ctrl", function ($scope, $http) {
 
     $scope.cart.loadFromLocalStorage();
 
+
+    $scope.cart.loadFromLocalStorage();
+
     $scope.DonHang = {
         ngayDatHang: new Date(),
         soDienThoai: "",
@@ -77,14 +82,14 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         maGiamGia: "",
         tienGiam: 0, // Sửa thành giá trị số hạ giảm
         phiGiaoHang: 0, // Sửa thành giá trị phí giao hàng
-        account: { username: $("#username").text() },
+        account: {username: $("#username").text()},
         tongTien: 0, // Sửa thành giá trị tổng tiền
         DonHangChiTiet: [], // Sửa thành một mảng chi tiết đơn hàng
         purchase() {
             // Tạo mảng chi tiết đơn hàng từ các sản phẩm trong giỏ hàng
             this.DonHangChiTiet = $scope.cart.items.map(item => {
                 return {
-                    chiTietSanPham: { id: item.id },
+                    chiTietSanPham: {id: item.id},
                     donGia: item.price,
                     soLuong: item.qty,
                     trangThai: 1
@@ -114,4 +119,46 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             })
         }
     }
+
+
+    //yêu thích
+    var url12 = "/rest/favorites";
+
+    $scope.addFavorite = function (ma, user1) {
+        ngay = new Date();
+        user1 = userLogin;
+        if (user1) {
+
+            let favoriteData = {
+                sanPham: ma,
+                accounts: user1,
+                date: ngay,
+                trangThai: 0
+            };
+            $http.post(url12, favoriteData).then(function (response) {
+                console.log(favoriteData.sanPham);
+                location.reload();
+            }).catch(function (error) {
+                console.log(favoriteData);
+                console.error("Lỗi: " + error.data);
+            });
+        }else{
+           window.location.href= 'auth/login/form';
+        }
+    };
+
+
+    $scope.removeFavorite = function (ma, username) {
+        username = userLogin;
+
+        $http.delete(url12 + '?ma=' + ma + '&username=' + username).then(function (resp) {
+            console.log("Đã xóa khỏi yêu thích");
+            location.reload();
+        }).catch(function (err) {
+            console.error("Lỗi: " + err.data);
+        });
+    }
+
+
+
 })

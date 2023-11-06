@@ -1,276 +1,299 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 <style>
-	.thumbnail-image img {
-		width: 100px;
-		height: 100px;
-	}
+    .thumbnail-image img {
+        width: 100px;
+        height: 100px;
+    }
 </style>
 
 <body>
-	<main class="main-content" th:object="${item}">
-		<div class="page-header-area">
-			<div class="container">
-				<div class="row">
-					<div class="col-12 text-center">
-						<div class="page-header-content">
-							<nav class="breadcrumb-area">
-								<ul class="breadcrumb">
-									<li>
-										<a href="/">Trang chủ</a>
-									</li>
-									<li class="breadcrumb-sep">/</li>
-									<li>Chi tiết sản phẩm</li>
-								</ul>
-							</nav>
-							<h4 class="title">Chi tiết sản phẩm</h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+<main class="main-content" th:object="${item}">
+    <div class="page-header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <nav class="breadcrumb-area">
+                            <ul class="breadcrumb">
+                                <li>
+                                    <a href="/">Trang chủ</a>
+                                </li>
+                                <li class="breadcrumb-sep">/</li>
+                                <li>Chi tiết sản phẩm</li>
+                            </ul>
+                        </nav>
+                        <h4 class="title">Chi tiết sản phẩm</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		<section class="product-area product-single-area">
-			<div class="container pt-60 pb-0">
-				<div class="row">
-					<div class="col-12">
-						<div class="product-single-item" data-margin-bottom="63">
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="product-thumb">
-										<div class="zoom zoom-hover">
-											<div class="image-gallery">
-												<div class="main-image">
-													<a class="lightbox-image" data-fancybox="gallery" th:href="@{|/assets/images/${item.getSanPham().getImage()[0].ma}|}">
-														<img id="main-image" class="m-auto d-block my-5" th:src="@{|/assets/images/${item.getSanPham().getImage()[0].ma}|}" alt="Image" />
-													</a>
-												</div>
-												<div class="thumbnail-images">
-													<div class="row">
-														<div th:each="image, iterStat : ${item.getSanPham().getImage()}" th:if="${!iterStat.first}" class="col-3">
-															<a class="thumbnail-image" data-fancybox="gallery" th:href="@{|/assets/images/${image.ma}|}" th:data-index="${iterStat.index}" style="width: 100px;
+    <section class="product-area product-single-area">
+        <div class="container pt-60 pb-0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-single-item" data-margin-bottom="63">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="product-thumb">
+                                    <div class="zoom zoom-hover">
+                                        <div class="image-gallery">
+                                            <div class="main-image">
+                                                <a class="lightbox-image" data-fancybox="gallery"
+                                                   th:href="@{|/assets/images/${item.getSanPham().getImage()[0].ma}|}">
+                                                    <img id="main-image" class="m-auto d-block my-5"
+                                                         th:src="@{|/assets/images/${item.getSanPham().getImage()[0].ma}|}"
+                                                         alt="Image"/>
+                                                </a>
+                                            </div>
+                                            <div class="thumbnail-images">
+                                                <div class="row">
+                                                    <div th:each="image, iterStat : ${item.getSanPham().getImage()}"
+                                                         th:if="${!iterStat.first}" class="col-3">
+                                                        <a class="thumbnail-image" data-fancybox="gallery"
+                                                           th:href="@{|/assets/images/${image.ma}|}"
+                                                           th:data-index="${iterStat.index}" style="width: 100px;
 		height: 100px;">
-																<img th:src="@{|/assets/images/${image.ma}|}" alt="Image" style="width: 100px;
-		height: 100px;" />
-															</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+                                                            <img th:src="@{|/assets/images/${image.ma}|}" alt="Image"
+                                                                 style="width: 100px;
+		height: 100px;"/>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
+                            <div class="col-lg-6">
+                                <div class="product-single-info">
+                                    <h4 class="title">[[*{SanPham.ten}]]</h4>
+                                    <div class="prices">[[*{ThuongHieu.name}]] <p class="text-success">Số lượng:
+                                        [[*{soLuong}]]</p></div>
+                                    <div class="prices">
+                                        <span class="price">$[[*{#numbers.formatDecimal(GiaBan,0,'COMMA',2,'POINT')}]]</span>
+                                    </div>
+                                    <div class="prices">Tag: [[*{CoAo.name}]], [[*{LoaiKhachHang.name}]]</div>
+
+                                    <div class="rating-box-wrap">
+                                        <div class="rating-box">
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select class="form-control" name="color" id="color">
+                                            <option th:each="color : ${m}" th:value="${color.code}"
+                                                    th:text="${color.name}"
+                                                    th:selected="${item.getMauSac().getCode() == color.code}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-light" th:each="size : ${kc}">
+                                                    <input type="radio" name="size" th:value="${size.code}"
+                                                           th:id="${'size' + size.code}"
+                                                           th:checked="${item.kichCo.code == size.code}"/>
+                                                    <!-- Kiểm tra điều kiện và chọn nếu đúng -->
+                                                    <span th:text="${size.name}"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <div class="product-action-simple" >
+
+                                            <!--<div class="product-wishlist" th:each="a:${favorite}" >
+                                                <a href="javascript:(0);" class="btn-wishlist"
+                                                   th:if="${ a.accounts != #request.remoteUser}"
+                                                   th:attr="ng-click='addFavorite(\'' + ${item.sanPham.ma} + '\', user1)'">
+                                                    Thêm vào yêu thích </a>
+                                            </div>
+                                            <div class="product-wishlist" th:each="a:${favorite}" >
+                                                <a href="javascript:(0);" class="btn-wishlist"
+                                                   th:if="${a.sanPham == item.sanPham.ma && a.accounts == #request.remoteUser}"
+                                                   th:attr="ng-click='removeFavorite(\'' + ${item.getSanPham().getMa()} + '\', username)'">Xóa khỏi yêu thích</a>
+                                            </div>-->
 
 
+                                        <div class="payment-button">
+                                            <a th:attr="ng-click=@{|cart.add(${id})|}" th:href="@{/cart/view}"
+                                               class="btn-payment">Thêm vào giỏ</a>
+                                        </div>
 
-								<div class="col-lg-6">
-									<div class="product-single-info">
-										<h4 class="title">[[*{SanPham.ten}]]</h4>
-										<div class="prices">[[*{ThuongHieu.name}]] <p class="text-success">Số lượng: [[*{soLuong}]]</p> </div>
-										<div class="prices">
-											<span class="price">$[[*{#numbers.formatDecimal(GiaBan,0,'COMMA',2,'POINT')}]]</span>
-										</div>
-										<div class="prices">Tag: [[*{CoAo.name}]], [[*{LoaiKhachHang.name}]]</div>
+                                        <div class="social-sharing">
+                                            <span>Share:</span>
+                                            <div class="social-icons">
+                                                <a href="javascript:(0);">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                                <a href="javascript:(0);">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                                <a href="javascript:(0);">
+                                                    <i class="fa fa-pinterest"></i>
+                                                </a>
+                                                <a href="javascript:(0);">
+                                                    <i class="fa fa-google-plus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-review-tabs-content">
+                        <ul class="nav product-tab-nav" id="ReviewTab" role="tablist">
+                            <li role="presentation">
+                                <a class="active" id="description-tab" data-bs-toggle="pill" href="#description"
+                                   role="tab"
+                                   aria-controls="description" aria-selected="true">Mô tả</a>
+                            </li>
+                            <li role="presentation">
+                                <a id="reviews-tab" data-bs-toggle="pill" href="#reviews" role="tab"
+                                   aria-controls="reviews"
+                                   aria-selected="false">Đánh giá</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content product-tab-content" id="ReviewTabContent">
+                            <div class="tab-pane fade show active" id="description" role="tabpanel"
+                                 aria-labelledby="description-tab">
+                                <div class="product-description">
 
-										<div class="rating-box-wrap">
-											<div class="rating-box">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<select class="form-control" name="color" id="color">
-												<option th:each="color : ${m}" th:value="${color.code}" th:text="${color.name}"
-														th:selected="${item.getMauSac().getCode() == color.code}"></option>
-											</select>
-										</div>
-										<div class="row">
-										<div class="col-md-12">
-											<div class="btn-group" data-toggle="buttons">
-												<label class="btn btn-light" th:each="size : ${kc}">
-													<input type="radio" name="size" th:value="${size.code}" th:id="${'size' + size.code}"
-														   th:checked="${item.kichCo.code == size.code}" /> <!-- Kiểm tra điều kiện và chọn nếu đúng -->
-													<span th:text="${size.name}"></span>
-												</label>
-											</div>
-										</div>
-									</div>
-
-
-										<div class="product-action-simple">
-											<div class="product-wishlist">
-												<a href="javascript:(0);" class="btn-wishlist">Thêm vào yêu thích</a>
-											</div>
-											<div class="payment-button">
-												<a th:attr="ng-click=@{|cart.add(${id})|}" th:href="@{/cart/view}" class="btn-payment">Thêm vào giỏ</a>
-											</div>
-											<div class="social-sharing">
-												<span>Share:</span>
-												<div class="social-icons">
-													<a href="javascript:(0);">
-														<i class="fa fa-facebook"></i>
-													</a>
-													<a href="javascript:(0);">
-														<i class="fa fa-twitter"></i>
-													</a>
-													<a href="javascript:(0);">
-														<i class="fa fa-pinterest"></i>
-													</a>
-													<a href="javascript:(0);">
-														<i class="fa fa-google-plus"></i>
-													</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<div class="product-review-tabs-content">
-							<ul class="nav product-tab-nav" id="ReviewTab" role="tablist">
-								<li role="presentation">
-									<a class="active" id="description-tab" data-bs-toggle="pill" href="#description" role="tab"
-										aria-controls="description" aria-selected="true">Mô tả</a>
-								</li>
-								<li role="presentation">
-									<a id="reviews-tab" data-bs-toggle="pill" href="#reviews" role="tab" aria-controls="reviews"
-										aria-selected="false">Đánh giá</a>
-								</li>
-							</ul>
-							<div class="tab-content product-tab-content" id="ReviewTabContent">
-								<div class="tab-pane fade show active" id="description" role="tabpanel"
-									aria-labelledby="description-tab">
-									<div class="product-description">
-
-											<p>[[*{SanPham.MoTa}]]</p>
+                                    <p>[[*{SanPham.MoTa}]]</p>
 
 
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                                <div class="product-review-content">
+                                    <div class="review-content-header">
+                                        <h3>Customer Reviews</h3>
+                                    </div>
+                                    <div class="reviews-form-area show">
+                                        <h4 class="title">Write a review</h4>
+                                        <div class="reviews-form-content">
+                                            <form action="#">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="for_name">Name</label>
+                                                            <input id="for_name" class="form-control" type="text"
+                                                                   placeholder="Nhập tên">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="for_email">Email</label>
+                                                            <input id="for_email" class="form-control" type="email"
+                                                                   placeholder="john.smith@example.com">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="for_comment">Content</label>
+                                                            <textarea id="for_comment" class="form-control"
+                                                                      placeholder="Nhập đánh giá"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-submit-btn">
+                                                            <button type="submit" class="btn-submit">Bình luận</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="product-area product-new-arrivals-area product-related-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 m-auto">
+                    <div class="section-title text-center">
+                        <h2 class="title">Sản phẩm tương tự</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="swiper-container swiper-slide-gap product-slider-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="p:*{thuongHieu.LThuongHieu}">
+                                <div class="product-item">
+                                    <div class="inner-content">
+                                        <div class="product-thumb">
+                                            <a th:href="@{|/product/detail/${p.id}|}">
+                                                <img class="product-item m-auto d-block"
+                                                     th:src="@{|/assets/images/${p.sanPham.image[0].ma}|}">
+                                            </a>
+                                        </div>
+                                        <div class="product-desc">
+                                            <div class="product-info">
+                                                <h4 class="title">
+                                                    <a th:href="@{|/product/detail/${p.id}|}">[[${p.sanPham.ten}]]</a>
+                                                </h4>
+                                                <div class="prices">
+                                                    <span class="price">$[[${#numbers.formatDecimal(p.giaBan,0,'COMMA',2,'POINT')}]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev">
+                            <i class="zmdi zmdi-chevron-left"></i>
+                        </div>
+                        <div class="swiper-button-next">
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    var images = /*[[${item.getSanPham().getImage()}]]*/ [];
+    var currentImageIndex = 0;
+    var mainImage = document.getElementById("main-image");
+    var thumbnailImages = document.querySelectorAll(".thumbnail-image");
 
+    function displayImage(index) {
+        mainImage.src = images[index].ma;
+        currentImageIndex = index;
+    }
 
-									</div>
-								</div>
-								<div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-									<div class="product-review-content">
-										<div class="review-content-header">
-											<h3>Customer Reviews</h3>
-										</div>
-										<div class="reviews-form-area show">
-											<h4 class="title">Write a review</h4>
-											<div class="reviews-form-content">
-												<form action="#">
-													<div class="row">
-														<div class="col-md-12">
-															<div class="form-group">
-																<label for="for_name">Name</label>
-																<input id="for_name" class="form-control" type="text" placeholder="Nhập tên">
-															</div>
-														</div>
-														<div class="col-md-12">
-															<div class="form-group">
-																<label for="for_email">Email</label>
-																<input id="for_email" class="form-control" type="email"
-																	placeholder="john.smith@example.com">
-															</div>
-														</div>
-														<div class="col-md-12">
-															<div class="form-group">
-																<label for="for_comment">Content</label>
-																<textarea id="for_comment" class="form-control" placeholder="Nhập đánh giá"></textarea>
-															</div>
-														</div>
-														<div class="col-md-12">
-															<div class="form-submit-btn">
-																<button type="submit" class="btn-submit">Bình luận</button>
-															</div>
-														</div>
-													</div>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    thumbnailImages.forEach(function (thumbnailImage, index) {
+        thumbnailImage.addEventListener("click", function () {
+            displayImage(index);
+        });
+    });
 
-		<section class="product-area product-new-arrivals-area product-related-area">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-7 m-auto">
-						<div class="section-title text-center">
-							<h2 class="title">Sản phẩm tương tự</h2>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<div class="swiper-container swiper-slide-gap product-slider-container">
-							<div class="swiper-wrapper">
-								<div class="swiper-slide" th:each="p:*{thuongHieu.LThuongHieu}">
-									<div class="product-item">
-										<div class="inner-content">
-											<div class="product-thumb">
-												<a th:href="@{|/product/detail/${p.id}|}">
-													<img class="product-item m-auto d-block" th:src="@{|/assets/images/${p.sanPham.image[0].ma}|}">
-												</a>
-											</div>
-											<div class="product-desc">
-												<div class="product-info">
-													<h4 class="title">
-														<a th:href="@{|/product/detail/${p.id}|}">[[${p.sanPham.ten}]]</a>
-													</h4>
-													<div class="prices">
-														<span class="price">$[[${#numbers.formatDecimal(p.giaBan,0,'COMMA',2,'POINT')}]]</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-button-prev">
-								<i class="zmdi zmdi-chevron-left"></i>
-							</div>
-							<div class="swiper-button-next">
-								<i class="zmdi zmdi-chevron-right"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-	<script>
-		var images = /*[[${item.getSanPham().getImage()}]]*/ [];
-		var currentImageIndex = 0;
-		var mainImage = document.getElementById("main-image");
-		var thumbnailImages = document.querySelectorAll(".thumbnail-image");
-
-		function displayImage(index) {
-			mainImage.src = images[index].ma;
-			currentImageIndex = index;
-		}
-
-		thumbnailImages.forEach(function(thumbnailImage, index) {
-			thumbnailImage.addEventListener("click", function() {
-				displayImage(index);
-			});
-		});
-
-		displayImage(currentImageIndex);
-	</script>
-
+    displayImage(currentImageIndex);
+</script>
 
 
 </body>
