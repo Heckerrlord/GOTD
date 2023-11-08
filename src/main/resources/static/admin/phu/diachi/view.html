@@ -1,0 +1,206 @@
+<div class="row">
+    <div class="col-6">
+        <div class="row mx-0 bg-white">
+            <div class="col-md-4 text-center">
+		<span ng-if="form.image == null">
+			<img ng-src="{{'/assets/images/cloud-upload.jpg'}}" style="max-width: 100%; margin-top: 5rem">
+		</span>
+                <span ng-if="form.image != null">
+			<img ng-src="{{'/assets/images/'+form.image}}" style="max-width: 100%; margin-top: 5rem">
+		</span>
+            </div>
+            <div class="col-md-8">
+                <form action="" class="form p-3">
+                    <div class="form-group row">
+                        <label class="form-label">Tên</label>
+                        <input type="text" class="form-control" ng-model="form.ten" placeholder="Nhập tên">
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="form-label">Tỉnh-Thành phố</label>
+                        <select ng-model="form.thanhpho" id="thanhpho" ng-change="changeThanhPho()" class="custom-select">
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Quận-Huyện</label>
+                        <select ng-model="form.huyen" id="huyen"  ng-change="changeHuyen()" class="custom-select">
+                            <option value="" >Chọn quận</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Phường-Xã</label>
+                        <select ng-model="form.xa" id="xa" ng-change="changeXa()" class="custom-select">
+                            <option value="" >Chọn phường</option>
+                        </select>
+                    </div>
+                    <p id="result"></p>
+                    <div class="form-group row">
+                        <label class="form-label">Chi tiết</label>
+                        <input type="text" class="form-control" ng-model="form.chiTiet" placeholder="Nhập chi tiết">
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Ghi chú</label>
+                        <input type="text" class="form-control" ng-model="form.gc" placeholder="Nhập ghi chú">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 px-0 control-label">Status</label>
+                        <div class="col-md-10">
+                            <div class="form-check-inline pr-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" checked class="custom-control-input" id="yes" name="available"
+                                           ng-model="form.tt" ng-value="0">
+                                    <label class="custom-control-label" for="yes">Hoạt động</label>
+                                </div>
+                            </div>
+                            <div class="form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio"  class="custom-control-input" id="no" name="available"
+                                           ng-model="form.tt" ng-value="1">
+                                    <label class="custom-control-label" for="no">Ngưng hoạt động</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+        <div class="card-header text-center">
+            <button ng-click="create()" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create
+            </button>
+            <button ng-click="update()" class="btn btn-success">
+                <i class="far fa-save"></i> Update
+            </button>
+            <button ng-click="delete(form)" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+            <button ng-click="reset()" class="btn btn-secondary">
+                <i class="fas fa-redo"></i> Reset
+            </button>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+                integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            // const host1 = "https://provinces.open-api.vn/api/";
+            // var callAPI = (api) => {
+            //     return axios.get(api)
+            //         .then((response) => {
+            //             renderData(response.data, "province");
+            //         });
+            // }
+            // callAPI('https://provinces.open-api.vn/api/?depth=1');
+            // var callApiDistrict = (api) => {
+            //     return axios.get(api)
+            //         .then((response) => {
+            //             renderData(response.data.districts, "district");
+            //         });
+            // }
+            // var callApiWard = (api) => {
+            //     return axios.get(api)
+            //         .then((response) => {
+            //             renderData(response.data.wards, "ward");
+            //         });
+            // }
+            //
+            // var renderData = (array, select) => {
+            //     let row = ' <option disable value="">chọn</option>';
+            //     array.forEach(element => {
+            //         row += `<option value="${element.code}">${element.name}</option>`
+            //     });
+            //     document.querySelector("#" + select).innerHTML = row
+            // }
+            //
+            // $("#province").change(() => {
+            //     callApiDistrict(host1 + "p/" + $("#province").val() + "?depth=2");
+            //     printResult();
+            // });
+            // $("#district").change(() => {
+            //     callApiWard(host1 + "d/" + $("#district").val() + "?depth=2");
+            //     printResult();
+            // });
+            // $("#ward").change(() => {
+            //     printResult();
+            // })
+            //
+            // var printResult = () => {
+            //     if ($("#district").val() != "" && $("#province").val() != "" &&
+            //         $("#ward").val() != "") {
+            //         let result = $("#province option:selected").text() +
+            //             " | " + $("#district option:selected").text() + " | " +
+            //             $("#ward option:selected").text();
+            //         $("#result").text(result)
+            //     }
+            //
+            // }
+
+        </script>
+    </div>
+    <div class="col-6">
+        <div class="row mx-0 bg-white" ng-if="items">
+            <div class="col-12 py-3">
+                <table id="datatable-buttons" class="table table-collapse table-bordered dt-responsive">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th hidden>Id</th>
+                        <th>Tên</th>
+                        <th>Tỉnh-Thành phố</th>
+                        <th>Quận-Huyện</th>
+                        <th>Xã-Phường</th>
+                        <th>Chi tiết</th>
+                        <th>Mã tài khoản</th>
+                        <th>Ghi chú</th>
+                        <th>Trạng thái</th>
+                        <th>#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in items">
+                        <td class="align-center">{{$index+1}}</td>
+                        <td hidden class="align-center">{{item.id}}</td>
+                        <td class="align-center">{{item.ten}}</td>
+                        <td class="align-center">{{item.thanhpho}}</td>
+                        <td class="align-center">{{item.huyen}}</td>
+                        <td class="align-center">{{item.xa}}</td>
+                        <td class="align-center">{{item.chiTiet}}</td>
+                        <td class="align-center"></td>
+                        <td class="align-center">{{item.gc}}</td>
+                        <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
+                        <td class="align-center">
+                            <div class="btn-group btn-group-xs">
+                                <button ng-click="edit(item)" class="btn btn-icon">
+                                    <i class="fa fa-xs fa-pen"></i>
+                                </button>
+                                <button ng-click="delete(item)"  class="btn btn-danger">
+                                    <i class="fa fa-xs fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <div class="card-header text-center">
+            <button ng-click="pager.first()" class="btn btn-danger">
+                <i class="fas fa-arrow-to-left"></i>
+            </button>
+            <button ng-click="pager.prev()" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="btn btn-success">{{pager.page + 1}} of {{pager.count?pager.count:'1'}}</button>
+            <button ng-click="pager.next()" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button ng-click="pager.last()" class="btn btn-danger">
+                <i class="fas fa-arrow-to-right"></i>
+            </button>
+        </div> -->
+        <script src="/assetss/js/init.js"></script>
+    </div>
+
+
+</div>
