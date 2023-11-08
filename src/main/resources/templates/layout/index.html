@@ -442,6 +442,22 @@
 		}
 
 	</script>
+	<script th:inline="javascript">
+		function togglePasswordVisibility() {
+			var passwordInput = document.getElementById('password');
+			var showPasswordIcon = document.getElementById('showPasswordIcon');
+
+			if (passwordInput.type === 'password') {
+				passwordInput.type = 'text';
+				showPasswordIcon.classList.remove('zmdi-eye');
+				showPasswordIcon.classList.add('zmdi-eye-off');
+			} else {
+				passwordInput.type = 'password';
+				showPasswordIcon.classList.remove('zmdi-eye-off');
+				showPasswordIcon.classList.add('zmdi-eye');
+			}
+		}
+	</script>
 
 
 
