@@ -1,0 +1,182 @@
+<div class="row">
+    <div class="col-6">
+        <div class="row mx-0 bg-white">
+            <div class="col-md-4 text-center">
+		<span ng-if="form.image == null">
+			<img ng-src="{{'/assets/images/cloud-upload.jpg'}}" style="max-width: 100%; margin-top: 5rem">
+		</span>
+                <span ng-if="form.image != null">
+			<img ng-src="{{'/assets/images/'+form.image}}" style="max-width: 100%; margin-top: 5rem">
+		</span>
+            </div>
+            <div class="col-md-8">
+                <form class="form p-3">
+                    <div class="form-group row">
+                        <label class="form-label">Tên</label>
+                        <input type="text" class="form-control" ng-model="form.ten" placeholder="Nhập tên">
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Mã</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="form.ma" placeholder="Nhập mã">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Sự kiện</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="form.sk" placeholder="Nhập sự kiện">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 px-0 control-label">Hình thức giảm</label>
+                        <div class="col-md-10">
+                            <div class="form-check-inline pr-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" checked class="custom-control-input" id="yes1" name="available"
+                                           ng-model="form.htg" ng-value="0">
+                                    <label class="custom-control-label" for="yes1">Phần trăm</label>
+                                </div>
+                            </div>
+                            <div class="form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio"  class="custom-control-input" id="no1" name="available"
+                                           ng-model="form.htg" ng-value="1">
+                                    <label class="custom-control-label" for="no1">Tiền mặt</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Ngày bắt đầu</label>
+                        <input type="date" class="form-control" ng-model="form.ngayBatDau" placeholder="2022-01-01">
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Ngày kết thúc</label>
+                        <input type="date" class="form-control" ng-model="form.ngayKetThuc" placeholder="2022-01-01">
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Giảm tối thiểu</label>
+                        <div class="input-group">
+                            <input type="number" min="0" max="1000000" step="1" class="form-control" ng-model="form.gtt" placeholder="Nhập giảm tối thiểu">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Giảm tối đa</label>
+                        <div class="input-group">
+                            <input type="number" min="0" max="1000000" step="1" class="form-control" ng-model="form.gtd" placeholder="Nhập giảm tối đa">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Số lượng</label>
+                        <div class="input-group">
+                            <input type="number" min="0" max="100" step="1" class="form-control" ng-model="form.sl" placeholder="Nhập số lượng">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 px-0 control-label">Status</label>
+                        <div class="col-md-10">
+                            <div class="form-check-inline pr-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" checked class="custom-control-input" id="yes2" name="available1"
+                                           ng-model="form.tt" ng-value="0">
+                                    <label class="custom-control-label" for="yes2">Hoạt động</label>
+                                </div>
+                            </div>
+                            <div class="form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio"  class="custom-control-input" id="no2" name="available1"
+                                           ng-model="form.tt" ng-value="1">
+                                    <label class="custom-control-label" for="no2">Ngưng hoạt động</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-header text-center">
+            <button ng-click="create()" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create
+            </button>
+            <button ng-click="update()" class="btn btn-success">
+                <i class="far fa-save"></i> Update
+            </button>
+            <button ng-click="delete(form)" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+            <button ng-click="reset()" class="btn btn-secondary">
+                <i class="fas fa-redo"></i> Reset
+            </button>
+        </div>
+
+    </div>
+    <div class="col-6">
+        <div class="row mx-0 bg-white" ng-if="items">
+            <div class="col-12 py-3">
+                <table id="datatable-buttons" class="table table-collapse table-bordered dt-responsive">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th hidden>Id</th>
+                        <th>Tên giảm giá</th>
+                        <th>Mã giảm giá</th>
+                        <th>Sự kiện</th>
+                        <th>Hình thức giảm</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Giảm tối thiểu</th>
+                        <th>Giảm tối đa</th>
+                        <th>Số lượng</th>
+                        <th>Trạng thái</th>
+                        <th>#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in items">
+                        <td class="align-center">{{$index+1}}</td>
+                        <td hidden class="align-center">{{item.id}}</td>
+                        <td class="align-center">{{item.ten}}</td>
+                        <td class="align-center">{{item.ma}}</td>
+                        <td class="align-center">{{item.sk}}</td>
+                        <td class="align-center">{{item.htg == 0 ?'Giảm phần trăm':'Giảm tiền mặt'}}</td>
+                        <td class="align-center">{{item.ngayBatDau | date:'dd/MM/yyyy'}}</td>
+                        <td class="align-center">{{item.ngayKetThuc | date:'dd/MM/yyyy'}}</td>
+                        <td class="align-center">{{item.gtt}}</td>
+                        <td class="align-center">{{item.gtd}}</td>
+                        <td class="align-center">{{item.sl}}</td>
+                        <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
+                        <td class="align-center">
+                            <div class="btn-group btn-group-xs">
+                                <button ng-click="edit(item)" class="btn btn-icon">
+                                    <i class="fa fa-xs fa-pen"></i>
+                                </button>
+                                <button ng-click="delete(item)"  class="btn btn-danger">
+                                    <i class="fa fa-xs fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <div class="card-header text-center">
+            <button ng-click="pager.first()" class="btn btn-danger">
+                <i class="fas fa-arrow-to-left"></i>
+            </button>
+            <button ng-click="pager.prev()" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="btn btn-success">{{pager.page + 1}} of {{pager.count?pager.count:'1'}}</button>
+            <button ng-click="pager.next()" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button ng-click="pager.last()" class="btn btn-danger">
+                <i class="fas fa-arrow-to-right"></i>
+            </button>
+        </div> -->
+        <script src="/assetss/js/init.js"></script>
+    </div>
+
+
+</div>
