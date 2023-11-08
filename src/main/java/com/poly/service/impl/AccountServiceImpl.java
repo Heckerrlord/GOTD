@@ -2,6 +2,8 @@ package com.poly.service.impl;
 
 import java.util.List;
 
+import com.poly.entity.Account;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,14 +15,13 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Service;
 
 import com.poly.dao.AccountDAO;
-import com.poly.entity.Account;
 import com.poly.service.AccountService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
 	@Autowired
-	AccountDAO adao;
+    AccountDAO adao;
 
 	@Autowired
 	PasswordEncoder pe;
@@ -29,6 +30,7 @@ public class AccountServiceImpl implements AccountService {
 	public Account findById(String username) {
 		return adao.findById(username).get();
 	}
+
 
 	@Override
 	public List<Account> findAll() {
@@ -57,9 +59,26 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void loginFromOAuth2(OAuth2AuthenticationToken oauth2) {
-		// String fullname = oauth2.getPrincipal().getAttribute("name");
+		String profilePictureUrl = oauth2.getPrincipal().getAttribute("picture");
+
+		String fullname = oauth2.getPrincipal().getAttribute("name");
 		String email = oauth2.getPrincipal().getAttribute("email");
+		Account aa = adao.findByUsername(email);
 		String password = Long.toHexString(System.currentTimeMillis());
+		if (aa == null){
+			Account account = new Account();
+			account.setUsername(email);
+			account.setPassword(pe.encode(password));
+			account.setFullname(fullname);
+			account.setEmail(email);
+			account.setPhoto(profilePictureUrl);
+			account.setToken("token");
+			account.setTrangThai(0);
+			adao.save(account);
+		}else {
+		aa.setPassword(pe.encode(password));
+		adao.save(aa);
+		}
 
 		UserDetails user = User.withUsername(email).password(pe.encode(password)).roles("CUST").build();
 		Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
