@@ -34,8 +34,8 @@
                   style="width: 50%; margin-top: 5rem">-->
                     </span>
                     <span>
-                             <img id="previewImage" th:src="@{'/assets/images/' + ${account.photo}}" alt=""
-                             style="width: 70%; height: 360px; margin-top: 5rem">
+                             <img id="previewImage" th:src="@{'/assets/images/' + ${account.photo}}" alt="ẢNH CÁ NHÂN"
+                             style="width: 70%; height: 360px; margin-top: 5rem;object-fit: scale-down">
                     </span>
 
 
@@ -67,16 +67,17 @@
                         </div>
                         <div class="form-group row">
                             <label class="form-label">Ảnh</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="photo" name="photo"
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" id="inputGroupFile02" name="file"
                                        onchange="previewImage(this)">
-                                <label class="custom-file-label" for="photo">Chọn ảnh</label>
+                                <label class="input-group-text" for="inputGroupFile02">Chọn ảnh</label>
                             </div>
                         </div>
+
                         <br>
                         <div class="card-header text-center">
                             <button type="submit" class="btn btn-success">
-                                <i class="far fa-save"></i> Cập nhật thông tin
+                                <i class="zmdi zmdi-update"></i> Cập nhật thông tin
                             </button>
 
                         </div>

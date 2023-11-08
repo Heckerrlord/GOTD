@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	BCryptPasswordEncoder pe;
 
+
 	@Autowired
 	HttpSession session;
 
@@ -77,11 +78,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Quyền yêu cầu truy cập
 		http.authorizeRequests().antMatchers("/order/**", "/auth/change-password","/auth/change-info","/favorites/**").authenticated()
 				.antMatchers("/admin/**").hasAnyRole("STAF", "DIRE").antMatchers("/rest/authorities").hasRole("DIRE")
-				.anyRequest().permitAll();
+				.anyRequest().permitAll().and().rememberMe().tokenValiditySeconds(3600);
 		// Đăng nhập
 		http.formLogin().loginPage("/auth/login/form").loginProcessingUrl("/auth/login")
 				.defaultSuccessUrl("/auth/login/success", false).failureUrl("/auth/login/error");
-		http.rememberMe().tokenValiditySeconds(86400); // remember me
+		http.rememberMe().tokenValiditySeconds(3600);
+			// remember me
 		// Điều khiển lỗi truy cập không đúng quyền
 		http.exceptionHandling().accessDeniedPage("/auth/unauthoried");
 		// Đăng xuất

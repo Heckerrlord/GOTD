@@ -69,8 +69,7 @@ public class AuthController {
 
         // Lưu tài khoản vào session
         session.setAttribute("authenticatedAccount", account);
-        System.out.println(account.getFullname());
-
+        System.out.println(account.getUsername());
         model.addAttribute("message", "Đăng nhập thành công");
         return "redirect:/index";
     }
@@ -88,7 +87,7 @@ public class AuthController {
 
     @RequestMapping("/auth/unauthoried")
     public String unauthoried(Model model, @ModelAttribute("account") Account account) {
-        model.addAttribute("message", "You don't have access!");
+        model.addAttribute("message", "Bạn không có quyền truy cập!");
         return "auth/login";
     }
 
@@ -201,51 +200,41 @@ public class AuthController {
     public String updateInfo(
             Model model,
             @Validated @ModelAttribute("account") Account account,
-            Errors errors, @RequestParam("photo") MultipartFile file) {
-        if (errors.hasErrors() && file.isEmpty()) {
+            Errors errors, @RequestParam("file") MultipartFile file) {
+        if (errors.hasErrors()) {
             model.addAttribute("updateFalse", true);
+            System.out.println(errors.getAllErrors());
             return "auth/change-info";
         }
-        if (!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             try {
                 String folder = "images";
 
                 File savedFile = uploadService.save(file, folder);
 
-                String relativeImagePath =   savedFile.getName();
+                String relativeImagePath = savedFile.getName();
                 account.setPhoto(relativeImagePath);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println(e.getMessage());
-                model.addAttribute("updateFalse", true);
+                model.addAttribute("", true);
                 return "auth/change-info";
             }
+        } else {
+            account.setPhoto("user.png");
         }
-
         account.setUsername(account.getUsername());
         account.setPassword(account.getPassword());
         account.setTrangThai(account.getTrangThai());
         account.setToken(account.getToken());
         accountService.update(account);
-
         model.addAttribute("updateSuccess", true);
-
-
         return "auth/change-info";
     }
 
 
 
-    @GetMapping("/auth/change-info/reset")
-    public String reset(Model model, HttpServletResponse response) {
 
-        Account emptyAccount = new Account();
-
-        model.addAttribute("account", emptyAccount);
-        emptyAccount.getUsername();
-        response.addHeader("refresh", "2;url=/auth/change-info");
-        return "auth/change-info";
-    }
 
 
     public String getSiteURL(HttpServletRequest request) {
