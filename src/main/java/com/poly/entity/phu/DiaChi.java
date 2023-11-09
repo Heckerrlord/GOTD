@@ -1,5 +1,6 @@
 package com.poly.entity.phu;
 
+import com.poly.entity.Account;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,8 +12,6 @@ import java.util.Date;
 @Table(name = "DiaChi")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class DiaChi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +38,9 @@ public class DiaChi {
 
     @Column(name = "TrangThai")
     private Integer tt;
+
+    @ManyToOne
+    @JoinColumn(name = "MaTaiKhoan")
+    private Account accounts;
+
 }

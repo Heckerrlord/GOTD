@@ -19,6 +19,11 @@ public class DiaChiServiceImpl implements DiaChiService {
     }
 
     @Override
+    public List<DiaChi> getDiaChiByUsername(String username) {
+        return (List<DiaChi>) diaChiDAO.getDiaChiByUsername(username);
+    }
+
+    @Override
     public DiaChi findById(Integer id) {
         return diaChiDAO.findById(id).get();
     }

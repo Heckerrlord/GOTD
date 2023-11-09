@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="row mx-0 bg-white">
+        <div class="col-md-10">
+            <br>
+            <br>
+        <h2>Địa chỉ của tôi</h2>
+        <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#addressModal">
+            <i class="zmdi zmdi-plus"></i> Thêm mới địa chỉ
+        </button>
+        </div>
+    </div>
+<div class="row mx-0 bg-white">
+        <div class="col-md-10">
+            <hr>
+            <h3>Địa chỉ</h3>
+            <div class="card" ng-repeat="a in address">
+                <div class="card-body">
+                    <h1 hidden>{{a.id}}</h1>
+                    <h5 class="card-title">{{a.accounts.fullname}} | Số điện thoại:{{a.accounts.soDienThoai}} </h5>
+                    <p class="card-text">{{a.chiTiet}}, {{a.xa}}, {{a.huyen}}, {{a.thanhpho}}</p>
+                    <a href="#" class="btn btn-primary" ng-click="edit(a)" data-toggle="modal" data-target="#addressModal">Sửa địa chỉ</a>
+                    <button class="btn btn-primary" ng-click="deleteAdd(a)" >Xóa</button>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+
+
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true" ng-show="showModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addressModalLabel">Địa chi mới</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Đặt biểu mẫu của bạn tại đây -->
+                    <form action="" class="form p-1">
+                        <input hidden ng-model="form.id">
+                        <div class="form-group row">
+                            <label class="form-label">Tỉnh-Thành phố</label>
+                            <select ng-model="form.thanhpho" id="thanhpho" ng-change="changeThanhPho()" class="form-control">
+                                <option value="">--Tỉnh thành--</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="form-label">Quận-Huyện</label>
+                            <select ng-model="form.huyen" id="huyen"  ng-change="changeHuyen()" class="form-control">
+                                <option value="" ng-selected="!form.huyen">--Quận huyện--</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="form-label">Phường-Xã</label>
+                            <select ng-model="form.xa" id="xa" ng-change="changeXa()" class="form-control">
+                                <option value="" >--Phường Xã--</option>
+                            </select>
+                        </div>
+                        <p id="result"></p>
+                        <div class="form-group row">
+                            <label class="form-label">Địa chỉ cụ thể</label>
+                            <input type="text" class="form-control" ng-model="form.chiTiet" placeholder="Nhập chi tiết" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <div class="card-header text-center">
+                        <button type="button" class="btn btn-light"data-dismiss="modal">Trở lại</button>
+                        <button ng-click="createDiachi(user)" class="btn btn-primary" ng-if="!isEditing">
+                            <i class="zmdi zmdi-floppy"></i> Hoàn thành
+                        </button>
+                        <button ng-click="updateAdd()" class="btn btn-success" ng-if="isEditing">
+                            <i class="far fa-save"></i> Hoàn thành
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>

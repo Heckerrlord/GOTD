@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -14,11 +15,18 @@ import java.util.List;
 public class DiaChiRestController {
     @Autowired
     private DiaChiService diaChiService;
+    @Autowired
+    HttpServletRequest request;
 
     @GetMapping
     public List<DiaChi> getAll(Model model) {
         model.addAttribute("item", diaChiService.findAll());
         return diaChiService.findAll();
+    }
+    @GetMapping("address")
+    public List<DiaChi> getDcByUsername(Model model){
+        model.addAttribute("address",diaChiService.getDiaChiByUsername(request.getRemoteUser()));
+        return diaChiService.getDiaChiByUsername(request.getRemoteUser());
     }
 
     @GetMapping("{id}")

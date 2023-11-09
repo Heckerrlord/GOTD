@@ -1,44 +1,13 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
-<body>
-<main class="main-content">
-    <div class="page-header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <div class="page-header-content">
-                        <nav class="breadcrumb-area">
-                            <ul class="breadcrumb">
-                                <li>
-                                    <a href="/">Trang chủ</a>
-                                </li>
-                                <li class="breadcrumb-sep">/</li>
-                                <li>Tài Khoản</li>
-                            </ul>
-                        </nav>
-                        <h4 class="title">Thông tin cá nhân</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <section class="account-area">
         <div class="container">
             <div class="row mx-0 bg-white">
 
                 <div class="col-md-4 text-center">
-
-                    <!--<span ng-if="form.image == null">
-			 <img  ng-src="{{'/assets/images/cloud-upload.jpg'}}" alt=""
-                  style="width: 50%; margin-top: 5rem">-->
-                    </span>
                     <span>
                              <img id="previewImage" th:src="@{'/assets/images/' + ${account.photo}}" alt="ẢNH CÁ NHÂN"
                              style="width: 70%; height: 360px; margin-top: 5rem;object-fit: scale-down">
                     </span>
-
-
                 </div>
                 <div class="col-md-8">
                     <form class="form p-3" th:object="${account}" th:action="@{/auth/change-info}" method="post"
@@ -77,16 +46,13 @@
                         <br>
                         <div class="card-header text-center">
                             <button type="submit" class="btn btn-success">
-                                <i class="zmdi zmdi-update"></i> Cập nhật thông tin
+                                <i class="zmdi zmdi-update"></i> Lưu
                             </button>
-
                         </div>
                     </form>
+
                 </div>
             </div>
 
         </div>
     </section>
-</main>
-</body>
-</html>

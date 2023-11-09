@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.poly.entity.Account;
 
+import com.poly.entity.phu.DiaChi;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -25,7 +26,7 @@ public interface AccountDAO extends JpaRepository<Account, String> {
 	public Account findByToken(String token);
 
 	@Query("SELECT a FROM Account a WHERE a.username=?1")
-	public Account findByUsername(String username);
+	Account findByUsername(String username);
 //	@Query(value = "SELECT count(a.username) FROM Accounts a", nativeQuery = true)
 //	Integer countAllAccount();
 }

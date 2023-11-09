@@ -2,12 +2,14 @@ package com.poly.service;
 
 import java.util.List;
 
+import com.poly.entity.Account;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
-import com.poly.entity.Account;
 
-public interface AccountService {
+
+public interface 	AccountService {
 	Account findById(String username);
+
 
 	List<Account> findAll();
 

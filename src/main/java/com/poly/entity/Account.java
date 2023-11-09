@@ -14,11 +14,16 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.poly.entity.phu.DiaChi;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Accounts")
 public class Account implements Serializable {
 
@@ -44,4 +49,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
 	List<Authority> authorities;
+	@JsonIgnore
+	@OneToMany(mappedBy = "accounts" ,fetch = FetchType.LAZY)
+	List<DiaChi> diaChis;
 }

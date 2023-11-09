@@ -8,6 +8,8 @@ import java.util.List;
 public interface DiaChiService {
     List<DiaChi> findAll();
 
+    List<DiaChi> getDiaChiByUsername(String username);
+
     DiaChi findById(Integer id);
 
     DiaChi create(DiaChi diaChi);
