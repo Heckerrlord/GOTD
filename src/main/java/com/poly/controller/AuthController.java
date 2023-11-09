@@ -193,7 +193,7 @@ public class AuthController {
         String username = userDetails.getUsername();
         Account account = accountService.findById(username);
         model.addAttribute("account", account);
-        return "auth/change-info";
+        return "auth/index";
     }
 
     @PostMapping("/auth/change-info")
@@ -204,7 +204,7 @@ public class AuthController {
         if (errors.hasErrors()) {
             model.addAttribute("updateFalse", true);
             System.out.println(errors.getAllErrors());
-            return "auth/change-info";
+            return "auth/index";
         }
         if (file != null && !file.isEmpty()) {
             try {
@@ -218,7 +218,7 @@ public class AuthController {
                 e.printStackTrace();
                 System.out.println(e.getMessage());
                 model.addAttribute("", true);
-                return "auth/change-info";
+                return "auth/index";
             }
         } else {
             account.setPhoto("user.png");
@@ -229,7 +229,7 @@ public class AuthController {
         account.setToken(account.getToken());
         accountService.update(account);
         model.addAttribute("updateSuccess", true);
-        return "auth/change-info";
+        return "auth/index";
     }
 
 
