@@ -2,12 +2,8 @@ package com.poly.service.impl;
 
 import java.util.List;
 
-import com.poly.dao.AuthorityDAO;
-import com.poly.dao.RoleDAO;
 import com.poly.entity.Account;
 
-import com.poly.entity.Authority;
-import com.poly.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,10 +25,6 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	PasswordEncoder pe;
-	@Autowired
-	AuthorityDAO authorityDAO;
-	@Autowired
-	RoleDAO roleDAO;
 
 	@Override
 	public Account findById(String username) {
@@ -52,15 +44,9 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account create(Account account) {
-         Account saveAc = adao.save(account);
-		Role role = roleDAO.findById("CUST").get();
-
-		Authority authority = new Authority();
-		authority.setRole(role);
-		authority.setAccount(saveAc);
-		authorityDAO.save(authority);
-		return saveAc;
+		return adao.save(account);
 	}
+
 	@Override
 	public Account update(Account account) {
 		return adao.save(account);
@@ -73,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void loginFromOAuth2(OAuth2AuthenticationToken oauth2) {
-
+		String profilePictureUrl = oauth2.getPrincipal().getAttribute("picture");
 
 		String fullname = oauth2.getPrincipal().getAttribute("name");
 		String email = oauth2.getPrincipal().getAttribute("email");
@@ -85,16 +71,10 @@ public class AccountServiceImpl implements AccountService {
 			account.setPassword(pe.encode(password));
 			account.setFullname(fullname);
 			account.setEmail(email);
-			account.setPhoto("user.png");
+			account.setPhoto(profilePictureUrl);
 			account.setToken("token");
 			account.setTrangThai(0);
-
-			Account saveAc= adao.save(account);
-			Role role = roleDAO.findById("CUST").get();
-			Authority authority = new Authority();
-			authority.setRole(role);
-			authority.setAccount(saveAc);
-			authorityDAO.save(authority);
+			adao.save(account);
 		}else {
 		aa.setPassword(pe.encode(password));
 		adao.save(aa);

@@ -7,84 +7,80 @@
 			<div class="container">
 				<div class="product-information">
 					<div class="row">
-						<div class="col-lg-7">
-							<div class="edit-checkout-head">
-								<div class="breadcrumb-area">
-									<ul>
-										<li>
-											<a class="active" href="cart.html">Cart</a>
-											<i class="fa fa-angle-right"></i>
-										</li>
-										<li>Payment</li>
-									</ul>
-								</div>
+						<div class="edit-checkout-head">
+							<div class="breadcrumb-area">
+								<ul>
+									<li>
+										<a class="active" href="cart.html">Giỏ hàng</a>
+										<i class="fa fa-angle-right"></i>
+									</li>
+									<li>Thanh toán</li>
+								</ul>
 							</div>
+						</div>
+						<div class="col-lg-7">
 							<div class="edit-checkout-information">
+
 								<div class="edit-checkout-form">
-									<h4 class="title">Shipping address</h4>
 									<div class="row row-gutter-12">
 										<div class="col-lg-6">
 											<div class="form-floating">
-												<span class="form-control" style="line-height: 2.25;" id="username">[[${#request.remoteUser}]]</span>
-												<label>Username</label>
+												<span class="form-control" style="line-height: 2.25;" id="username" ng-model="gioHang.account.username">[[${#request.remoteUser}]]</span>
+												<label>Tên tài khoản</label>
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-floating">
-												<span class="form-control" style="line-height: 2.25;">{{$auth.user.email}}</span>
-												<label>Email</label>
+												<input class="form-control" ng-model="gioHang.soDienThoai" value="{{$auth.user.soDienThoai}}" style="line-height: 2.25;">
+												<label>Số Điện Thoại <sup class="text-danger">*</sup> </label>
+												<div ng-show="checkoutForm.soDienThoai.$invalid && checkoutForm.soDienThoai.$dirty">
+													<span style="color: #ff0000;">Số Điện Thoại là trường bắt buộc.</span>
+												</div>
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-floating">
 												<span class="form-control" style="line-height: 2.25;">{{$auth.user.fullname}}</span>
-												<label>Full name</label>
+												<label>Tên khách hàng</label>
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-floating">
-												<span class="form-control" style="line-height: 2.25;">{{order.ngayDatHang |
-													date:'dd-MM-yyyy'}}</span>
-												<label>Order date</label>
+												<span class="form-control" ng-model="gioHang.ngayDatHang" style="line-height: 2.25;" th:value="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}" th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"> </span>
+												<label>Ngày đặt</label>
 											</div>
 										</div>
+											<div class="row ">
+											<div class="col-lg-4">
+											<label class="form-label" style="font-size: 14px;">Tỉnh-Thành phố<sup class="text-danger">*</sup></label>
+											<select class="form-control" id="thanhpho" ng-model="thanhpho" name="thanhpho" ng-change="changeThanhPho()" >
+											</select>
+										</div>
+											<div class="col-lg-4">
+												<label class="form-label" style="font-size: 14px;">Quận-Huyện<sup class="text-danger">*</sup></label>
+												<select  class="form-control" id="huyen" ng-model="huyen" name="huyen" ng-change="changeHuyen()" >
+													<option value="" >Chọn quận</option>
+												</select>
+											</div>
+											<div class="col-lg-4">
+												<label class="form-label" style="font-size: 14px;">Phường-Xã<sup class="text-danger">*</sup></label>
+												<select class="form-control" id="xa" ng-model="xa"  name="xa" ng-change="changeXa()" >
+													<option value="" >Chọn phường</option>
+												</select>
+											</div>
+
+											<p id="result"></p></div>
+										<div class="col-lg-12" style="margin-top: 10px">
+											<div class="form-floating">
+												<input type="text" class="form-control"  placeholder="address" ng-model="gioHang.dcChiTiet" >
+												<label>Nhập địa chỉ chi tiết<sup class="text-danger">*</sup></label>
+											</div>
+										</div>
+
 										<div class="col-lg-12">
 											<div class="form-floating">
-												<input type="text" class="form-control" placeholder="address" ng-model="order.address">
-												<label>Address</label>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="form-floating">
-												<select class="form-select form-control">
-													<option value="1" selected>Vietnam</option>
-													<option value="2">Singapore</option>
-													<option value="3">United States</option>
-												</select>
-												<div class="field-caret"></div>
-												<label for="floatingInput6rid">Country/Region</label>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<div class="form-floating">
-												<input type="text" class="form-control" placeholder="address">
-												<label>Postal code</label>
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="titel-ptgiao-hang" style="background-color: #f1f1f1;margin: 20px 0px 20px 0px;padding: 5px 20px 5px 20px;">
-												<p style="color: black; font-size: 23px; font-weight: 700">PHƯƠNG THỨC GIAO HÀNG</p>
-											</div>
-											<div class="row" style="padding: 0; margin: 0">
-												<div class="col-sm-2">
-													<input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input">
-												</div>
-												<div class="col-sm-7">
-													<p style="color: black">Tốc độ tiêu chuẩn (từ 2 - 5 ngày làm việc)</p>
-												</div>
-												<div class="col-sm-3">
-													<p style="margin-left: 65%;color: black">0 VNĐ</p>
-												</div>
+												<input type="text" class="form-control"  placeholder="address" ng-model="gioHang.maGiamGia" >
+												<label>Mã giảm giá(nếu có)</label>
 											</div>
 										</div>
 										<div class="col-12">
@@ -93,15 +89,15 @@
 											</div>
 											<div class="row" style="padding: 0; margin: 0">
 												<div class="col-sm-2">
-													<input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input">
+													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">
 												</div>
 												<div class="col-sm-10">
-													<p style="color: black">Thanh toán trức tiếp khi giao hàng</p>
+													<p style="color: black">Thanh toán trực tiếp khi giao hàng</p>
 												</div>
 											</div>
 											<div class="row" style="padding: 0; margin: 0">
 												<div class="col-sm-2">
-													<input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input">
+													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">
 												</div>
 												<div class="col-sm-10">
 													<p style="color: black">Thanh toán bằng Thẻ quốc tế / Thẻ nội địa / QR Code</p>
@@ -109,7 +105,7 @@
 											</div>
 											<div class="row" style="padding: 0; margin: 0">
 												<div class="col-sm-2">
-													<input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input">
+													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">
 												</div>
 												<div class="col-sm-10">
 													<p style="color: black">Thanh toán bằng ví MoMo</p>
@@ -118,33 +114,40 @@
 										</div>
 										<div class="col-12" style="margin-top: 20px">
 											<div class="btn-box">
-												<button class="btn-shipping" ng-click="order.purchase()">Continue to shipping</button>
-												<a class="btn-return" th:href="@{/cart/view}">Return to cart</a>
+												<button class="btn-shipping" ng-click="gioHang.purchase()">Xác nhận</button>
+												<a class="btn-return" th:href="@{/cart/view}">Giỏ hàng</a>
 											</div>
 										</div>
 									</div>
 								</div>
+
 							</div>
 						</div>
 						<div class="col-lg-5">
 							<div class="shipping-cart-subtotal-wrapper">
 								<div class="shipping-cart-subtotal">
-									<div class="shipping-cart-item" ng-repeat="item in cart.items">
+									<div class="shipping-cart-item" ng-repeat="item in cartItems">
 										<div class="thumb">
-											<img src="assets/images/{{item.sanPham.image[0].ma}}">
-											<span class="quantity">{{item.qty}}</span>
+											<img src="assets/images/{{item.chiTietSanPham.sanPham.image[0].ma}}">
+											<span class="quantity">{{item.soLuong}}</span>
 										</div>
 										<div class="content">
 											<h4 class="title">{{item.sanPham.ten}}</h4>
-											<span class="info">${{item.giaBan | number:2}}</span>
-											<span class="price">${{item.qty*item.giaBan | number:2}}</span>
+											<span class="info">{{item.donGia | number:2}}</span>
+											<span class="price">{{item.soLuong * item.donGia}}</span>
 										</div>
 									</div>
 									<div class="shipping-subtotal">
 										<p>
-											<span>Subtotal</span>
+											<span>Đơn hàng</span>
 											<span>
-												<strong>${{cart.amount | number : 2}}</strong>
+												<strong>{{getSubtotal()}}</strong>
+											</span>
+										</p>
+										<p>
+											<span>Tiền giảm</span>
+											<span>
+												<strong></strong>
 											</span>
 										</p>
 										<p>
@@ -153,10 +156,10 @@
 										</p>
 									</div>
 									<div class="shipping-total">
-										<p class="total">Total</p>
+										<p class="total">Tổng cộng</p>
 										<p class="price">
-											<span class="usd">USD</span>
-											${{cart.amount | number : 2}}
+											<span class="usd">VND</span>
+											{{getTotalMoney()}}
 										</p>
 									</div>
 								</div>
@@ -164,8 +167,12 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
+
 		</section>
 	</main>
+
 </body>
+
 </html>

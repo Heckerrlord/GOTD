@@ -44,6 +44,7 @@ public class ProductController {
 	private MauSacService mauSacService;
 
 
+
 	@Autowired
 	private DSYTDAO dsytdao;
 	@RequestMapping("/product/detail/{id}")

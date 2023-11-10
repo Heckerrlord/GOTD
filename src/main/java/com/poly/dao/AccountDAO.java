@@ -29,4 +29,6 @@ public interface AccountDAO extends JpaRepository<Account, String> {
 	Account findByUsername(String username);
 //	@Query(value = "SELECT count(a.username) FROM Accounts a", nativeQuery = true)
 //	Integer countAllAccount();
+
+
 }

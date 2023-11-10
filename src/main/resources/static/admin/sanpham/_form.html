@@ -1,55 +1,124 @@
+<style>  .image-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+}
 
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background: #007BFF; /* Màu sắc nổi bật */
+    color: #fff;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.upload-btn input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.form-container {
+    padding: 20px;
+}</style>
 <div class="row mx-0 bg-white">
-    <div class="col-md-4 text-center">
-		<span ng-if="form.image == null">
-			<img ng-src="{{'/assets/images/cloud-upload.jpg'}}" style="max-width: 100%; margin-top: 5rem">
-		</span>
-        <span ng-if="form.image != null">
-			<img ng-src="{{'/assets/images/'+form.image}}" style="max-width: 100%; margin-top: 5rem">
-		</span>
-    </div>
+<!--    <div class="col-md-4 text-center">-->
+<!--		<span ng-if="form.image == null">-->
+<!--			<img ng-src="{{'/assets/images/cloud-upload.jpg'}}" style="max-width: 100%; margin-top: 5rem">-->
+<!--		</span>-->
+<!--        <span ng-if="form.image != null">-->
+<!--			<img ng-src="{{'/assets/images/'+form.image}}" style="max-width: 100%; margin-top: 5rem">-->
+<!--		</span>-->
+<!--    </div>-->
     <div class="col-md-8">
         <form class="form p-3">
-            <div class="form-group row">
-                <label class="form-label">Mã sản phẩm</label>
-                <input type="text" class="form-control" ng-model="form.ma" placeholder="Nhập mã sản phẩm">
-            </div>
-            <div class="form-group row">
-                <label class="form-label">Tên</label>
-                <input type="text" class="form-control" ng-model="form.ten" placeholder="Nhập tên sản phẩm">
-            </div>
-            <div class="form-group row">
-                <label class="form-label">Ảnh</label>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="image"
-                           onchange="angular.element(this).scope().imageChanged(this.files)">
-                    <label class="custom-file-label">Chọn ảnh</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="form-label">Mô tả</label>
-                <textarea type="text" class="form-control" ng-model="form.moTa" placeholder="Mô tả"></textarea>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-2 px-0 control-label">Trạng thái</label>
-                <div class="col-md-10">
-                    <div class="form-check-inline pr-3">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" checked class="custom-control-input" id="yes" name="available"
-                                   ng-model="form.trangThai" ng-value="0">
-                            <label class="custom-control-label" for="yes">Hoạt động</label>
+            <div class="row mx-0 bg-white">
+
+                <div class="col-md-6 form-container"> <!-- Sử dụng Grid System để chia form thành 2 cột -->
+
+                    <div class="form-group">
+                        <label for="productName">Tên sản phẩm:</label>
+                        <input type="text" class="form-control" id="productName" ng-model="form.ten" placeholder="Nhập tên sản phẩm">
+                    </div>
+                    <div class="form-group">
+                        <label class="d-block">Hoạt động:</label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="form.trangThai" type="radio" class="custom-control-input" id="availableYes" name="available">
+                            <label class="custom-control-label" for="availableYes">Có</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input ng-model="form.trangThai" type="radio" class="custom-control-input" id="availableNo" name="available">
+                            <label class="custom-control-label" for="availableNo">Không</label>
                         </div>
                     </div>
-                    <div class="form-check-inline">
-                        <div class="custom-control custom-radio">
-                            <input type="radio"  class="custom-control-input" id="no" name="available"
-                                   ng-model="form.trangThai" ng-value="1">
-                            <label class="custom-control-label" for="no">Ngưng hoạt động</label>
-                        </div>
-                    </div>
+
+
                 </div>
+                <div class="col-md-6 form-container">
+                    <div class="form-group">
+                        <label for="productCode">Mã sản phẩm:</label> <!-- Sử dụng label để kết nối với trường nhập liệu -->
+                        <input type="text" class="form-control" id="productCode" ng-model="form.ma" placeholder="Nhập mã sản phẩm">
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Mô tả:</label>
+                        <textarea class="form-control" id="productDescription" ng-model="form.moTa" rows="5"></textarea>
+                    </div>
+
+                </div>
+
             </div>
         </form>
+        <label>Ảnh sản phẩm:</label>
+        <div class="row mx-0 bg-white">
+            <div class="col-md-2" ng-repeat="image in form.image">
+                <div class="image-container">
+                    <img ng-src="/assets/images/{{image.ma}}" alt="Ảnh sản phẩm" class="image">
+                    <label class="upload-btn">
+                        Tải lên
+                        <input type="file" class="form-control-file d-none" ngf-select="uploadImage($file, imageInput)" ng-model="imageInput.file">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Phần ảnh sản phẩm -->
+<!--        <label>Ảnh sản phẩm:</label>-->
+<!--        <div class="row mx-0 bg-white">-->
+<!--            <div class="col-md-2" ng-repeat="imageInput in imageInputs">-->
+<!--                <div class="image-container">-->
+<!--                    <img ng-src="{{imageInput.preview }}" alt="Ảnh {{$index + 1}}" class="image">-->
+<!--                    <label class="upload-btn">-->
+<!--                        Tải lên-->
+<!--                        <input type="file" class="form-control-file d-none" ngf-select="uploadImage($file, imageInput)" ng-model="imageInput.file">-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row mt-3">-->
+<!--            <div class="col-md-12">-->
+<!--                <button type="button" class="btn btn-primary" ng-click="addImage()">Thêm ảnh</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+    </div>
+</div>
     </div>
 </div>
 <div class="card-header text-center">

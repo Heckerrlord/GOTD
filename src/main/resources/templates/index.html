@@ -62,22 +62,21 @@
 											</a>
 											<div class="product-action">
 												<div class="addto-wrap" th:each="a:${favorite}">
-
 													<!-- Hiển thị nút "remove" -->
 													<a class="add-wishlist" href="javascript:void(0)"
 													   th:if="${a.sanPham == p.sanPham.ma && a.accounts == #request.remoteUser}"
 													   th:attr="ng-click='removeFavorite(\'' + ${p.sanPham.ma} + '\', username)'">
 														<i class="zmdi zmdi-favorite" style="color: #a52834"></i>
 													</a>
-													<!-- Hiển thị nút "Add" -->
-													<a class="add-wishlist" href="javascript:void(0)"
+
+													<!-- Nếu sản phẩm chưa có trong danh sách yêu thích, hiển thị nút "Thêm vào yêu thích" -->
+													<a class="add-wishlist"  href="javascript:void(0)"
 													   th:if="${a.accounts != #request.remoteUser}"
 													   th:attr="ng-click='addFavorite(\'' + ${p.sanPham.ma} + '\', user1)'">
 														<i class="zmdi zmdi-favorite-outline zmdi-hc-fw icon"></i>
 													</a>
-													<!-- Nút thêm vào giỏ hàng-->
 													<a class="add-cart" th:href="@{|/product/detail/${p.id}|}"
-													   th:attr="ng-click=@{|addToCart(${p.id})|}">
+													   th:attr="ng-click=@{|cart.add(${p.id})|}">
 														<i class="zmdi zmdi-shopping-cart-plus icon"></i>
 													</a>
 												</div>

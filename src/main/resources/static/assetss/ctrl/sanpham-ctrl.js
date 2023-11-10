@@ -4,6 +4,7 @@ app.controller("sanpham-ctrl", function ($scope, $http) {
     $scope.items = [];
     $scope.cates = [];
     $scope.form = {};
+    $scope.imageInputs = [];
 
     var sweetalert = function (text) {
         Swal.fire({
@@ -64,6 +65,7 @@ app.controller("sanpham-ctrl", function ($scope, $http) {
         });
     }
 
+
     //xoa sp
     $scope.delete = function (item) {
         $http.delete(`${url}/${item.id}`).then(resp => {
@@ -122,5 +124,30 @@ app.controller("sanpham-ctrl", function ($scope, $http) {
     //            this.page = this.count - 1;
     //        }
     //    }
+
+    //hinh anh
+
+
+
+    $scope.addImage = function() {
+        $scope.imageInputs.push({ file: null, preview: '/assetss/img/img.png' });
+    };
+
+    $scope.previewImage = function(imageInput) {
+        const input = imageInput.file;
+
+        if (input && input[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Update imageInput.preview with the data URL
+                $scope.$apply(function() {
+                    imageInput.preview = e.target.result;
+                });
+            };
+            reader.readAsDataURL(input[0]);
+        }
+    };
+
+
 
 });

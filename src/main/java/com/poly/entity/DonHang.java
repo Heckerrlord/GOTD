@@ -1,9 +1,12 @@
 package com.poly.entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,8 +32,17 @@ public class DonHang {
     @Column(name = "DCChiTiet")
     private String dcChiTiet;
 
+    @Column(name = "Tinh")
+    private String tinh;
+
+    @Column(name = "Huyen")
+    private String huyen;
+
+    @Column(name = "Xa")
+    private String xa;
+
     @Column(name = "NgayDatHang")
-    private LocalDateTime ngayDatHang;
+        private Date ngayDatHang;
 
     @Column(name = "TienGiam")
     private BigDecimal tienGiam;
@@ -45,8 +57,45 @@ public class DonHang {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
-    @OneToMany(mappedBy = "donHang")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "donHang", cascade = CascadeType.ALL)
     private List<DonHangChiTiet> chiTietDonHangList;
+
+
+    public DonHang(GioHang gioHang) {
+        this.maGiamGia = gioHang.getMaGiamGia();
+        this.soDienThoai = gioHang.getSoDienThoai();
+        this.tinh = gioHang.getTinh();
+        this.huyen = gioHang.getHuyen();
+        this.xa = gioHang.getXa();
+        this.dcChiTiet = gioHang.getDcChiTiet();
+        this.account = gioHang.getAccount();;
+        this.ngayDatHang = gioHang.getNgayDatHang();
+        this.tienGiam = gioHang.getTienGiam();
+        this.phiGiaoHang = gioHang.getPhiGiaoHang();
+        this.tongTien = gioHang.getTongTien();
+        this.trangThai = gioHang.getTrangThai();
+    }
+
+    public DonHang() {
+    }
+
+    public DonHang(Long id, Account account, String maGiamGia, String soDienThoai, String dcChiTiet, String tinh, String huyen, String xa, Date ngayDatHang, BigDecimal tienGiam, BigDecimal phiGiaoHang, BigDecimal tongTien, Integer trangThai, List<DonHangChiTiet> chiTietDonHangList) {
+        this.id = id;
+        this.account = account;
+        this.maGiamGia = maGiamGia;
+        this.soDienThoai = soDienThoai;
+        this.dcChiTiet = dcChiTiet;
+        this.tinh = tinh;
+        this.huyen = huyen;
+        this.xa = xa;
+        this.ngayDatHang = ngayDatHang;
+        this.tienGiam = tienGiam;
+        this.phiGiaoHang = phiGiaoHang;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
+        this.chiTietDonHangList = chiTietDonHangList;
+    }
 
     // Constructors, getters, and setters
 }

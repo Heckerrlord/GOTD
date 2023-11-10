@@ -2,6 +2,8 @@ package com.poly.controller;
 
 
 
+import com.poly.dao.DonHangDAO;
+import com.poly.entity.DonHang;
 import com.poly.service.DonHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ public class OrderController {
 	@Autowired
     DonHangService DHService;
 
+	@Autowired
+	DonHangDAO DHDao;
 	@Autowired
     HttpServletRequest request;
 
@@ -37,9 +41,16 @@ public class OrderController {
 	@RequestMapping("/order/list")
 	public String list(Model model, HttpServletRequest request) {
 		String username = request.getRemoteUser();
-        System.out.println(username+"oders");
-		model.addAttribute("orders", DHService.findByUsername(username));
+		model.addAttribute("orders", DHDao.findByUsername(username));
 		return "order/list";
+	}
+
+	@GetMapping("/order/cancel/{id}")
+	public String updateStatus(@PathVariable("id") Long id){
+		DonHang dh = DHDao.findById(id).get();
+		dh.setTrangThai(2);
+		DHDao.save(dh);
+		return "redirect:order/list";
 	}
 
 	@RequestMapping("/order/detail/{id}")

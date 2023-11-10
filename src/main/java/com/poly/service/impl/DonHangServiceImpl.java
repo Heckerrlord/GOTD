@@ -23,22 +23,8 @@ public class DonHangServiceImpl implements DonHangService {
 	@Autowired
     DonHangCTDAO ddao;
 	@Override
-	public DonHang create(JsonNode orderData) {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			DonHang order = mapper.convertValue(orderData, DonHang.class);
-			dao.save(order);
-			TypeReference<List<DonHangChiTiet>> type = new TypeReference<List<DonHangChiTiet>>() {
-			};
-			List<DonHangChiTiet> details = mapper.convertValue(orderData.get("chiTietDonHangList"), type).stream()
-					.peek(d -> d.setDonHang(order)).collect(Collectors.toList());
-			ddao.saveAll(details);
-			return order;
-		}catch (Exception e){
-			System.out.println("Bub hera");
-
-			return  null;
-		}
+	public DonHang create(DonHang donHang) {
+		return  dao.save(donHang);
 
 	}
 

@@ -8,7 +8,7 @@
 			<div class="row">
 				<div class="col-12 text-center">
 					<div class="page-header-content">
-						<h4 class="title mt-0">Your Shopping Cart</h4>
+						<h4 class="title mt-0">Giỏ hàng</h4>
 					</div>
 				</div>
 			</div>
@@ -28,34 +28,45 @@
 									<th class="indecor-product-thumbnail">Ảnh</th>
 									<th class="indecor-product-name">Sản phẩm</th>
 									<th class="indecor-product-price">Giá</th>
+									<th class="indecor-product-price">Size</th>
+									<th class="indecor-product-price">Màu sắc</th>
 									<th class="indecor-product-quantity">Số Lượng</th>
 									<th class="indecor-product-subtotal">Tổng tiền</th>
 								</tr>
 								</thead>
 								<tbody>
-								<tr ng-repeat="item in cart.items">
+								<tr ng-repeat="item in cartItems">
 									<td class="indecor-product-remove">
-										<a href="javascript:(0);" ng-click="cart.remove(item.id)">
+										<a class="cart-trash" href="javascript:void(0);" ng-click="removeItem(item.id)">
 											<i class="fa fa-trash"></i>
 										</a>
 									</td>
 									<td class="indecor-product-thumbnail">
-										<img class="w-50" src="assets/images/{{item.sanPham.image[0].ma}}">
+										<img class="w-50" ng-src="assets/images/{{item.chiTietSanPham.sanPham.image[0].ma}}">
 									</td>
 									<td class="indecor-product-name">
-										<h4 class="title">{{item.sanPham.ma}}</h4>
+										<h4 class="title">{{item.chiTietSanPham.sanPham.ten}}</h4>
 									</td>
 									<td class="indecor-product-price">
-										<span class="price">${{item.giaBan | number:2}}</span>
+										<span class="price">{{item.donGia}}</span>
+									</td>
+									<td class="indecor-product-price">
+										<span class="kichCo">{{item.chiTietSanPham.kichCo.name}}</span>
+									</td>
+									<td class="indecor-product-price">
+										<span class="mauSac">{{item.chiTietSanPham.mauSac.name}}</span>
 									</td>
 									<td class="indecor-product-quantity">
-										<input type="number" pattern="[0-9]*" id="spinner" name="value" value="1" min="1" max="200"
-											   step="1" ng-change="cart.saveToLocalStorage()" ng-model="item.qty">
+										<input type="number" pattern="[0-9]*" id="spinner" name="value" ng-model="item.soLuong" min="1" max="200" step="1" ng-change="updateCartItem(item)">
 									</td>
 									<td class="indecor-product-subtotal">
-										<span class="price">${{item.qty*item.giaBan | number:2}}</span>
-									</td>
+										<span class="price">{{item.soLuong * item.donGia}}</span>
+									</td>item
 								</tr>
+								<tr ng-if="!cartItems || cartItems.length === 0">
+									<td colspan="8"> <strong>Giỏ hàng trống </strong> <a class="link-success" href="/">shopping</a></td>
+								</tr>
+
 								</tbody>
 							</table>
 						</div>
@@ -63,25 +74,25 @@
 							<div class="col-md-12 col-lg-7 col-12">
 								<div class="coupon-all">
 									<div class="coupon">
-										<a class="button" href="/">Continue Shopping</a>
-										<a class="button" href="javascript:(0);" ng-click="cart.clear()">Clear Cart</a>
+										<a class="button" href="/">Tiếp tục mua hàng</a>
+										<a class="button" href="javascript:(0);" ng-click="clearCart()">Dọn dẹp</a>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-12 col-lg-5 col-12">
 								<div class="cart-page-total">
-									<h3>Cart Totals</h3>
+									<h3>Tổng giỏ hàng</h3>
 									<ul>
 										<li>
-											Subtotal
-											<span class="money">${{cart.amount | number : 2}}</span>
+											Tổng phụ
+											<span class="money">{{getSubtotal()}} <sup>VND</sup></span>
 										</li>
 										<li>
-											Total
-											<span class="money">${{cart.amount | number : 2}}</span>
+											Tổng cộng
+											<span class="money">{{getTotalMoney()}} <sup>VND</sup>  </span>
 										</li>
 									</ul>
-									<a class="proceed-to-checkout-btn" th:href="@{/cart/checkout}">Proceed to Checkout</a>
+									<a class="proceed-to-checkout-btn" th:href="@{/cart/checkout}">Thanh Toán</a>
 								</div>
 							</div>
 						</div>

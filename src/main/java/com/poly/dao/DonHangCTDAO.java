@@ -14,4 +14,6 @@ public interface DonHangCTDAO extends JpaRepository<DonHangChiTiet, Long> {
              Long idDonHang,
              Integer trangThai
     );
+
+
 }

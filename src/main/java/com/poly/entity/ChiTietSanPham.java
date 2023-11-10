@@ -34,37 +34,34 @@ public class ChiTietSanPham implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "MaLoaiKH", referencedColumnName = "Ma")
-    @JsonBackReference
+    @JsonBackReference("spct-loaiKhachHang")
     private LoaiKhachHang loaiKhachHang;
 
     @ManyToOne
     @JoinColumn(name = "MaThuongHieu", referencedColumnName = "Ma")
-    @JsonBackReference
+    @JsonBackReference("spct-thuongHieu")
     private ThuongHieu thuongHieu;
 
     @ManyToOne
     @JoinColumn(name = "MaMau", referencedColumnName = "Ma")
-    @JsonBackReference
+    @JsonBackReference("spct-mauSac")
     private MauSac mauSac;
 
     @ManyToOne
     @JoinColumn(name = "MaKichCo", referencedColumnName = "Ma")
-    @JsonBackReference
+    @JsonBackReference("spct-kichCo")
     private KichCo kichCo;
 
     @ManyToOne
     @JoinColumn(name = "MaChatLieu", referencedColumnName = "Ma")
-    @JsonBackReference
+    @JsonBackReference("spct-chatLieu")
     private ChatLieu chatLieu;
 
     @ManyToOne
     @JoinColumn(name = "MaCoAo", referencedColumnName = "Ma")
-    @JsonBackReference
+    @JsonBackReference("spct-coAo")
     private CoAo coAo;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "chiTietSanPham")
 
-    private List<DonHangChiTiet> ctdhlist;
 }
 

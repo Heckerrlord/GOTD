@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DonHangService {
 
-    DonHang create(JsonNode orderData);
+    DonHang create(DonHang donHang);
 
     DonHang findById(Long id);
 

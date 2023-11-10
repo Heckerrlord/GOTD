@@ -1,7 +1,5 @@
 app.controller("order-ctrl", function ($scope, $http) {
-    var url = "/rest/accounts";
-    var url1 = "/rest/roles";
-    // var url2 = "/rest/upload/images";
+    var url ="/rest/order";
     $scope.roles = [];
     $scope.items = [];
     $scope.form = {};
@@ -15,33 +13,46 @@ app.controller("order-ctrl", function ($scope, $http) {
         });
     }
 
-    $scope.initialize = function () {
-        //load account
-        $http.get(url).then(resp => {
-            $scope.items = resp.data;
-        });
-
-        //load roles
-        $http.get(url1).then(resp => {
-            $scope.roles = resp.data;
-        })
+    $scope.initialize = function (trangThai) {
+        $http.get(url, { params: { tt: trangThai } })
+            .then(function(response) {
+                $scope.items = response.data;
+            })
+            .catch(function(error) {
+                console.error('Lỗi khi lấy dữ liệu đơn hàng', error);
+            });
     }
 
     //khoi dau
-    $scope.initialize();
+    $scope.initialize(0);
 
-    //xoa form
-    $scope.reset = function () {
-        $scope.form = {
-            image: 'cloud-upload.jpg',
-        };
-    }
+
 
     //hien thi len form
-    $scope.edit = function (item) {
-        $scope.form = angular.copy(item);
-        $(".nav-tabs a:eq(0)").tab('show');
+
+
+    $scope.xacNhan = function (item) {
+        item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
+        item.trangThai = 1;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            sweetalert("Cập nhật chất liệu thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật chất liệu!");
+            console.log("Error", error);
+        });
     }
+    $scope.tuChoi = function (item) {
+        item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);;
+        item.trangThai = 2;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            sweetalert("Cập nhật chất liệu thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật chất liệu!");
+            console.log("Error", error);
+        });
+    }
+
+
 
 
     //phan trang

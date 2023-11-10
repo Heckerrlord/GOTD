@@ -2,7 +2,9 @@ package com.poly.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.entity.DonHang;
+import com.poly.entity.GioHang;
 import com.poly.service.DonHangService;
+import com.poly.service.GioHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,11 @@ public class DonHangRestController {
 	@Autowired
 	DonHangService orderService;
 
-	@PostMapping
-	public DonHang create(@RequestBody JsonNode orderData) {
-		return orderService.create(orderData);
-	}
+	@Autowired
+	GioHangService gioHangService;
+
+//	@PostMapping
+//	public GioHang create(@RequestBody GioHang donHang) {
+//		return gioHangService.create(donHang);
+//	}
 }

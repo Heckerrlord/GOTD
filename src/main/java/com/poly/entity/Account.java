@@ -14,16 +14,11 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.poly.entity.phu.DiaChi;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "Accounts")
 public class Account implements Serializable {
 
@@ -31,7 +26,7 @@ public class Account implements Serializable {
 	@NotBlank(message = "Không được để trống")
 	String username;
 	@NotBlank(message = "Không được để trống")
-	@Size(min = 6, max = 100, message = "Mật khẩu phải nhiều hơn 6 kí tự")
+	@Size(min = 3, max = 12, message = "Mật khẩu phải từ 3 đến 12 ký tự")
 	String password;
 	@NotBlank(message = "Không được để trống")
 	String fullname;
@@ -49,7 +44,4 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
 	List<Authority> authorities;
-	@JsonIgnore
-	@OneToMany(mappedBy = "accounts" ,fetch = FetchType.LAZY)
-	List<DiaChi> diaChis;
 }
