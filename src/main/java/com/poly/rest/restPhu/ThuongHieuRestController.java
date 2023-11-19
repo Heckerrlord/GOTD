@@ -1,6 +1,6 @@
 package com.poly.rest.restPhu;
 
-import com.poly.entity.phu.ThuongHieu;
+import com.poly.entity.ThuongHieu;
 import com.poly.service.serPhu.ThuongHieuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

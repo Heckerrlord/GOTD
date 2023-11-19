@@ -1,22 +1,24 @@
-package com.poly.entity.phu;
+package com.poly.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.poly.entity.ChiTietSanPham;
+import com.poly.entity.DonHangChiTiet;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+
 @Data
 @Entity
-@Table(name = "ThuongHieu")
+@Table(name = "LoaiKhachHang")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ThuongHieu implements Serializable {
+public class LoaiKhachHang implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -31,7 +33,7 @@ public class ThuongHieu implements Serializable {
     @Column(name = "TrangThai")
     private Integer tt;
 
-    @OneToMany(mappedBy = "thuongHieu", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("thuongHieu")
-    private List<ChiTietSanPham> lThuongHieu;
+    @OneToMany(mappedBy = "loaiKhachHang", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("loaiKhachHang")
+    private List<ChiTietSanPham> ctsplkh;
 }

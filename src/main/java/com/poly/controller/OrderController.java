@@ -5,7 +5,7 @@ package com.poly.controller;
 import com.poly.dao.DonHangDAO;
 import com.poly.dao.daoPhu.MaGiamGiaDAO;
 import com.poly.entity.DonHang;
-import com.poly.entity.phu.MaGiamGia;
+import com.poly.entity.MaGiamGia;
 import com.poly.service.DonHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,7 +49,12 @@ public class OrderController {
 	public String list(Model model, HttpServletRequest request) {
 		String username = request.getRemoteUser();
 		model.addAttribute("orders", DHDao.findByUsername(username));
-		return "order/list";
+		model.addAttribute("choxacnhan",DHDao.findByUsernameAndTrangThai(username,0));
+		model.addAttribute("daxacnhan",DHDao.findByUsernameAndTrangThai(username,1));
+		model.addAttribute("dahuy", DHDao.findByUsernameAndTrangThai(username,2));
+		model.addAttribute("vanchuyen", DHDao.findByUsernameAndTrangThai(username,3));
+		model.addAttribute("hoanthanh", DHDao.findByUsernameAndTrangThai(username,4));
+		return "order/index";
 	}
 
 	@GetMapping("/order/cancel/{id}")
@@ -57,7 +62,7 @@ public class OrderController {
 		DonHang dh = DHDao.findById(id).get();
 		dh.setTrangThai(2);
 		DHDao.save(dh);
-		return "redirect:order/list";
+		return "redirect:http://localhost:8080/order/list";
 	}
 
 	@RequestMapping("/order/detail/{id}")

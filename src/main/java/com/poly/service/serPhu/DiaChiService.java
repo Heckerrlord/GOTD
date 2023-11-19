@@ -1,7 +1,7 @@
 package com.poly.service.serPhu;
 
 
-import com.poly.entity.phu.DiaChi;
+import com.poly.entity.DiaChi;
 
 import java.util.List;
 

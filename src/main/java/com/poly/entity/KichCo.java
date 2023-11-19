@@ -1,4 +1,4 @@
-package com.poly.entity.phu;
+package com.poly.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

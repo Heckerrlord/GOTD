@@ -2,7 +2,7 @@ package com.poly.service.impl.implPhu;
 
 
 import com.poly.dao.daoPhu.KichCoDAO;
-import com.poly.entity.phu.KichCo;
+import com.poly.entity.KichCo;
 import com.poly.service.serPhu.KichCoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

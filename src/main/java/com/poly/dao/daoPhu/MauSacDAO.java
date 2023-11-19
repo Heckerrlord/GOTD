@@ -1,7 +1,6 @@
 package com.poly.dao.daoPhu;
 
-import com.poly.entity.ChiTietSanPham;
-import com.poly.entity.phu.MauSac;
+import com.poly.entity.MauSac;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

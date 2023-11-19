@@ -1,4 +1,4 @@
-package com.poly.entity.phu;
+package com.poly.entity;
 
 import lombok.*;
 

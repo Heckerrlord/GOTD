@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.poly.entity.Account;
 
-import com.poly.entity.phu.DiaChi;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

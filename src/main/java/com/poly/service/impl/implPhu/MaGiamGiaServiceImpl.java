@@ -1,7 +1,7 @@
 package com.poly.service.impl.implPhu;
 
 import com.poly.dao.daoPhu.MaGiamGiaDAO;
-import com.poly.entity.phu.MaGiamGia;
+import com.poly.entity.MaGiamGia;
 import com.poly.service.serPhu.MaGiamGiaServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.poly.service.impl.implPhu;
 
 import com.poly.dao.daoPhu.LoaiKhachHangDAO;
-import com.poly.entity.phu.LoaiKhachHang;
+import com.poly.entity.LoaiKhachHang;
 import com.poly.service.serPhu.LoaiKhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

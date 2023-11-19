@@ -5,9 +5,9 @@ import com.poly.dao.CTSPDAO;
 import com.poly.dao.DSYTDAO;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.DanhSachYeuThich;
-import com.poly.entity.phu.CoAo;
-import com.poly.entity.phu.MauSac;
-import com.poly.entity.phu.ThuongHieu;
+import com.poly.entity.CoAo;
+import com.poly.entity.MauSac;
+import com.poly.entity.ThuongHieu;
 
 import com.poly.service.serPhu.CoAoService;
 import com.poly.service.serPhu.MauSacService;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 import javax.servlet.http.HttpServletRequest;

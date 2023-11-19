@@ -1,7 +1,7 @@
 package com.poly.rest.restPhu;
 
 
-import com.poly.entity.phu.ChatLieu;
+import com.poly.entity.ChatLieu;
 import com.poly.service.serPhu.ChatLieuSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

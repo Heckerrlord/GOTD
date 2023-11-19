@@ -1,6 +1,6 @@
 package com.poly.service.serPhu;
 
-import com.poly.entity.phu.CoAo;
+import com.poly.entity.CoAo;
 
 import java.util.List;
 

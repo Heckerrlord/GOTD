@@ -24,13 +24,13 @@
                 </td>
 
                 <td class="align-center">
-                    <input type="text" ng-model="item.phiGiaoHang" class="form-control" />
+                    {{item.phiGiaoHang}}
                 </td>
                 <td class="align-center">{{item.tongTien}}</td>
                 <td class="align-center">
                     <div class="btn-group btn-group-xs">
                         <button ng-click="xacNhan(item)" class="btn btn-icon">
-                            <i class="fa fa-xs fa-pen"></i>
+                            <i class="fas fa-check" style="color: #47e10e;"></i>
                         </button>
                         <button ng-click="tuChoi(item)" class="btn btn-danger">
                             <i class="fa fa-xs fa-times"></i>

@@ -8,14 +8,13 @@ import com.poly.dao.CTSPDAO;
 import com.poly.dao.daoPhu.KichCoDAO;
 import com.poly.dao.daoPhu.MauSacDAO;
 import com.poly.entity.ChiTietSanPham;
-import com.poly.entity.phu.KichCo;
-import com.poly.entity.phu.MauSac;
+import com.poly.entity.KichCo;
+import com.poly.entity.MauSac;
 import com.poly.service.CTSPService;
 import com.poly.service.serPhu.KichCoService;
 import com.poly.service.serPhu.MauSacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 

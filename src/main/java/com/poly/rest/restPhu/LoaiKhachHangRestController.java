@@ -1,6 +1,6 @@
 package com.poly.rest.restPhu;
 
-import com.poly.entity.phu.LoaiKhachHang;
+import com.poly.entity.LoaiKhachHang;
 import com.poly.service.serPhu.LoaiKhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

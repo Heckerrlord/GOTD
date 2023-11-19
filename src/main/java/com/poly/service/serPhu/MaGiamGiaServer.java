@@ -1,6 +1,6 @@
 package com.poly.service.serPhu;
 
-import com.poly.entity.phu.MaGiamGia;
+import com.poly.entity.MaGiamGia;
 
 import java.util.List;
 

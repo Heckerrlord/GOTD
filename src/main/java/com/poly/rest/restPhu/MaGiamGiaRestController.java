@@ -1,6 +1,6 @@
 package com.poly.rest.restPhu;
 
-import com.poly.entity.phu.MaGiamGia;
+import com.poly.entity.MaGiamGia;
 import com.poly.service.serPhu.MaGiamGiaServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

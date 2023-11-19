@@ -1,6 +1,6 @@
 package com.poly.dao.daoPhu;
 
-import com.poly.entity.phu.MaGiamGia;
+import com.poly.entity.MaGiamGia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

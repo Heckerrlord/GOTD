@@ -1,7 +1,6 @@
 package com.poly.service;
 
 import com.poly.entity.SanPham;
-import com.poly.entity.phu.ThuongHieu;
 
 import java.util.List;
 

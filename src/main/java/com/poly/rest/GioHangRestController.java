@@ -1,18 +1,13 @@
 package com.poly.rest;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.dao.GioHangCTDAO;
 import com.poly.dao.daoPhu.MaGiamGiaDAO;
 import com.poly.entity.ChiTietSanPham;
-import com.poly.entity.DonHang;
 import com.poly.entity.GioHang;
 import com.poly.entity.GioHangChiTiet;
-import com.poly.entity.phu.DiaChi;
-import com.poly.entity.phu.MaGiamGia;
 import com.poly.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

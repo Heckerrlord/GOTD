@@ -1,6 +1,6 @@
 package com.poly.rest.restPhu;
 
-import com.poly.entity.phu.DiaChi;
+import com.poly.entity.DiaChi;
 import com.poly.service.serPhu.DiaChiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

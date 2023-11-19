@@ -1,6 +1,6 @@
 <div class="row mx-0 bg-white" ng-if="items">
     <div class="col-12 py-3">
-        <table id="datatable-buttons2" class="table table-collapse table-bordered dt-responsive">
+        <table id="datatable-buttons3" class="table table-collapse table-bordered dt-responsive">
             <thead>
             <tr>
                 <th>Id</th>
@@ -22,15 +22,14 @@
                 <td class="align-center">
                     {{item.maGiamGia ? item.maGiamGia : 'Không có'}}
                 </td>
-
                 <td class="align-center">
                     {{item.phiGiaoHang}}
                 </td>
                 <td class="align-center">{{item.tongTien}}</td>
                 <td class="align-center">
                     <div class="btn-group btn-group-xs">
-                        <button ng-click="giaoHang(item)" class="btn btn-icon">
-                            <i class="fas fa-truck"></i>
+                        <button ng-click="hoanThanh(item)" class="btn btn-icon">
+                            <i class="fas fa-check" style="color: #47e10e;"></i>
                         </button>
                     </div>
                 </td>

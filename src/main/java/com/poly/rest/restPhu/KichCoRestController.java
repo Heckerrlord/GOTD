@@ -1,7 +1,7 @@
 package com.poly.rest.restPhu;
 
 
-import com.poly.entity.phu.KichCo;
+import com.poly.entity.KichCo;
 import com.poly.service.serPhu.KichCoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

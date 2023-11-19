@@ -1,6 +1,6 @@
 package com.poly.rest.restPhu;
 
-import com.poly.entity.phu.MauSac;
+import com.poly.entity.MauSac;
 import com.poly.service.serPhu.MauSacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

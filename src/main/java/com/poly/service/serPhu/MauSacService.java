@@ -1,6 +1,6 @@
 package com.poly.service.serPhu;
 
-import com.poly.entity.phu.MauSac;
+import com.poly.entity.MauSac;
 
 import java.util.List;
 

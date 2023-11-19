@@ -1,7 +1,7 @@
 package com.poly.service.serPhu;
 
 
-import com.poly.entity.phu.KichCo;
+import com.poly.entity.KichCo;
 
 import java.util.List;
 

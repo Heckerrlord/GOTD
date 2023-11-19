@@ -2,15 +2,14 @@ package com.poly.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.poly.entity.phu.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @SuppressWarnings("serial")
 @Entity
@@ -33,33 +32,33 @@ public class ChiTietSanPham implements Serializable {
     @JoinColumn(name = "MaSanPham", referencedColumnName = "Ma")
     private SanPham sanPham;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaLoaiKH", referencedColumnName = "Ma")
     @JsonIgnoreProperties("ctsplkh")
     private LoaiKhachHang loaiKhachHang;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "MaThuongHieu", referencedColumnName = "Ma")
-    @JsonIgnoreProperties("lThuongHieu")
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "MaThuongHieu", referencedColumnName = "ma")
     private ThuongHieu thuongHieu;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaMau", referencedColumnName = "Ma")
     @JsonIgnoreProperties("lMauSac")
     private MauSac mauSac;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaKichCo", referencedColumnName = "Ma")
     @JsonIgnoreProperties("LkichCo")
     private KichCo kichCo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaChatLieu", referencedColumnName = "Ma")
     @JsonIgnoreProperties("Lchatlieu")
     private ChatLieu chatLieu;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MaCoAo", referencedColumnName = "Ma")
     @JsonIgnoreProperties("LCoAo")
     private CoAo coAo;

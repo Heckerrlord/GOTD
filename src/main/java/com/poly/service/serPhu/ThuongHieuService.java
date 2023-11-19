@@ -2,7 +2,7 @@ package com.poly.service.serPhu;
 
 ;
 
-import com.poly.entity.phu.ThuongHieu;
+import com.poly.entity.ThuongHieu;
 
 import java.util.List;
 

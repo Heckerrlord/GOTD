@@ -6,7 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 
+import com.poly.dao.AuthorityDAO;
+import com.poly.dao.RoleDAO;
 import com.poly.entity.Account;
+import com.poly.entity.Authority;
+import com.poly.entity.Role;
 import com.poly.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +53,10 @@ public class AuthController {
     UploadService uploadService;
     @Autowired
     HttpServletRequest rq;
+    @Autowired
+    AuthorityDAO aDao;
+    @Autowired
+    RoleDAO roleDAO;
 
 
     @CrossOrigin("*")
@@ -125,6 +133,11 @@ public class AuthController {
         account.setToken("token");
         account.setTrangThai(0);
         accountService.create(account);
+        Role role = roleDAO.findById("CUST").get();
+        Authority a = new Authority();
+        a.setAccount(account);
+        a.setRole(role);
+        aDao.save(a);
         model.addAttribute("message", "Đăng ký tài khoản mới thành công!");
         response.addHeader("refresh", "2;url=/auth/login/form");
         return "auth/register";

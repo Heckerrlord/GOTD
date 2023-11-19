@@ -34,20 +34,40 @@ app.controller("order-ctrl", function ($scope, $http) {
     $scope.xacNhan = function (item) {
         item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
         item.trangThai = 1;
-        $http.put(`${url}/${item.id}`, item).then(resp => {
-            sweetalert("Cập nhật chất liệu thành công!");
+        $http.put(`${url}/update/${item.id}`, item).then(resp => {
+            sweetalert("Đơn hàn đã được xác nhận!");
         }).catch(error => {
-            sweetalert("Lỗi cập nhật chất liệu!");
+            sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
             console.log("Error", error);
         });
     }
     $scope.tuChoi = function (item) {
-        item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);;
+        item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
         item.trangThai = 2;
-        $http.put(`${url}/${item.id}`, item).then(resp => {
-            sweetalert("Cập nhật chất liệu thành công!");
+        $http.put(`${url}/update/${item.id}`, item).then(resp => {
+            sweetalert("Đơn hàng đã bị từ chối!");
         }).catch(error => {
-            sweetalert("Lỗi cập nhật chất liệu!");
+            sweetalert("Lỗi khi cập nhật trạng thái đơn hàng !");
+            console.log("Error", error);
+        });
+    }
+    $scope.giaoHang = function (item) {
+        item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
+        item.trangThai = 3;
+        $http.put(`${url}/update/${item.id}`, item).then(resp => {
+            sweetalert("Đơn hàng đã được giao cho đơn vị vận chuyển !");
+        }).catch(error => {
+            sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
+            console.log("Error", error);
+        });
+    }
+    $scope.hoanThanh = function (item) {
+        item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
+        item.trangThai = 4;
+        $http.put(`${url}/update/${item.id}`, item).then(resp => {
+            sweetalert("Đơn hàng đã hoàn thành ! ");
+        }).catch(error => {
+            sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
             console.log("Error", error);
         });
     }

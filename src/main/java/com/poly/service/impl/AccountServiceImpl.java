@@ -80,8 +80,8 @@ public class AccountServiceImpl implements AccountService {
 			account.setTrangThai(0);
 			adao.save(account);
 		}else {
-		aa.setPassword(pe.encode(password));
-		adao.save(aa);
+			aa.setPassword(pe.encode(password));
+			adao.save(aa);
 		}
 
 		UserDetails user = User.withUsername(email).password(pe.encode(password)).roles("CUST").build();

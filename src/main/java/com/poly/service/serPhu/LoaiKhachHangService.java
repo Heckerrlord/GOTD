@@ -1,7 +1,7 @@
 package com.poly.service.serPhu;
 
 
-import com.poly.entity.phu.LoaiKhachHang;
+import com.poly.entity.LoaiKhachHang;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.poly.service.impl.implPhu;
 
 import com.poly.dao.daoPhu.DiaChiDAO;
-import com.poly.entity.phu.DiaChi;
+import com.poly.entity.DiaChi;
 import com.poly.service.serPhu.DiaChiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

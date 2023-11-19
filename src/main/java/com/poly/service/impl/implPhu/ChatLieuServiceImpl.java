@@ -1,7 +1,8 @@
 package com.poly.service.impl.implPhu;
 
 import com.poly.dao.daoPhu.ChatLieuDAO;
-import com.poly.entity.phu.ChatLieu;
+
+import com.poly.entity.ChatLieu;
 import com.poly.service.serPhu.ChatLieuSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
