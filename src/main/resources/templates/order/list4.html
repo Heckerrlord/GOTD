@@ -1,0 +1,53 @@
+
+<main class="main-content">
+    <div class="container my-3">
+        <section class="product-area shopping-cart-area">
+            <div class="row my-3">
+                <div class="col-12">
+                    <div class="shopping-cart-wrap">
+                        <div class="table-responsive" th:if="${not #lists.isEmpty(dahuy)}">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th class="text-center">STT</th>
+                                <th>Mã đặt hàng.</th>
+                                <th>Ngày mua</th>
+                                <th class="text-center">Tiền giảm</th>
+                                <th class="text-center">Phí ship</th>
+                                <th class="text-center">Tổng tiền</th>
+                                <th class="text-center">#</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="order,state : *{dahuy}" class="custom-row-height">
+                                    <td class="align-middle">[[${state.index+1}]]</td>
+                                    <td class="align-middle">[[${order.id}]]</td>
+                                    <td class="align-middle">
+                                        [[${order.ngayDatHang}]]
+                                    </td>
+                                    <td class="align-middle">
+                                        <span th:text="${#numbers.formatDecimal(order.tienGiam,0,'COMMA',0,'POINT')}"></span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span th:text="${#numbers.formatDecimal(order.phiGiaoHang,0,'COMMA',0,'POINT')}"></span>
+                                    </td><td class="align-middle">
+                                    <span th:text="${#numbers.formatDecimal(order.tongTien,0,'COMMA',0,'POINT')}"></span>
+                                </td>
+
+                                    <th class="align-middle">
+                                        <a th:href="@{|/order/detail/${order.id}|}" class="btn btn-sm btn-default border-0"
+                                           title="Xem chi tiết đơn hàng">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div th:unless="${not #lists.isEmpty(dahuy)}" class="text-center">
+                            <h3>Chưa có đơn hàng.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>

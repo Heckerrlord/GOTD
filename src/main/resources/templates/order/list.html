@@ -1,62 +1,29 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
-<body>
+
 	<main class="main-content">
-		<div class="page-header-area">
-			<div class="container">
-				<div class="row">
-					<div class="col-12 text-center">
-						<div class="page-header-content">
-							<nav class="breadcrumb-area">
-								<ul class="breadcrumb">
-									<li>
-										<a href="/">Home</a>
-									</li>
-									<li class="breadcrumb-sep">/</li>
-									<li>Your Orders</li>
-								</ul>
-							</nav>
-							<h4 class="title">Your Orders</h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="container my-3">
 			<section class="product-area shopping-cart-area">
 				<div class="row my-3">
 					<div class="col-12">
-						<div class="bg-success text-white p-3">ĐƠN HÀNG</div>
 						<div class="shopping-cart-wrap">
-							<div class="cart-table table-responsive">
-								<table class="table">
+							<div class="table-responsive" th:if="${not #lists.isEmpty(orders)}">
+								<table class="table table-bordered">
 									<thead>
-										<tr>
-											<th class="text-center">STT.</th>
+											<th class="text-center">STT</th>
 											<th>Mã đặt hàng.</th>
-											<th>Người mua</th>
 											<th>Ngày mua</th>
-											<th>Địa chỉ giao hàng</th>
-											<th class="text-center">Số điện thoại</th>
 											<th class="text-center">Tiền giảm</th>
 											<th class="text-center">Phí ship</th>
 											<th class="text-center">Tổng tiền</th>
 											<th class="text-center">Trạng thái</th>
-
 											<th class="text-center">#</th>
-										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="order,state : *{orders}">
+										<tr th:each="order,state : *{orders}" class="custom-row-height">
 											<td class="align-middle">[[${state.index+1}]]</td>
 											<td class="align-middle">[[${order.id}]]</td>
-											<td class="align-middle">[[${order.account.username}]]</td>
-
 											<td class="align-middle">
 											[[${order.ngayDatHang}]]
 											</td>
-											<td class="align-middle">[[${order.dcChiTiet}]]</td>
-											<td class="align-middle">[[${order.soDienThoai}]]</td>
 											<td class="align-middle">
 												<span th:text="${#numbers.formatDecimal(order.tienGiam,0,'COMMA',0,'POINT')}"></span>
 											</td>
@@ -70,16 +37,18 @@
 													<span th:case="0">Chờ xác nhận</span>
      												<span th:case="1">Đã xác nhận</span>
      												<span th:case="2">Đã hủy</span>
+													<span th:case="3">Đang vận chuyển</span>
+													<span th:case="4">Hoàn thành</span>
    												</span>
 											</td>
 
 											<th class="align-middle">
-												<a class="link-danger" th:if="${order.trangThai == 0}" th:href="@{|/order/cancel/${order.id}|}">x</a>
+												<a title="Hủy đơn hàng" class="link-danger" th:if="${order.trangThai == 0}" th:href="@{|/order/cancel/${order.id}|}">x</a>
 
 
 
 												<a th:href="@{|/order/detail/${order.id}|}" class="btn btn-sm btn-default border-0"
-													title="View your Order Details">
+													title="Xem chi tiết đơn hàng">
 													<i class="fa fa-eye"></i>
 												</a>
 											</td>
@@ -87,11 +56,12 @@
 									</tbody>
 								</table>
 							</div>
+							<div th:unless="${not #lists.isEmpty(orders)}" class="text-center">
+								<h3>Chưa có đơn hàng.</h3>
+							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 		</div>
 	</main>
-</body>
-</html>

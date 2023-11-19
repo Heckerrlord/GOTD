@@ -23,25 +23,23 @@
         </div>
     </div>
 
-    <div class="page-content-wrapper" style="margin-top: 20px">
-        <div class="container">
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a href="javascript:(0);" class="nav-link active" data-toggle="tab" data-target="#edit" type="button"
-                       role="tab" aria-selected="false">Thông tin</a>
-                    <a href="javascript:(0);" class="nav-link " data-toggle="tab" data-target="#list"
-                       type="button"
-                       role="tab" aria-selected="true">Địa chỉ</a>
-                </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="edit" role="tabpanel">
-                    <div th:replace="auth/change-info.html"></div>
-                </div>
-                <div class="tab-pane fade " id="list" role="tabpanel">
-                    <div th:replace="auth/adress.html"></div>
-                </div>
+    <div class="container">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a href="/type1" class="nav-link active" data-toggle="tab" data-target="#list" type="button"
+                   role="tab" aria-selected="true" >Hồ sơ cá nhân</a>
+                <a href="/type1" class="nav-link " data-toggle="tab" data-target="#list1" type="button"
+                   role="tab" aria-selected="false" >Địa chỉ</a>
             </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list" role="tabpanel">
+                <div th:replace="auth/change-info.html"></div>
+            </div>
+            <div class="tab-pane fade" id="list1" role="tabpanel">
+                <div th:replace="auth/adress.html"></div>
+            </div>
+
         </div>
     </div>
 </main>

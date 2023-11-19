@@ -335,6 +335,11 @@ if ($scope.sanPhamMa !=null) {
                 username: user
             }
         }
+        // Kiểm tra xem tất cả các trường đã được nhập chưa
+        if (!$scope.form.chiTiet || $scope.form.chiTiet.trim() === "" || $("#thanhpho option:selected").text() === "Chọn thành phố" || $("#huyen option:selected").text() === "Chọn huyện" || $("#xa option:selected").text() === "Chọn xã") {
+            sweetalert("Vui lòng nhập đầy đủ thông tin địa chỉ");
+            return;
+        }
         $http.post(urladd, diachiData).then(resp => {
             $scope.address.push(resp.data);
             $scope.reset();
@@ -395,6 +400,11 @@ if ($scope.sanPhamMa !=null) {
                 username: user
             }
         }
+        // Kiểm tra xem tất cả các trường đã được nhập chưa
+        if (!$scope.form.chiTiet || $scope.form.chiTiet.trim() === "" || $("#thanhpho option:selected").text() === "Chọn thành phố" || $("#huyen option:selected").text() === "Chọn huyện" || $("#xa option:selected").text() === "Chọn xã") {
+            sweetalert("Vui lòng nhập đầy đủ thông tin địa chỉ");
+            return;
+        }
         $http.put(`${urladd}/${diachiData.id}`, diachiData).then(resp => {
             var index = $scope.address.findIndex(p => p.id == diachiData.id);
             if (index !== -1) {
@@ -414,4 +424,77 @@ if ($scope.sanPhamMa !=null) {
     }
 
     $scope.showCart();
+
+    /* ĐÁNH GIÁ SẢN PHẨM */
+    var urlReview = `/rest/danhgia`;
+
+    $scope.showRate = function (maSanPham) {
+        $http.get(urlReview + "/" + maSanPham).then(function (response) {
+            $scope.reviews = response.data;
+        })
+    };
+
+    //KHAI BÁO SAO
+    $scope.stars = [1, 2, 3, 4, 5]; // Số lượng sao
+    $scope.rating = 5; // Giá trị rating
+    //SET SỐ SAO CHO ĐÁNH GIÁ
+    $scope.setStar = function (star) {
+        $scope.rating = star;
+    };
+    $scope.formRate = {
+        sao: 0
+    };
+    $scope.resetR = function () {
+        $scope.formRate = {};
+    }
+
+    //GỬI ĐÁNH GIÁ
+
+    $scope.Reviews = function (maSp, user) {
+        user = userLogin;
+        if (user == null) {
+            sweetalert("Vui lòng đăng nhập trước khi đánh giá");
+            // Chờ 5 giây trước khi chuyển hướng đến trang đăng nhập
+            setTimeout(function () {
+                // Chuyển hướng đến trang đăng nhập
+                window.location.href = "/auth/login/form"
+            }, 2000);
+            return;
+        }
+        if (!$scope.rating) {
+            sweetalert("Vui lòng chọn số sao trước khi gửi đánh giá");
+            return;
+        } else {
+            var reviewdata = {
+                sao: $scope.rating,
+                comment: $scope.formRate.comment,
+                ngayCmt: new Date(),
+                trangThai: 0,
+                account: {
+                    username: user
+                },
+                sanPham: {
+                    ma: maSp
+                }
+            };
+            console.log(reviewdata.sanPham.ma)
+
+            $http.post(urlReview + '/' + maSp, reviewdata, {
+                params: {
+                    user: user,
+                    maSp: maSp
+                }
+            })
+                .then(resp => {
+                    $scope.resetR();
+                    sweetalert("Gửi đánh giá thành công")
+                })
+                .catch(err => {
+                    console.error(err);
+                    sweetalert("Gửi đánh giá không thành công")
+                });
+        }
+        ;
+    }
+
 });

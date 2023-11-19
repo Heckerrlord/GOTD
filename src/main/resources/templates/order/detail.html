@@ -56,26 +56,78 @@
 						<div class="text-white p-3" style="background-color: #f27474;">THÔNG TIN ĐẶT HÀNG</div>
 						<div class="shopping-cart-wrap">
 							<div class="cart-table table-responsive">
-								<table class="table">
+								<table class="table" >
 									<thead>
-										<tr>
-											<th>ID</th>
-											<th>Tên sản phẩm</th>
-											<th>Gía</th>
-											<th>Số lượng</th>
-											<th>Tổng tiền</th>
+									<tr>
 
-										</tr>
+										<th class="indecor-product-name">Sản phẩm</th>
+										<th class="indecor-product-price">Size</th>
+										<th class="indecor-product-price">Màu sắc</th>
+										<th class="indecor-product-quantity">Số Lượng</th>
+										<th class="indecor-product-price">Giá</th>
+										<th class="indecor-product-subtotal">Tổng tiền</th>
+										<th th:if="${order.trangThai == 4}"> </th>
+									</tr>
 									</thead>
 									<tbody>
-										<tr th:each="detail:*{chiTietDonHangList}">
-											<td class="align-middle price">[[*{chiTietSanPham.sanPham.ma}]]</td>
-											<td class="align-middle text-start">[[*{chiTietSanPham.sanPham.ma}]]</td>
-											<td class="align-middle price">$[[*{#numbers.formatDecimal(donGia,0,'COMMA',2,'POINT')}]]</td>
-											<td class="align-middle">[[*{soLuong}]]</td>
-											<td class="align-middle price">$[[*{#numbers.formatDecimal(donGia*soLuong,0,'COMMA',2,'POINT')}]]</td>
-										</tr>
+									<tr th:each="detail : ${order.chiTietDonHangList}"  th:object="${detail}" >
+										<td class="indecor-product-thumbnail" style="width:200px">
+											<img class="w-25" th:src="@{|/assets/images/${detail.chiTietSanPham.sanPham.image[0].ma}|}"  />
+										[[${detail.chiTietSanPham.sanPham.ten}]]</td>
+										<td class="align-middle name" th:text="${detail.chiTietSanPham.kichCo.name}"></td>
+										<td class="align-middle name" th:text="${detail.chiTietSanPham.mauSac.name}"></td>
+										<td class="align-middle name" th:text="${detail.soLuong}"></td>
+										<td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia,0,'COMMA',2,'POINT')}]]</td>
+										<td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia * detail.soLuong,0,'COMMA',2,'POINT')}]]</td>
+										<td th:if="${order.trangThai == 4}"><a type="button" class="rating-button" data-bs-toggle="modal" data-bs-target="#sizeGuideModal">
+											<span class="star">&#9733;</span> Đánh giá
+										</a> </td>
+										<div class="modal fade" id="sizeGuideModal" tabindex="-1"
+											 aria-labelledby="sizeGuideModalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="addressModalLabel">Đánh giá sản phẩm</h5>
+													</div>
+													<div class="modal-header">
+														<a th:href="@{|/product/detail/${detail.chiTietSanPham.sanPham.ma}|}">
+															<img style="width: 60px;height: 60px;font-weight: bold " th:src="@{|/assets/images/${detail.chiTietSanPham.sanPham.image[0].ma}|}"  />
+															[[${detail.chiTietSanPham.sanPham.ten}]][[${detail.soLuong}]]
+														</a>
+													</div>
+													<div class="modal-body">
+														<form action="#">
+															<div class="row">
+																<div class="col-md-12">
+																	Chất lượng sản phẩm: <span ng-repeat="star in stars" ng-click="setStar(star)" style="cursor: pointer;">
+                               											 <i class="fa" ng-class="{'fa-star': star <= rating, 'fa-star-o': star > rating}" style="color: #ffd43b; font-size: 15px"></i></span>
+																</div>
+																<br><br><br>
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label for="for_comment">Bình luận</label>
+																		<textarea id="for_comment" ng-model="formRate.comment" class="form-control" rows="7" placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé"></textarea>
+																	</div>
+																</div>
+															</div>
+														</form>
+													</div>
+													<div class="modal-footer">
+														<div class="card-header text-center">
+															<button type="button" class="btn btn-secondary"
+									data-bs-dismiss="modal">Đóng</button>
+															<a th:attr="ng-click='Reviews(\'' + *{chiTietSanPham.sanPham.ma} + '\', user)'">
+                                                                <button class="btn btn-danger">Gửi đánh giá</button>
+                                                            </a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</tr>
 									</tbody>
+
+
 								</table>
 							</div>
 						</div>
@@ -84,6 +136,11 @@
 			</section>
 			<a th:href="@{/order/list}" class="btn-theme pull-right my-2">Quay lại giỏ hàng</a>
 		</div>
+
+
+
+
+
 	</main>
 </body>
 </html>

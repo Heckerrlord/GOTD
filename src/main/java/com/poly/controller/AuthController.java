@@ -117,6 +117,10 @@ public class AuthController {
             model.addAttribute("message", "Please correct the error below!");
             return "auth/register";
         }
+        if (accountService.isUsernameExists(account.getUsername())) {
+            model.addAttribute("message", "Tên đăng nhập đã tồn tại");
+            return "auth/register";
+        }
         account.setPhoto("user.png");
         account.setToken("token");
         account.setTrangThai(0);

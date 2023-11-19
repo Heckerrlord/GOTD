@@ -7,11 +7,13 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 
 
 
-public interface 	AccountService {
+public interface AccountService {
 	Account findById(String username);
 
 
 	List<Account> findAll();
+
+	 boolean isUsernameExists(String username);
 
 	List<Account> getAdministrators();
 
