@@ -21,9 +21,10 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             "JOIN DanhSachYeuThich D ON C.MaSanPham = D.MaSanPham WHERE D.MaKhachHang = :username GROUP BY C.MaSanPham", nativeQuery = true)
     List<ChiTietSanPham> findFavorite(String username);
 
-    List<ChiTietSanPham> findAllBySanPhamMaAndKichCoCodeAndMauSacCode(SanPham sp, KichCo kc, MauSac ms);
-    List<ChiTietSanPham> findAllBySanPhamMaAndKichCoCode(String sp, String kc);
-    List<ChiTietSanPham> findAllBySanPhamMaAndMauSacCode(String sp, String ms);
-    List<ChiTietSanPham> findChiTietSanPhamBySanPhamMa(String ma);
-
+    ChiTietSanPham findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(String sp, String kc, String ms);
+    ChiTietSanPham findFirstBySanPhamMaAndKichCoCode(String sp, String kc);
+    ChiTietSanPham findFirstBySanPhamMaAndMauSacCode(String sp, String ms);
+    ChiTietSanPham findFirstBySanPhamMa(String ma);
+    List<ChiTietSanPham> findAllBySanPhamMa(String ma);
+    List<ChiTietSanPham> findAllByMauSac(MauSac mauSac);
 }

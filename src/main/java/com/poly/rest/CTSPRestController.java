@@ -1,19 +1,22 @@
 package com.poly.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.poly.dao.CTSPDAO;
+import com.poly.dao.daoPhu.KichCoDAO;
+import com.poly.dao.daoPhu.MauSacDAO;
 import com.poly.entity.ChiTietSanPham;
+import com.poly.entity.phu.KichCo;
+import com.poly.entity.phu.MauSac;
 import com.poly.service.CTSPService;
+import com.poly.service.serPhu.KichCoService;
+import com.poly.service.serPhu.MauSacService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin("*")
@@ -22,7 +25,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class CTSPRestController {
 	@Autowired
     CTSPService productService;
-
+	@Autowired
+	CTSPDAO pdao;
+	@Autowired
+	MauSacService mausacService;
+	@Autowired
+	KichCoService kichcoService;
+	@Autowired
+	MauSacDAO mdao;
+	@Autowired
+	KichCoDAO kcdao;
 	@GetMapping
 	public List<ChiTietSanPham> getAll() {
 		return productService.findAll();
@@ -47,4 +59,37 @@ public class CTSPRestController {
 	public void delete(@PathVariable("id") Long id) {
 		productService.delete(id);
 	}
+
+@GetMapping("detail/{sanPhamMa}")
+public ResponseEntity<Object> detailSanPham(
+		@PathVariable String sanPhamMa,
+		String kichCoCode,
+		String mauSacCode
+) {
+	ChiTietSanPham item;
+	// Lấy thông tin chi tiết sản phẩm từ các mã kích cỡ và màu sắc
+	if (kichCoCode != null && mauSacCode != null) {
+		item = pdao.findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(sanPhamMa, kichCoCode, mauSacCode);
+	} else if (kichCoCode != null) {
+		item = pdao.findFirstBySanPhamMaAndKichCoCode(sanPhamMa, kichCoCode);
+	} else if (mauSacCode != null) {
+		item = pdao.findFirstBySanPhamMaAndMauSacCode(sanPhamMa, mauSacCode);
+	} else {
+		item = pdao.findFirstBySanPhamMa(sanPhamMa);
+	}
+
+	// Lấy danh sách màu sắc và kích cỡ
+	List<MauSac> m = mdao.findMauSacByMaSanPham(item.getSanPham().getMa());
+	List<KichCo> kc = kcdao.findKichCoByMaSanPham(item.getSanPham().getMa());
+
+	Map<String, Object> response = new HashMap<>();
+	response.put("item", item);
+	response.put("m", m);
+	response.put("kc", kc);
+
+	return ResponseEntity.ok(response);
+}
+
+
+
 }

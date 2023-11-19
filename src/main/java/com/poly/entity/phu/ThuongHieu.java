@@ -1,5 +1,7 @@
 package com.poly.entity.phu;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.poly.entity.ChiTietSanPham;
 import lombok.*;
 
@@ -29,6 +31,7 @@ public class ThuongHieu implements Serializable {
     @Column(name = "TrangThai")
     private Integer tt;
 
-    @OneToMany(mappedBy = "thuongHieu")
+    @OneToMany(mappedBy = "thuongHieu", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("thuongHieu")
     private List<ChiTietSanPham> lThuongHieu;
 }

@@ -23,6 +23,7 @@ public class SanPhamRestController {
         return sanPhamService.findById(id);
     }
 
+
     @PostMapping
     public SanPham create(@RequestBody SanPham product) {
         return sanPhamService.create(product);

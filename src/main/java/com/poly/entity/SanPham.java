@@ -1,5 +1,8 @@
 package com.poly.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,5 +35,7 @@ public class SanPham implements Serializable {
 
     @OneToMany(mappedBy = "sanPham")
     private List<Anh> image;
+
+
 
 }

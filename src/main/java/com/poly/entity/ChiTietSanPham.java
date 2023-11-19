@@ -1,6 +1,7 @@
 package com.poly.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poly.entity.phu.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,34 +33,35 @@ public class ChiTietSanPham implements Serializable {
     @JoinColumn(name = "MaSanPham", referencedColumnName = "Ma")
     private SanPham sanPham;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MaLoaiKH", referencedColumnName = "Ma")
-    @JsonBackReference("spct-loaiKhachHang")
+    @JsonIgnoreProperties("ctsplkh")
     private LoaiKhachHang loaiKhachHang;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MaThuongHieu", referencedColumnName = "Ma")
-    @JsonBackReference("spct-thuongHieu")
+    @JsonIgnoreProperties("lThuongHieu")
     private ThuongHieu thuongHieu;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MaMau", referencedColumnName = "Ma")
-    @JsonBackReference("spct-mauSac")
+    @JsonIgnoreProperties("lMauSac")
     private MauSac mauSac;
 
     @ManyToOne
     @JoinColumn(name = "MaKichCo", referencedColumnName = "Ma")
-    @JsonBackReference("spct-kichCo")
+    @JsonIgnoreProperties("LkichCo")
     private KichCo kichCo;
 
     @ManyToOne
     @JoinColumn(name = "MaChatLieu", referencedColumnName = "Ma")
-    @JsonBackReference("spct-chatLieu")
+    @JsonIgnoreProperties("Lchatlieu")
     private ChatLieu chatLieu;
 
     @ManyToOne
     @JoinColumn(name = "MaCoAo", referencedColumnName = "Ma")
-    @JsonBackReference("spct-coAo")
+    @JsonIgnoreProperties("LCoAo")
     private CoAo coAo;
 
 

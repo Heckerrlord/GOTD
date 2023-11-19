@@ -37,15 +37,7 @@
     padding: 20px;
 }</style>
 <div class="row mx-0 bg-white">
-<!--    <div class="col-md-4 text-center">-->
-<!--		<span ng-if="form.image == null">-->
-<!--			<img ng-src="{{'/assets/images/cloud-upload.jpg'}}" style="max-width: 100%; margin-top: 5rem">-->
-<!--		</span>-->
-<!--        <span ng-if="form.image != null">-->
-<!--			<img ng-src="{{'/assets/images/'+form.image}}" style="max-width: 100%; margin-top: 5rem">-->
-<!--		</span>-->
-<!--    </div>-->
-    <div class="col-md-8">
+    <div class="col-md-7">
         <form class="form p-3">
             <div class="row mx-0 bg-white">
 
@@ -118,6 +110,40 @@
 <!--        </div>-->
 
     </div>
+    <div class="col-md-5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Màu sắc</th>
+                <th>Kích cỡ</th>
+                <th>Giá nhập</th>
+                <th>Giá bán</th>
+                <th>Số lượng</th>
+                <th>#</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ctsp in form.chiTietSanPhamList">
+                <td class="align-center">{{ctsp.mauSac.name}}</td>
+                <td class="align-center">{{ctsp.kichCo.name}}</td>
+                <td class="align-center">{{ctsp.giaNhap}}</td>
+                <td class="align-center">{{ctsp.giaBan}}</td>
+                <td class="align-center">{{ctsp.soLuong}}</td>
+                <td class="align-center">
+                    <div class="btn-group btn-group-xs">
+                        <button ng-click="edit(ctsp)" class="btn btn-icon">
+                            <i class="fa fa-xs fa-pen"></i>
+                        </button>
+                        <button ng-click="delete(ctsp)" class="btn btn-danger">
+                            <i class="fa fa-xs fa-times"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
 </div>
     </div>
 </div>

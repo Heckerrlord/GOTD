@@ -37,10 +37,6 @@ public class CTSPServiceImpl implements CTSPService {
 		pdao.deleteById(id);
 	}
 
-	@Override
-	public List<ChiTietSanPham> findChiTietSanPhamBySanPhamMa(String ma){
-		return pdao.findChiTietSanPhamBySanPhamMa(ma);
-	};
 
 	@Override
 	public List<ChiTietSanPham> findFavorites(String username) {

@@ -2,6 +2,8 @@ package com.poly.controller;
 
 import com.poly.dao.CTSPDAO;
 import com.poly.dao.DSYTDAO;
+import com.poly.dao.daoPhu.KichCoDAO;
+import com.poly.dao.daoPhu.MauSacDAO;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.DanhSachYeuThich;
 import com.poly.entity.phu.CoAo;
@@ -20,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,10 @@ public class ProductController {
 	@Autowired
 	MauSacService mausacService;
 	@Autowired
+	MauSacDAO mdao;
+	@Autowired
+	KichCoDAO kcdao;
+	@Autowired
 	KichCoService kichcoService;
 	@Autowired
 	private ThuongHieuService thuongHieuService;
@@ -43,22 +50,55 @@ public class ProductController {
 	@Autowired
 	private MauSacService mauSacService;
 
-
-
 	@Autowired
 	private DSYTDAO dsytdao;
-	@RequestMapping("/product/detail/{id}")
-	public String detail(Model model, @PathVariable("id") Long id) {
-		ChiTietSanPham item = productService.findById(id);
-		List<MauSac> m = mausacService.findAll();
-		List<KichCo> kc = kichcoService.findAll();
+
+
+
+	@GetMapping("/product/detail/{sanPhamMa}")
+	public String detailSanPham(
+			Model model,
+			@PathVariable String sanPhamMa,
+			@RequestParam(required = false) String size,
+			@RequestParam(required = false) String color
+	) {
+		ChiTietSanPham item;
+		if (size != null && color != null) {
+			item = pdao.findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(sanPhamMa,size,color);
+		} else if (size != null) {
+			item = pdao.findFirstBySanPhamMaAndKichCoCode(sanPhamMa, size);
+		} else if (color != null) {
+			item = pdao.findFirstBySanPhamMaAndMauSacCode(sanPhamMa, color);
+		} else {
+			item = pdao.findFirstBySanPhamMa(sanPhamMa);
+		}
+
+		model.addAttribute("m", mdao.findMauSacByMaSanPham(item.getSanPham().getMa()));
+		model.addAttribute("kc", kcdao.findKichCoByMaSanPham(item.getSanPham().getMa()));
 		model.addAttribute("item", item);
-		model.addAttribute("m", m);
-		model.addAttribute("kc", kc);
-		List<DanhSachYeuThich> list1 = dsytdao.findAll();
-		model.addAttribute("favorite",list1);
 		return "product/detail";
 	}
+
+
+//	@RequestMapping("/product/detail/{id}")
+//	public String detail(Model model, @PathVariable("id") Long id) {
+//		ChiTietSanPham item = productService.findById(id);
+//		List<MauSac> m = mausacService.findAll();
+//		List<KichCo> kc = kichcoService.findAll();
+//
+//
+//
+//
+//
+//		model.addAttribute("item", item);
+//		model.addAttribute("m", m);
+//		model.addAttribute("kc", kc);
+//		List<DanhSachYeuThich> list1 = dsytdao.findAll();
+//		model.addAttribute("favorite",list1);
+//		return "product/detail";
+//	}
+
+
 	@GetMapping("/sanpham")
 	public String getShopPage(Model model) {
 		// Get list brand
@@ -77,17 +117,13 @@ public class ProductController {
 		for (CoAo category : coAos) {
 			categoryIds.add(category.getId());
 		}
-
 		// Get list color
 		List<MauSac> sizeVn = mauSacService.findAll();
 		model.addAttribute("sizeVn", sizeVn);
-
 		List<ChiTietSanPham> list = pdao.findDistinctByMasp();
 		model.addAttribute("items", list);
-
 		List<DanhSachYeuThich> list1 = dsytdao.findAll();
 		model.addAttribute("favorite",list1);
-
 		return "sanpham";
 	}
 

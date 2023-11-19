@@ -9,7 +9,7 @@ public interface CTSPService {
 
 	ChiTietSanPham findById(Long id);
 
-	List<ChiTietSanPham>  findChiTietSanPhamBySanPhamMa(String ma);
+
 
 	ChiTietSanPham create(ChiTietSanPham product);
 

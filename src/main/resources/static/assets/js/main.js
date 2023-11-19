@@ -9,14 +9,13 @@ app.run(function ($http, $rootScope) {
     });
 })
 
+
 app.controller("shopping-ctrl", function ($scope, $http) {
-    var url = "/rest/products";
-    var url1 = "/rest/cart";
+
     var url2 = "/rest/order";
     $scope.items = [];
     $scope.cates = [];
     $scope.form = {};
-
     var sweetalert = function (text, callback) {
         Swal.fire({
             title: text,
@@ -38,6 +37,43 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             $scope.cartItems = response.data;
         });
     };
+    var url = window.location.pathname;
+    var segments = url.split('/');
+    $scope.sanPhamMa = segments[segments.length - 1] || '';
+    $scope.p = {};
+    $scope.selectedKichCo = null;
+    $scope.selectedMauSac = null;
+    $scope.searchDetail = function() {
+        var url = 'rest/products/detail/' + $scope.sanPhamMa;
+        var params = {};
+        if ($scope.selectedKichCo) {
+            params.kichCoCode = $scope.selectedKichCo;
+        }
+        if ($scope.selectedMauSac) {
+            params.mauSacCode = $scope.selectedMauSac;
+        }
+if ($scope.sanPhamMa !=null) {
+    $http.get(url, {params: params})
+        .then(function (response) {
+            if (response || response.data.item) {
+                $scope.p = response.data.item;
+                $scope.m = response.data.m;
+                $scope.kc = response.data.kc;
+            }
+        })
+        .catch(function (error) {
+            sweetalert("Không tìm thấy sản phẩm");
+            console.error('Đã xảy ra lỗi:', error);
+        });
+};
+    };
+
+
+
+
+    // Gọi hàm searchDetail khi controller được khởi tạo
+
+
 
 
     $scope.addToCart = function(productId) {
@@ -56,7 +92,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
 
         $http.put('/rest/cart/' + item.id, data)
             .then(function(response) {
-               console.log(data);
+               console.log(item);
                 console.log("Mục đã được cập nhật thành công");
             })
             .catch(function(error) {
@@ -73,14 +109,8 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         }
         return subtotal;
     };
-    $scope.getTotalMoney = function() {
-        // Sử dụng hàm getSubtotal để tính Subtotal
-        var subtotal = $scope.getSubtotal();
-        // Thêm các khoản phí khác nếu cần
-        var otherFees = 0; // Thay bằng các khoản phí khác nếu có
-        var totalMoney = subtotal + otherFees;
-        return totalMoney;
-    };
+
+
 
 
     $scope.getProductCount = function() {
@@ -114,6 +144,25 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                 console.error("Lỗi khi xóa giỏ hàng", error);
             });
     };
+    $scope.getDiscount = function(ma) {
+        return $http.get('/rest/order/discount/' + ma)
+            .then(function(response) {
+                return response.data.gtd;
+            })
+            .catch(function(error) {
+                console.error('Đã xảy ra lỗi:', error);
+                return null;
+            });
+    };
+
+    $scope.getTotalMoney = function() {
+        var subtotal = $scope.getSubtotal();
+        var tienGiam = $scope.gioHang.tienGiam || 0;
+        var otherFees = 0;
+        var totalMoney = subtotal - tienGiam + otherFees;
+        return totalMoney;
+    };
+
 
     $scope.gioHang = {
         maGiamGia: "",
@@ -128,29 +177,36 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         trangThai: 1,
         ngayDatHang: new Date(),
         account: { username: $("#username").text() },
-        purchase() {
-            console.log(this.soDienThoai)
+        purchase: function() {
             if (!this.soDienThoai || !$("#thanhpho option:selected").text() || !$("#huyen option:selected").text() || !$("#xa option:selected").text() || !this.dcChiTiet) {
                 sweetalert("Vui lòng điền đầy đủ thông tin '*'");
                 return;
             }
-            var gioHang = angular.copy(this);
-            gioHang.tongTien = $scope.getTotalMoney();
-            gioHang.tinh = $("#thanhpho option:selected").text();
-            gioHang.huyen = $("#huyen option:selected").text();
-            gioHang.xa = $("#xa option:selected").text();
+            var self = this;
+            $scope.getDiscount(this.maGiamGia)
+                .then(function(tienGiam) {
+                        self.tienGiam = tienGiam || 0;
+                        self.tongTien = $scope.getTotalMoney();
+                        self.tinh = $("#thanhpho option:selected").text();
+                        self.huyen = $("#huyen option:selected").text();
+                        self.xa = $("#xa option:selected").text();
+                        return $http.post(url2, self);
+                })
+                .then(function(resp) {
+                    if (resp) {
+                        sweetalert("Đặt hàng thành công!");
+                        var newLocation = resp.headers('Location');
+                        window.location.href = newLocation;
 
-            $http.post(url2, gioHang).then(resp => {
-                sweetalert("Đặt hàng thành công!", function() {
-                    window.location.href = '/';
+                    }
+                })
+                .catch(function(error) {
+                    sweetalert("Đã xảy ra lỗi khi đặt hàng!");
+                    console.log("Error", error);
                 });
-
-            }).catch(error => {
-                sweetalert("Đặt hàng lỗi!");
-                console.log("Error", error);
-            })
         }
     };
+
 
 
 //yêu thích

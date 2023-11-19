@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+<main class="main-content"th:object="${order}" >
+    <div class="page-header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <h4 class="title mt-0">Đơn hàng #<span th:text="${order.id}"></span></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="product-area shopping-cart-area">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN INVOICE -->
+                <div class="col-md-12">
+                    <div class="grid invoice">
+                        <div class="grid-body">
+                            <div class="invoice-title">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2> <i>Thank you for your purchase !</i> </h2>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <address>
+                                        <strong>Khách hàng:</strong><br>
+                                        [[*{account.fullname}]]<br>
+                                        [[*{account.SoDienThoai}]]<br>
+                                        [[*{account.email}]]<br>
+                                    </address>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <address>
+                                        <strong>Địa chỉ:</strong><br>
+                                        [[*{xa}]],  [[*{huyen}]],  [[*{tinh}]] <br>
+                                        [[*{dcChiTiet}]]<br>
+                                        <strong>P: </strong> [[*{soDienThoai}]]
+                                    </address>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <address>
+                                        <strong>Phương thức thanh toán:</strong><br>
+                                        Thanh toán khi nhận hàng<br>
+                                    </address>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <address>
+                                        <strong>Ngày đặt hàng:</strong><br>
+                                        [[*{ngayDatHang}]]
+                                    </address>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Chi tiết đơn hàng</h3>
+                                    <table class="table" >
+                                        <thead>
+                                        <tr>
+                                            <th class="indecor-product-thumbnail">Ảnh</th>
+                                            <th class="indecor-product-name">Sản phẩm</th>
+                                            <th class="indecor-product-price">Size</th>
+                                            <th class="indecor-product-price">Màu sắc</th>
+                                            <th class="indecor-product-quantity">Số Lượng</th>
+                                            <th class="indecor-product-price">Giá</th>
+                                            <th class="indecor-product-subtotal">Tổng tiền</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="detail : ${order.chiTietDonHangList}">
+                                            <td class="indecor-product-thumbnail" style="width:200px">
+                                                <img class="w-50" th:src="@{|/assets/images/${detail.chiTietSanPham.sanPham.image[0].ma}|}"  />
+                                            </td>
+                                            <td class="align-middle name" th:text="${detail.chiTietSanPham.sanPham.ten}"></td>
+                                            <td class="align-middle name" th:text="${detail.chiTietSanPham.kichCo.name}"></td>
+                                            <td class="align-middle name" th:text="${detail.chiTietSanPham.mauSac.name}"></td>
+                                            <td class="align-middle name" th:text="${detail.soLuong}"></td>
+                                            <td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia,0,'COMMA',2,'POINT')}]]</td>
+                                            <td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia * detail.soLuong,0,'COMMA',2,'POINT')}]]</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="shopping-cart-wrap">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-7 col-12">
+                                    <div class="coupon-all">
+                                        <div class="coupon">
+                                            <a class="button" href="/">Tiếp tục mua hàng</a>
+                                            <a class="button" href="/order/list" ng-click="clearCart()">Danh sách đơn hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-5 col-12">
+                                    <div class="cart-page-total">
+                                        <ul>
+                                            <li>
+                                                Đơn hàng
+                                                <span class="money">{{getSubtotal()}} <sup>VND</sup></span>
+                                            </li>
+                                            <li>
+                                                Giảm giá
+                                                <span class="money">[[*{#numbers.formatDecimal(tienGiam,0,'COMMA',2,'POINT')}]] <sup>VND</sup></span>
+                                            </li>
+<!--                                            <li>-->
+<!--                                                Phí giao hàng-->
+<!--                                                <span class="money">Tính toán sau khi xác nhận</span>-->
+<!--                                            </li>-->
+                                            <li>
+                                                Tổng cộng
+                                                <span class="money">[[*{#numbers.formatDecimal(tongTien,0,'COMMA',2,'POINT')}]] <sup>VND</sup>  </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END INVOICE -->
+            </div>
+        </div>
+
+    </section>
+</main>
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.poly.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.dao.GioHangCTDAO;
+import com.poly.dao.daoPhu.MaGiamGiaDAO;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.DonHang;
 import com.poly.entity.GioHang;
@@ -44,6 +45,9 @@ public class GioHangRestController {
 	@Autowired
 	HttpServletRequest request;
 
+	@Autowired
+	MaGiamGiaDAO mdao;
+
 
 	@GetMapping("/view")
 	public List<GioHangChiTiet> showCart(Model model) {
@@ -55,6 +59,7 @@ public class GioHangRestController {
 				gioHang.setAccount(accservice.findById(username)); // Gán tài khoản cho giỏ hàng
 				gioHang.setTrangThai(0);
 				cartService.create(gioHang);
+
 			}
 			List<GioHangChiTiet> cartItems = cartdetailService.findByIdGioHangAndTrangThai(gioHang.getId(),0);
 			return cartItems;

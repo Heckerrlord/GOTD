@@ -78,40 +78,44 @@
 										</div>
 
 										<div class="col-lg-12">
-											<div class="form-floating">
-												<input type="text" class="form-control"  placeholder="address" ng-model="gioHang.maGiamGia" >
-												<label>Mã giảm giá(nếu có)</label>
-											</div>
+
+<!--												<input type="text" class="form-control"  placeholder="address" ng-model="gioHang.maGiamGia" >-->
+												<select class="form-control" ng-model="gioHang.maGiamGia" >
+													<option value="" selected >Mã giảm giá</option>
+													<option th:each="dis : ${mgg}" th:value="${dis.ma}"  th:text="${dis.ma+ ' - Giá trị: ' + dis.gtd + ' - Số lượng: ' + dis.sl}"></option>
+												</select>
+
+
 										</div>
-										<div class="col-12">
-											<div class="titel-ptgiao-hang" style="background-color: #f1f1f1;margin: 20px 0px 20px 0px;padding: 5px 20px 5px 20px;">
-												<p style="color: black; font-size: 23px; font-weight: 700">PHƯƠNG THỨC THANH TOÁN</p>
-											</div>
-											<div class="row" style="padding: 0; margin: 0">
-												<div class="col-sm-2">
-													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">
-												</div>
-												<div class="col-sm-10">
-													<p style="color: black">Thanh toán trực tiếp khi giao hàng</p>
-												</div>
-											</div>
-											<div class="row" style="padding: 0; margin: 0">
-												<div class="col-sm-2">
-													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">
-												</div>
-												<div class="col-sm-10">
-													<p style="color: black">Thanh toán bằng Thẻ quốc tế / Thẻ nội địa / QR Code</p>
-												</div>
-											</div>
-											<div class="row" style="padding: 0; margin: 0">
-												<div class="col-sm-2">
-													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">
-												</div>
-												<div class="col-sm-10">
-													<p style="color: black">Thanh toán bằng ví MoMo</p>
-												</div>
-											</div>
-										</div>
+<!--										<div class="col-12">-->
+<!--											<div class="titel-ptgiao-hang" style="background-color: #f1f1f1;margin: 20px 0px 20px 0px;padding: 5px 20px 5px 20px;">-->
+<!--												<p style="color: black; font-size: 23px; font-weight: 700">PHƯƠNG THỨC THANH TOÁN</p>-->
+<!--											</div>-->
+<!--											<div class="row" style="padding: 0; margin: 0">-->
+<!--												<div class="col-sm-2">-->
+<!--													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">-->
+<!--												</div>-->
+<!--												<div class="col-sm-10">-->
+<!--													<p style="color: black">Thanh toán trực tiếp khi giao hàng</p>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--											<div class="row" style="padding: 0; margin: 0">-->
+<!--												<div class="col-sm-2">-->
+<!--													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">-->
+<!--												</div>-->
+<!--												<div class="col-sm-10">-->
+<!--													<p style="color: black">Thanh toán bằng Thẻ quốc tế / Thẻ nội địa / QR Code</p>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--											<div class="row" style="padding: 0; margin: 0">-->
+<!--												<div class="col-sm-2">-->
+<!--													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">-->
+<!--												</div>-->
+<!--												<div class="col-sm-10">-->
+<!--													<p style="color: black">Thanh toán bằng ví MoMo</p>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
 										<div class="col-12" style="margin-top: 20px">
 											<div class="btn-box">
 												<button class="btn-shipping" ng-click="gioHang.purchase()">Xác nhận</button>
