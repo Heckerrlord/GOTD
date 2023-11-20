@@ -79,60 +79,62 @@
 										<td class="align-middle name" th:text="${detail.soLuong}"></td>
 										<td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia,0,'COMMA',2,'POINT')}]]</td>
 										<td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia * detail.soLuong,0,'COMMA',2,'POINT')}]]</td>
-										<td th:if="${order.trangThai == 4}"><a type="button" class="rating-button" data-bs-toggle="modal" data-bs-target="#sizeGuideModal">
-											<span class="star">&#9733;</span> Đánh giá
-										</a> </td>
-										<div class="modal fade" id="sizeGuideModal" tabindex="-1"
-											 aria-labelledby="sizeGuideModalLabel" aria-hidden="true">
-											<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="addressModalLabel">Đánh giá sản phẩm</h5>
-													</div>
-													<div class="modal-header">
-														<a th:href="@{|/product/detail/${detail.chiTietSanPham.sanPham.ma}|}">
-															<img style="width: 60px;height: 60px;font-weight: bold " th:src="@{|/assets/images/${detail.chiTietSanPham.sanPham.image[0].ma}|}"  />
-															[[${detail.chiTietSanPham.sanPham.ten}]][[${detail.soLuong}]]
-														</a>
-													</div>
-													<div class="modal-body">
-														<form action="#">
-															<div class="row">
-																<div class="col-md-12">
-																	Chất lượng sản phẩm: <span ng-repeat="star in stars" ng-click="setStar(star)" style="cursor: pointer;">
-                               											 <i class="fa" ng-class="{'fa-star': star <= rating, 'fa-star-o': star > rating}" style="color: #ffd43b; font-size: 15px"></i></span>
-																</div>
-																<br><br><br>
-																<div class="col-md-12">
-																	<div class="form-group">
-																		<label for="for_comment">Bình luận</label>
-																		<textarea id="for_comment" ng-model="formRate.comment" class="form-control" rows="7" placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé"></textarea>
-																	</div>
-																</div>
-															</div>
-														</form>
-													</div>
-													<div class="modal-footer">
-														<div class="card-header text-center">
-															<button type="button" class="btn btn-secondary"
-									data-bs-dismiss="modal">Đóng</button>
-															<a th:attr="ng-click='Reviews(\'' + *{chiTietSanPham.sanPham.ma} + '\', user)'">
-                                                                <button class="btn btn-danger">Gửi đánh giá</button>
-                                                            </a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
+										<td th:if="${order.trangThai == 4}">
+											<a type="button" class="rating-button" data-bs-toggle="modal" th:attr="data-bs-target='#sizeGuideModal' + ${detail.chiTietSanPham.sanPham.ma}">
+												<span class="star">&#9733;</span> Đánh giá
+											</a>
+										</td>
+
+
 									</tr>
 									</tbody>
-
-
 								</table>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<div th:each="detail : ${order.chiTietDonHangList}" th:object="${detail}" th:id="'sizeGuideModal' + ${detail.chiTietSanPham.sanPham.ma}" class="modal fade" tabindex="-1" aria-labelledby="sizeGuideModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="addressModalLabel">Đánh giá sản phẩm</h5>
+								</div>
+								<div class="modal-header">
+									<a target="_blank" th:href="@{|/product/detail/${detail.chiTietSanPham.sanPham.ma}|}">
+										<img style="width: 60px;height: 60px;font-weight: bold " th:src="@{|/assets/images/${detail.chiTietSanPham.sanPham.image[0].ma}|}"  />
+										[[${detail.chiTietSanPham.sanPham.ten}]] X[[${detail.soLuong}]]
+									</a>
+								</div>
+								<div class="modal-body">
+									<form action="#">
+										<div class="row">
+											<div class="col-md-12">
+												Chất lượng sản phẩm: <span ng-repeat="star in stars" ng-click="setStar(star)" style="cursor: pointer;">
+                               					<i class="fa" ng-class="{'fa-star': star <= rating, 'fa-star-o': star > rating}" style="color: #ffd43b; font-size: 15px"></i></span>
+											</div>
+											<br><br><br>
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="for_comment">Bình luận</label>
+													<textarea id="for_comment" ng-model="formRate.comment" class="form-control" rows="7" placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé"></textarea>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<div class="card-header text-center">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+										<a th:attr="ng-click='Reviews(\'' + *{chiTietSanPham.sanPham.ma} + '\', user)'">
+											<button class="btn btn-danger">Gửi đánh giá</button>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 			</section>
 			<a th:href="@{/order/list}" class="btn-theme pull-right my-2">Quay lại giỏ hàng</a>
 		</div>
