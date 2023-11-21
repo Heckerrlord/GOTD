@@ -86,18 +86,21 @@
                                             <!-- Kiểm tra xem averageRating có phải là null hay không -->
                                             <span th:if="${averageRating != null}">
                                                     <span th:each="star : ${#numbers.sequence(1, averageRating)}">
-                                                        <i class="fa fa-star" style="color: #ffd43b;"></i>
+                                                        <i class="fa fa-star" style="font-size: 24px; color: #ffd43b;"></i>
                                                     </span>
+                                                       <!-- Chuyển đổi thành kiểu thực và kiểm tra nếu có phần thập phân -->
                                                     <span th:if="${averageRating % 1 != 0}">
-                                                        <i class="fa fa-star-half" style="color: #ffd43b;"></i>
+                                                        <i class="fa fa-star-half" style="font-size: 24px; color: #ffd43b;"></i>
                                                     </span>
-                                            </span>
-                                            <!-- Xử lý khi averageRating là null -->
-                                            <span th:unless="${averageRating != null}">
-                                                <p>No rating available</p>
-                                            </span>
+                                                </span>
+                                                    <!-- Xử lý khi averageRating là null -->
+                                                <span th:unless="${averageRating != null}">
+                                                    <p>No rating available</p>
+                                                </span>
                                         </div>
                                     </div>
+
+
 
 
 
@@ -208,7 +211,7 @@
                                                     <p style="font-style: italic; font-family: 'Be Vietnam Pro', sans-serif;font-size: 20px">
                                                         {{ review.account.fullname}}</p>
                                                     <p>{{ review.ngayCmt | date:'HH:mm dd-MM-yyyy' }}</p>
-                                                    <i class="fa fa-star" style="color: #ffd43b;"
+                                                    <i class="fa fa-star" style="font-size: 24px; color: #ffd43b;"
                                                        ng-repeat="star in [].constructor(review.sao) track by $index"></i>
                                                     <br>
                                                     <span>{{review.comment}}</span>
