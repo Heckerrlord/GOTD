@@ -2,6 +2,7 @@ package com.poly.controller;
 
 import com.poly.dao.CTSPDAO;
 import com.poly.dao.DSYTDAO;
+import com.poly.dao.DanhGiaDAO;
 import com.poly.dao.daoPhu.KichCoDAO;
 import com.poly.dao.daoPhu.MauSacDAO;
 import com.poly.entity.ChiTietSanPham;
@@ -49,6 +50,9 @@ public class ProductController {
 	@Autowired
 	private DSYTDAO dsytdao;
 
+	@Autowired
+	private DanhGiaDAO danhGiaDAO;
+
 
 
 	@GetMapping("/product/detail/{sanPhamMa}")
@@ -68,11 +72,14 @@ public class ProductController {
 		} else {
 			item = pdao.findFirstBySanPhamMa(sanPhamMa);
 		}
+		Double averageRating = danhGiaDAO.findAverageRatingByMaSanPham(sanPhamMa);
+		averageRating = (averageRating != null) ? averageRating : 5;
 		List<DanhSachYeuThich> list1 = dsytdao.findAll();
 		model.addAttribute("favorite",list1);
 		model.addAttribute("m", mdao.findMauSacByMaSanPham(item.getSanPham().getMa()));
 		model.addAttribute("kc", kcdao.findKichCoByMaSanPham(item.getSanPham().getMa()));
 		model.addAttribute("item", item);
+		model.addAttribute("averageRating",averageRating);
 		return "product/detail";
 	}
 
