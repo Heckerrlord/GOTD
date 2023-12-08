@@ -53,6 +53,7 @@ app.controller("colors-ctrl", function ($scope, $http) {
     //cap nhat sp
     $scope.update = function () {
         var item = angular.copy($scope.form);
+        console.log(item)
         $http.put(`${url}/${item.id}`, item).then(resp => {
             var index = $scope.items.findIndex(p => p.id == item.id);
             $scope.items[index] = item;

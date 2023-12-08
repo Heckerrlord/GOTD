@@ -15,5 +15,7 @@ public interface DonHangCTDAO extends JpaRepository<DonHangChiTiet, Long> {
              Integer trangThai
     );
 
+    @Query("SELECT p.chiTietSanPham.sanPham.id FROM DonHangChiTiet p WHERE p.donHang.id IN :orderId GROUP BY p.chiTietSanPham.sanPham.id ORDER BY SUM(p.soLuong) DESC")
+    List<Integer> getProductIdList(List<Long> orderId);
 
 }
