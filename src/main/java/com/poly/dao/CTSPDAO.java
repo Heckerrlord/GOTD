@@ -2,8 +2,12 @@ package com.poly.dao;
 
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.MauSac;
+import com.poly.model.dto.ChiTietSanPhamDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -20,9 +24,49 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
     List<ChiTietSanPham> findFavorite(String username);
 
     ChiTietSanPham findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(String sp, String kc, String ms);
+
     ChiTietSanPham findFirstBySanPhamMaAndKichCoCode(String sp, String kc);
+
     ChiTietSanPham findFirstBySanPhamMaAndMauSacCode(String sp, String ms);
+
     ChiTietSanPham findFirstBySanPhamMa(String ma);
+
     List<ChiTietSanPham> findAllBySanPhamMa(String ma);
+
     List<ChiTietSanPham> findAllByMauSac(MauSac mauSac);
+
+    @Query(value =
+            "SELECT * FROM ChiTietSanPham " +
+                    "WHERE (COALESCE(:maThuongHieu, '') = '' OR MaThuongHieu = :maThuongHieu) " +
+                    "AND (COALESCE(:maMau, '') = '' OR MaMau = :maMau) " +
+                    "AND (COALESCE(:maKichCo, '') = '' OR MaKichCo = :maKichCo) " +
+                    "AND (COALESCE(:minGiaBan, '') = '' OR GiaBan >= :minGiaBan) " +
+                    "AND (COALESCE(:maxGiaBan, '') = '' OR GiaBan <= :maxGiaBan)",
+            countQuery =
+                    "SELECT COUNT(*) FROM ChiTietSanPham " +
+                            "WHERE (COALESCE(:maThuongHieu, '') = '' OR MaThuongHieu = :maThuongHieu) " +
+                            "AND (COALESCE(:maMau, '') = '' OR MaMau = :maMau) " +
+                            "AND (COALESCE(:maKichCo, '') = '' OR MaKichCo = :maKichCo) " +
+                            "AND (COALESCE(:minGiaBan, '') = '' OR GiaBan >= :minGiaBan) " +
+                            "AND (COALESCE(:maxGiaBan, '') = '' OR GiaBan <= :maxGiaBan)",
+            nativeQuery = true)
+    Page<ChiTietSanPham> getListCTSP(String maThuongHieu, String maMau, String maKichCo, Long minGiaBan, Long maxGiaBan, Pageable pageable);
+
+
+    @Query(value = "SELECT * \n" +
+            "FROM ChiTietSanPham c\n" +
+            "INNER JOIN ThuongHieu th ON c.MaThuongHieu = th.Ma\n" +
+            "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma\n" +
+            "INNER JOIN MauSac ms ON c.MaMau = ms.Ma\n" +
+            "WHERE (th.Ten IN (SELECT value FROM STRING_SPLIT(?1,',')) OR COALESCE(?1, '') = '')\n" +
+            "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?2,',')) OR COALESCE(?2, '') = '')\n" +
+            "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '')\n" +
+            "AND c.GiaBan BETWEEN COALESCE(?4, 0) AND COALESCE(?5, 999999999)", nativeQuery = true)
+    List<ChiTietSanPham> findByFilters(String brandNames,
+                                       String sizes,
+                                       String colors,
+                                       Long minPrice,
+                                       Long maxPrice);
+
+
 }

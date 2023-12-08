@@ -5,10 +5,7 @@ import com.poly.dao.DSYTDAO;
 import com.poly.dao.DanhGiaDAO;
 import com.poly.dao.daoPhu.KichCoDAO;
 import com.poly.dao.daoPhu.MauSacDAO;
-import com.poly.entity.ChiTietSanPham;
-import com.poly.entity.DanhSachYeuThich;
-import com.poly.entity.CoAo;
-import com.poly.entity.ThuongHieu;
+import com.poly.entity.*;
 import com.poly.service.CTSPService;
 import com.poly.service.serPhu.CoAoService;
 import com.poly.service.serPhu.KichCoService;
@@ -83,29 +80,10 @@ public class ProductController {
 		return "product/detail";
 	}
 
-
-//	@RequestMapping("/product/detail/{id}")
-//	public String detail(Model model, @PathVariable("id") Long id) {
-//		ChiTietSanPham item = productService.findById(id);
-//		List<MauSac> m = mausacService.findAll();
-//		List<KichCo> kc = kichcoService.findAll();
-//
-//
-//
-//
-//
-//		model.addAttribute("item", item);
-//		model.addAttribute("m", m);
-//		model.addAttribute("kc", kc);
-//		List<DanhSachYeuThich> list1 = dsytdao.findAll();
-//		model.addAttribute("favorite",list1);
-//		return "product/detail";
-//	}
-
-
 	@GetMapping("/sanpham")
 	public String getShopPage(Model model) {
 		// Get list brand
+
 		List<ThuongHieu> brands = thuongHieuService.findAll();
 		model.addAttribute("brands", brands);
 		ArrayList<Integer> brandIds = new ArrayList<Integer>();
@@ -113,16 +91,17 @@ public class ProductController {
 			brandIds.add(brand.getId());
 		}
 		model.addAttribute("brandIds", brandIds);
+
 		// Get list category
-		List<CoAo> coAos = coAoService.findAll();
-		model.addAttribute("categories", coAos);
+		List<KichCo> kichCos = kichcoService.findAll();
+		model.addAttribute("categories", kichCos);
 		ArrayList<Integer> categoryIds = new ArrayList<Integer>();
-		for (CoAo category : coAos) {
+		for (KichCo category : kichCos) {
 			categoryIds.add(category.getId());
 		}
-		// Get list color
-//		List<MauSac> colors = mauSacService.findAll();
-//		model.addAttribute("colors", colors);
+
+
+
 		List<ChiTietSanPham> list = pdao.findDistinctByMasp();
 		model.addAttribute("items", list);
 		List<DanhSachYeuThich> list1 = dsytdao.findAll();

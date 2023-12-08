@@ -4,6 +4,8 @@ import com.poly.dao.CTSPDAO;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.service.CTSPService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,4 +44,21 @@ public class CTSPServiceImpl implements CTSPService {
 	public List<ChiTietSanPham> findFavorites(String username) {
 		return pdao.findFavorite(username);
 	}
+
+	@Override
+	public Page<ChiTietSanPham> getListCTSP(String maThuongHieu, String maMau, String maKichCo, Long minGiaBan, Long maxGiaBan, Pageable pageable) {
+		return pdao.getListCTSP(maThuongHieu,maMau,maKichCo,minGiaBan,maxGiaBan,pageable);
+	}
+
+	@Override
+	public List<ChiTietSanPham> findByFilters(String brandNames, String sizes, String colors, Long minPrice, Long maxPrice) {
+		return pdao.findByFilters(brandNames,sizes,colors,minPrice,maxPrice);
+	}
+
+	@Override
+	public List<ChiTietSanPham> findDistinctByMasp() {
+		return pdao.findDistinctByMasp();
+	}
+
+
 }
