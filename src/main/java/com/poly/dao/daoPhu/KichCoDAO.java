@@ -10,7 +10,8 @@ import java.util.List;
 public interface KichCoDAO extends JpaRepository<KichCo, Integer> {
     @Query("SELECT DISTINCT m FROM KichCo m JOIN m.LkichCo c WHERE c.sanPham.ma = :maSanPham")
     List<KichCo> findKichCoByMaSanPham(@Param("maSanPham") String maSanPham);
-
+    @Query("SELECT DISTINCT m FROM KichCo m JOIN m.LkichCo c WHERE c.sanPham.ma = :maSanPham and c.mauSac.code =:mauSac")
+    List<KichCo> findKichCoByMaSanPhamaAndMauSac(@Param("maSanPham") String maSanPham, String mauSac);
 
         @Query("SELECT kc FROM KichCo kc " +
                 "JOIN ChiTietSanPham ctsp ON kc.code = ctsp.kichCo.code " +

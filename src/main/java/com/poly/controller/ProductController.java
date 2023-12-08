@@ -59,6 +59,8 @@ public class ProductController {
 			@RequestParam(required = false) String size,
 			@RequestParam(required = false) String color
 	) {
+		Double averageRating = danhGiaDAO.findAverageRatingByMaSanPham(sanPhamMa);
+		averageRating = (averageRating != null) ? averageRating : 5;
 		ChiTietSanPham item;
 		if (size != null && color != null) {
 			item = pdao.findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(sanPhamMa,size,color);
@@ -69,12 +71,11 @@ public class ProductController {
 		} else {
 			item = pdao.findFirstBySanPhamMa(sanPhamMa);
 		}
-		Double averageRating = danhGiaDAO.findAverageRatingByMaSanPham(sanPhamMa);
-		averageRating = (averageRating != null) ? averageRating : 5;
+
 		List<DanhSachYeuThich> list1 = dsytdao.findAll();
 		model.addAttribute("favorite",list1);
 		model.addAttribute("m", mdao.findMauSacByMaSanPham(item.getSanPham().getMa()));
-		model.addAttribute("kc", kcdao.findKichCoByMaSanPham(item.getSanPham().getMa()));
+		model.addAttribute("kc", kcdao.findAll());
 		model.addAttribute("item", item);
 		model.addAttribute("averageRating",averageRating);
 		return "product/detail";

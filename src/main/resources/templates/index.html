@@ -56,8 +56,7 @@
 								<div class="product-item">
 									<div class="inner-content">
 										<div class="product-thumb">
-											<a th:href="@{|/product/detail/${p.sanPham.ma}|}"
-											ng-click="searchDetail()">
+											<a th:href="@{|/product/detail/${p.sanPham.ma}|}">
 												<img class="product-item m-auto d-block" th:src="@{|/assets/images/${p.sanPham.getImage().get(0).ma}|}"
 													 th:title="${p.sanPham.ten}">
 											</a>
@@ -86,8 +85,9 @@
 										<div class="product-desc">
 											<div class="product-info">
 												<h4 class="title">
-													<a th:href="@{|/product/detail/${p.sanPham.ma}|}" ng-click="searchDetail()">[(${p.sanPham.ten})]</a>
+													<a th:href="@{|/product/detail/${p.sanPham.ma}|}" >[(${p.sanPham.ten})]</a>
 												</h4>
+
 
 											</div>
 										</div>

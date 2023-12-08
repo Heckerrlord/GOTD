@@ -3,40 +3,56 @@
 
 <body>
 	<main class="main-content">
+		<div class="page-header-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<div class="page-header-content">
+							<nav class="breadcrumb-area">
+								<ul class="breadcrumb">
+									<li>
+										<a href="/">Trang chủ</a>
+									</li>
+									<li class="breadcrumb-sep">/</li>
+									<li>Thanh toán</li>
+								</ul>
+							</nav>
+							<h4 class="title">Thanh toán</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<section class="product-area product-information-area">
 			<div class="container">
 				<div class="product-information">
 					<div class="row">
-						<div class="edit-checkout-head">
-							<div class="breadcrumb-area">
-								<ul>
-									<li>
-										<a class="active" href="cart.html">Giỏ hàng</a>
-										<i class="fa fa-angle-right"></i>
-									</li>
-									<li>Thanh toán</li>
-								</ul>
-							</div>
-						</div>
+
 						<div class="col-lg-7">
 							<div class="edit-checkout-information">
-
+								<div class="row justify-content-center">
+									<div class="col-md-6">
+										<h5 class="text-center">Thông tin nhận hàng</h5>
+									</div>
+								</div>
 								<div class="edit-checkout-form">
 									<div class="row row-gutter-12">
 										<div class="col-lg-6">
 											<div class="form-floating">
-												<span class="form-control" style="line-height: 2.25;" id="username" ng-model="gioHang.account.username">[[${#request.remoteUser}]]</span>
+												<span class="form-control" style="line-height: 2.25;" id="username" ng-model="gioHang.account.username">{{ $auth.user.username }}</span>
 												<label>Tên tài khoản</label>
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-floating">
-												<input class="form-control" ng-model="gioHang.soDienThoai" value="{{$auth.user.soDienThoai}}" style="line-height: 2.25;">
+												<input class="form-control" ng-model="gioHang.account.soDienThoai" style="line-height: 2.25;">
 												<label>Số Điện Thoại <sup class="text-danger">*</sup> </label>
 												<div ng-show="checkoutForm.soDienThoai.$invalid && checkoutForm.soDienThoai.$dirty">
 													<span style="color: #ff0000;">Số Điện Thoại là trường bắt buộc.</span>
 												</div>
 											</div>
+
+
 										</div>
 										<div class="col-lg-6">
 											<div class="form-floating">
@@ -87,38 +103,11 @@
 
 
 										</div>
-<!--										<div class="col-12">-->
-<!--											<div class="titel-ptgiao-hang" style="background-color: #f1f1f1;margin: 20px 0px 20px 0px;padding: 5px 20px 5px 20px;">-->
-<!--												<p style="color: black; font-size: 23px; font-weight: 700">PHƯƠNG THỨC THANH TOÁN</p>-->
-<!--											</div>-->
-<!--											<div class="row" style="padding: 0; margin: 0">-->
-<!--												<div class="col-sm-2">-->
-<!--													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">-->
-<!--												</div>-->
-<!--												<div class="col-sm-10">-->
-<!--													<p style="color: black">Thanh toán trực tiếp khi giao hàng</p>-->
-<!--												</div>-->
-<!--											</div>-->
-<!--											<div class="row" style="padding: 0; margin: 0">-->
-<!--												<div class="col-sm-2">-->
-<!--													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">-->
-<!--												</div>-->
-<!--												<div class="col-sm-10">-->
-<!--													<p style="color: black">Thanh toán bằng Thẻ quốc tế / Thẻ nội địa / QR Code</p>-->
-<!--												</div>-->
-<!--											</div>-->
-<!--											<div class="row" style="padding: 0; margin: 0">-->
-<!--												<div class="col-sm-2">-->
-<!--													<input class="form-check-input" type="radio" name="Paymentmethods" value="" aria-label="Checkbox for following text input">-->
-<!--												</div>-->
-<!--												<div class="col-sm-10">-->
-<!--													<p style="color: black">Thanh toán bằng ví MoMo</p>-->
-<!--												</div>-->
-<!--											</div>-->
-<!--										</div>-->
+
 										<div class="col-12" style="margin-top: 20px">
 											<div class="btn-box">
 												<button class="btn-shipping" ng-click="gioHang.purchase()">Xác nhận</button>
+												<button class="btn-vnpay" ng-click="gioHang.getPaymentUrl()">VN Pay</button>
 												<a class="btn-return" th:href="@{/cart/view}">Giỏ hàng</a>
 											</div>
 										</div>
@@ -128,6 +117,11 @@
 							</div>
 						</div>
 						<div class="col-lg-5">
+							<div class="row justify-content-center">
+								<div class="col-md-6">
+									<h5 class="text-center">Thông tin đơn hàng</h5>
+								</div>
+							</div>
 							<div class="shipping-cart-subtotal-wrapper">
 								<div class="shipping-cart-subtotal">
 									<div class="shipping-cart-item" ng-repeat="item in cartItems">
@@ -136,18 +130,12 @@
 											<span class="quantity">{{item.soLuong}}</span>
 										</div>
 										<div class="content">
-											<h4 class="title">{{item.sanPham.ten}}</h4>
-											<span class="info">{{item.donGia | number:2}}</span>
-											<span class="price">{{item.soLuong * item.donGia}}</span>
+											<h4 class="title">{{item.chiTietSanPham.sanPham.ten}}</h4>
+											<span class="info">{{item.donGia | number:0}}</span>
+											<span class="price">{{item.soLuong * item.donGia | number:0}} <strong>vnd</strong> </span>
 										</div>
 									</div>
 									<div class="shipping-subtotal">
-										<p>
-											<span>Đơn hàng</span>
-											<span>
-												<strong>{{getSubtotal()}}</strong>
-											</span>
-										</p>
 										<p>
 											<span>Tiền giảm</span>
 											<span>
@@ -168,6 +156,7 @@
 									</div>
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>

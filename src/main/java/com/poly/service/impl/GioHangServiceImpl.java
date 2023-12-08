@@ -37,19 +37,13 @@ public class GioHangServiceImpl implements GioHangService {
 	public GioHang update(Long id, GioHang updatedOrder) {
 		// Kiểm tra xem đơn hàng có tồn tại hay không
 		Optional<GioHang> existingOrder = dao.findById(id);
-
 		if (existingOrder.isPresent()) {
 			// Lấy đơn hàng hiện tại
 			GioHang currentOrder = existingOrder.get();
-
-			// Cập nhật thông tin đơn hàng với thông tin từ updatedOrder
-			// ...
-
 			// Lưu đơn hàng đã cập nhật vào cơ sở dữ liệu
 			return dao.save(currentOrder);
 		} else {
 			// Xử lý khi đơn hàng không tồn tại
-			// ...
 			return null;
 		}
 	}
@@ -74,4 +68,6 @@ public class GioHangServiceImpl implements GioHangService {
 	public void delete(Long id){
 		dao.deleteById(id);
 	}
+
+
 }

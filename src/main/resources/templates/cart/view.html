@@ -48,7 +48,7 @@
 										<h4 class="title">{{item.chiTietSanPham.sanPham.ten}}</h4>
 									</td>
 									<td class="indecor-product-price">
-										<span class="price">{{item.donGia}}</span>
+										<span class="price">{{item.donGia | number:0}}</span>
 									</td>
 									<td class="indecor-product-price">
 										<span class="kichCo">{{item.chiTietSanPham.kichCo.name}}</span>
@@ -60,7 +60,7 @@
 										<input type="number" pattern="[0-9]*" id="spinner" name="value" ng-model="item.soLuong" min="1" max="200" step="1" ng-change="updateCartItem(item)">
 									</td>
 									<td class="indecor-product-subtotal">
-										<span class="price">{{item.soLuong * item.donGia}}</span>
+										<span class="price">{{item.soLuong * item.donGia | number:0}}</span>
 									</td>
 								</tr>
 								<tr ng-if="!cartItems || cartItems.length === 0">
