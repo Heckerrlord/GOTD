@@ -5140,6 +5140,43 @@ input[type="number"] {
   color: #ffd43b; /* Màu vàng của sao */
 }
 
+.danhgia-box {
+  border: 1px solid #e0e0e0; /* Đặt viền cho khung đánh giá */
+  padding: 15px; /* Đặt khoảng trắng bên trong khung đánh giá */
+  margin-bottom: 15px; /* Đặt khoảng cách giữa các khung đánh giá */
+  background-color: #f9f9f9; /* Đặt màu nền cho khung đánh giá */
+  border-radius: 8px; /* Đặt góc bo cho khung đánh giá */
+}
+
+.danhgia {
+  margin-bottom: 10px; /* Đặt khoảng cách giữa mỗi khung đánh giá */
+}
+
+.danhgia p {
+  margin: 0; /* Đặt margin cho đoạn văn bản trong khung đánh giá */
+}
+
+.fa-star {
+  font-size: 24px; /* Đặt kích thước của sao */
+  color: #ffd43b; /* Đặt màu sắc của sao */
+}
+
+.chureview {
+  display: block; /* Đặt dạng hiển thị của đoạn văn bản để xuống dòng */
+}
+.no-review-message {
+  text-align: center; /* Canh giữa nội dung */
+  margin-top: 20px; /* Khoảng cách với các phần khác nếu cần */
+}
+
+.no-review-message p {
+  font-style: italic;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 20px;
+  /* Các thuộc tính CSS khác theo ý muốn của bạn */
+}
+
+
 
 
 

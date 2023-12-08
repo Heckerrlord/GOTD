@@ -117,4 +117,9 @@ public class AccountServiceImpl implements AccountService {
 		entity.setPassword(newPassword);
 		adao.save(entity);
 	}
+
+	@Override
+	public Integer getSoLuongAc() {
+		return adao.getSoluong();
+	}
 }

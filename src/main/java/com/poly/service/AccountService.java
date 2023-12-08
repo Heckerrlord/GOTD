@@ -32,4 +32,6 @@ public interface AccountService {
 	void updatePassword(Account entity, String newPassword);
 
 	void changePassword(Account entity, String newPassword);
+
+	Integer getSoLuongAc();
 }

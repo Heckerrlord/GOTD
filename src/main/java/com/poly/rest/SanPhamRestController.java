@@ -38,4 +38,9 @@ public class SanPhamRestController {
     public void delete(@PathVariable("id") Integer id) {
         sanPhamService.delete(id);
     }
+
+    @GetMapping("/soluong")
+    public Integer getSoluong(){
+        return sanPhamService.getSoLuongSp();
+    }
 }

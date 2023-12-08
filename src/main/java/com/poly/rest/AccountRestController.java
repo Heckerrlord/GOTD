@@ -33,6 +33,10 @@ public class AccountRestController {
 		}
 		return accountService.findAll();
 	}
+	@GetMapping("/soluong")
+	public Integer getSoluong(){
+		return accountService.getSoLuongAc();
+	}
 
 	@GetMapping("{id}")
 	public Account getOne(@PathVariable("id") String id) {

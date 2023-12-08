@@ -37,4 +37,9 @@ public class SanPhamServiceImpl implements SanPhamService {
     public void delete(Integer id) {
         pdao.deleteById(id);
     }
+
+    @Override
+    public Integer getSoLuongSp() {
+        return pdao.getSoLuongSP();
+    }
 }

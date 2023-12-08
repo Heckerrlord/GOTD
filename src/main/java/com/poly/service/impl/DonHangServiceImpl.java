@@ -1,5 +1,7 @@
 package com.poly.service.impl;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,4 +43,44 @@ public class DonHangServiceImpl implements DonHangService {
 	public List<DonHang> findByUsername(String username) {
 		return dao.findByUsername(username);
 	}
+
+	@Override
+	public List<Object[]> getDoanhThuThang(int year) {
+		return dao.getDoanhThuThang(year);
+	}
+
+	@Override
+	public List<Integer> getYear() {
+		return dao.getYear();
+	}
+
+	@Override
+	public Double getDoamhThuNam(int year) {
+		return dao.getDoamhThuNam(year);
+	}
+
+	@Override
+	public Double thongKeDoanhThu7NgayGanNhat(LocalDateTime sevenDaysAgo, LocalDateTime currentDate) {
+		Timestamp sevenDaysAgoTimestamp = Timestamp.valueOf(sevenDaysAgo);
+		Timestamp currentDateTimestamp = Timestamp.valueOf(currentDate);
+
+		return dao.thongKeDoanhThu7NgayGanNhat(sevenDaysAgoTimestamp, currentDateTimestamp);
+	}
+
+	@Override
+	public Double thongKeThangHienTai() {
+		return dao.thongKeThangHienTai();
+	}
+
+	@Override
+	public Integer getSoLuongDon() {
+		return dao.getSoLuongDon();
+	}
+
+	@Override
+	public List<Object[]> thongkeNgay() {
+		return dao.thongkeNgay();
+	}
+
+
 }
