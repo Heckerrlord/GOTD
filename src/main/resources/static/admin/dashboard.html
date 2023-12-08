@@ -27,8 +27,8 @@
 											<i class="fas fa-tasks text-gradient-success"></i>
 										</div>
 										<div class="col-10 text-right">
-											<h5 class="mt-0 mb-1">190</h5>
-											<p class="mb-0 font-12 text-muted">Products</p>
+											<h5 class="mt-0 mb-1">{{soLuongSanPham}}</h5>
+											<p class="mb-0 font-12 text-muted">Sản phẩm</p>
 										</div>
 									</div>
 								</div>
@@ -44,8 +44,8 @@
 											<i class="far fa-gem text-gradient-danger"></i>
 										</div>
 										<div class="col-10 text-right">
-											<h5 class="mt-0 mb-1">62</h5>
-											<p class="mb-0 font-12 text-muted">Categories</p>
+											<h5 class="mt-0 mb-1">{{soLuongDon}}</h5>
+											<p class="mb-0 font-12 text-muted">Dơn hàng</p>
 										</div>
 									</div>
 								</div>
@@ -61,8 +61,8 @@
 											<i class="fas fa-users text-gradient-warning"></i>
 										</div>
 										<div class="col-10 text-right">
-											<h5 class="mt-0 mb-1">14</h5>
-											<p class="mb-0 font-12 text-muted">Account</p>
+											<h5 class="mt-0 mb-1">{{soLuongTaiKhoan}}</h5>
+											<p class="mb-0 font-12 text-muted">Tài khoản</p>
 										</div>
 									</div>
 								</div>
@@ -78,8 +78,8 @@
 											<i class="fas fa-database text-gradient-primary"></i>
 										</div>
 										<div class="col-10 text-right">
-											<h5 class="mt-0 mb-1">$15,421.50</h5>
-											<p class="mb-0 font-12 text-muted">Revenue</p>
+											<h5 class="mt-0 mb-1">{{doanhHientai}} VNĐ</h5>
+											<p class="mb-0 font-12 text-muted">Doanh thu</p>
 										</div>
 									</div>
 								</div>
@@ -89,100 +89,52 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xl-4">
+
+		<div class="row" >
+			<div class="col-lg-3">
+				<h2>Doanh thu</h2>
 				<div class="card">
 					<div class="card-body">
-						<h5 class="header-title pb-3 mt-0">New Account</h5>
-						<div class="table-responsive boxscroll" style="overflow: hidden; outline: none;">
-							<div class="media">
-								<img src="/assetss/img/avatar.jpg" class="thumb-md rounded-circle">
-								<div class="media-body ml-2">
-									<p class="mb-0">Roy Saunders</p>
-									<span class="font-12 text-muted">CEO of facebook</span>
-								</div>
-							</div>
-						</div>
+						<div>
+							<label class="form-label">Chọn năm:</label>
+							<select class="form-control" id="selectedYear" ng-model="selectedYear"
+									ng-options="year for year in years" ng-change="getDoanhThuThang(selectedYear)">
+							</select>
+							<br>
+							<button class="btn btn-primary" ng-click="exportDoanhThuThangToExcel()">Xuất Excel</button>
+							<br>
+							<label class="form-label" >Chọn ngày bắt đầu:</label>
+							<input class="form-control" type="date" ng-model="sevenDaysAgo">
+
+							<label class="form-label">Chọn ngày kết thúc:</label>
+							<input class="form-control" type="date" ng-model="currentDate">
+							<br>
+							<button class="btn btn-primary" ng-click="xemTheoKhoang()">Xem Doanh Thu</button>
+					</div>
+				</div>
+			  </div>
+				<div class="card" ng-show="showDateRange">
+					<div class="card-body">
+						<span>Doanh thu từ ngày {{formattedStartDate}} đến ngày {{formattedEndDate}}: <b>{{doanhThuKhoangThoiGian}} VNĐ</b></span>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-4 col-lg-6">
+			<div class="col-xl-9 " >
 				<div class="card">
 					<div class="card-body">
-						<h5 class="header-title mb-4 mt-0">Revenue</h5>
-						<h4 class="mb-4">$15,421.50</h4>
+
+						<h5 class="header-title mb-4 mt-0">Doanh thu năm:{{selectedYear}}</h5>
+						<canvas id="barChart" width="200" height="100"></canvas>
+						<br>
+						<p style="text-align: center;font-size: 20px">Biểu đồ thể hiện doanh thu các tháng trong năm {{selectedYear}} </p>
 					</div>
 				</div>
 				<div class="card">
 					<div class="card-body">
-						<div class="d-sm-flex align-self-center">
-							<img src="/assetss/img/code.svg" alt="" class="" height="100">
-							<div class="media-body ml-3">
-								<h6>Code Confirmed</h6>
-								<p class="text-muted font-13 ">Contrary to popular belief, generators on Lorem Ipsum is
-									not
-									simply random text.</p>
-								<a href="#" class="btn btn-gradient-secondary">Confirm</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4  col-lg-6">
-				<div class="card timeline-card">
-					<div class="card-body p-0">
-						<div class="bg-gradient2 text-white text-center py-3 mb-4">
-							<p class="mb-0 font-18">
-								<i class="mdi mdi-clock-outline font-20"></i> This Week's Activity
-							</p>
-						</div>
-					</div>
-					<div class="card-body boxscroll">
-						<div class="timeline">
-							<div class="entry">
-								<div class="title">
-									<h6>9/ Oct</h6>
-								</div>
-								<div class="body">
-									<p>All the Lorem Ipsum generators on the predefined chunks as...
-										<a href="#" class="text-primary"> Read More</a>
-									</p>
-								</div>
-							</div>
-							<div class="entry">
-								<div class="title">
-									<h6>8/ Oct</h6>
-								</div>
-								<div class="body">
-									<p>Contrary to popular belief, Lorem Ipsum is not simply random text.....
-										<a href="#" class="text-primary"> Read More</a>
-									</p>
-								</div>
-							</div>
-							<div class="entry">
-								<div class="title">
-									<h6>7/ Oct</h6>
-								</div>
-								<div class="body">
-									<p class="pb-1">Many desktop publishing packages and web page editors now.....
-										<a href="#" class="text-primary"> Read More</a>
-									</p>
-								</div>
-							</div>
-							<div class="entry">
-								<div class="title">
-									<h6>6/ Oct</h6>
-								</div>
-								<div class="body">
-									<p class="pb-1 mb-0">All the Lorem Ipsum generators on the predefined chunks...
-										<a href="#" class="text-primary"> Read More</a>
-									</p>
-								</div>
-							</div>
-						</div>
+						<canvas id="myLineChart" width="400" height="200"></canvas>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+	</div>

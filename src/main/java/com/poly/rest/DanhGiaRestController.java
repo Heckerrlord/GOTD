@@ -23,6 +23,13 @@ public class DanhGiaRestController {
         return danhGiaService.getDanhGiaByMaSp(ma);
     }
 
+    @GetMapping("/check/{maSanPham}")
+    public ResponseEntity<?> checkReview(@PathVariable String maSanPham, @RequestParam String username) {
+        boolean hasReviewed = danhGiaService.findByUserAndProduct(maSanPham, username);
+        return ResponseEntity.ok(hasReviewed);
+    }
+
+
     @PostMapping("/{maSp}")
     public DanhGia createDanhGia(@RequestBody DanhGia danhGia,  String user, String maSp) {
         return danhGiaService.create(danhGia, user, maSp);

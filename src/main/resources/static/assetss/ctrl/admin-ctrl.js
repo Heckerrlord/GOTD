@@ -1,4 +1,4 @@
-app = angular.module("admin-app", ["ngRoute"]);
+var app = angular.module("admin-app", ["ngRoute"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
@@ -9,6 +9,10 @@ app.config(function ($routeProvider) {
         .when("/product", {
             templateUrl: "/admin/product/index.html",
             controller: "product-ctrl"
+        })
+        .when("/doanhthu", {
+            templateUrl: "/admin/doanhthu/index.html",
+            controller: "an-ctrl"
         })
         //bd
         .when("/color", {
@@ -64,7 +68,9 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/sanpham/index.html",
             controller: "sanpham-ctrl"
         })
+
         .otherwise({
-            templateUrl: "/admin/dashboard.html"
+            templateUrl: "/admin/dashboard.html",
+            controller: "diachi-ctrl"
         });
 });

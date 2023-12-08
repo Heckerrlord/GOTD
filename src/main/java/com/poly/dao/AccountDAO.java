@@ -29,5 +29,8 @@ public interface AccountDAO extends JpaRepository<Account, String> {
 //	@Query(value = "SELECT count(a.username) FROM Accounts a", nativeQuery = true)
 //	Integer countAllAccount();
 
+	@Query(value = "SELECT COUNT(*) FROM Accounts WHERE TrangThai = 0",nativeQuery = true)
+	Integer getSoluong();
+
 
 }

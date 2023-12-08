@@ -103,7 +103,6 @@
 
 
 
-
                                     <div class="form-group">
                                         <select class="form-control" name="color" id="color" ng-model="selectedMauSac"
                                                 ng-change="searchDetail()">
@@ -206,19 +205,23 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <br><br>
-                                            <div class="rating-box" ng-repeat="review in reviews ">
-                                                <div class="rating">
-                                                    <p style="font-style: italic; font-family: 'Be Vietnam Pro', sans-serif;font-size: 20px">
-                                                        {{ review.account.fullname}}</p>
-                                                    <p>{{ review.ngayCmt | date:'HH:mm dd-MM-yyyy' }}</p>
+                                            <div ng-if="reviews.length > 0" ng-repeat="review in reviews" class="danhgia-box">
+                                                <div class="danhgia">
+                                                    <p style="font-style: italic; font-family: 'Be Vietnam Pro', sans-serif; font-size: 20px">
+                                                        {{ review.account.fullname }}</p>
+                                                    <p>{{ review.ngayCmt | date:'h:mm a | dd-MM-yyyy' }}</p>
                                                     <i class="fa fa-star" style="font-size: 24px; color: #ffd43b;"
                                                        ng-repeat="star in [].constructor(review.sao) track by $index"></i>
                                                     <br>
-                                                    <span>{{review.comment}}</span>
+                                                    <span class="chureview">{{ review.comment }}</span>
                                                 </div>
                                             </div>
-
+                                            <div ng-if="reviews.length === 0" class="no-review-message">
+                                                <p class="text-center">Chưa có đánh giá nào cho sản phẩm này.</p>
+                                            </div>
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>

@@ -7,4 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface SanPhamDAO extends JpaRepository<SanPham,Integer> {
     @Query("SELECT  a FROM SanPham a where a.ma=:ma")
     SanPham findSanPhamByMa(String ma);
+
+    @Query(value = "SELECT COUNT(*) FROM SanPham WHERE TrangThai = 0",nativeQuery = true)
+    Integer getSoLuongSP();
 }

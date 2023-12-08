@@ -58,8 +58,8 @@ public class DanhSYTController {
         }
 
         // Get list color
-        List<MauSac> sizeVn = mauSacService.findAll();
-        model.addAttribute("sizeVn", sizeVn);
+        /*List<MauSac> sizeVn = mauSacService.findAll();
+        model.addAttribute("sizeVn", sizeVn);*/
 
         List<ChiTietSanPham> list = pdao.findFavorite(request.getRemoteUser());
         model.addAttribute("items", list);

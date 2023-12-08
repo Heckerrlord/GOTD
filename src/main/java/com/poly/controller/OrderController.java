@@ -2,8 +2,10 @@ package com.poly.controller;
 
 
 
+import com.poly.dao.DanhGiaDAO;
 import com.poly.dao.DonHangDAO;
 import com.poly.dao.daoPhu.MaGiamGiaDAO;
+import com.poly.entity.DanhGia;
 import com.poly.entity.DonHang;
 import com.poly.entity.MaGiamGia;
 import com.poly.service.DonHangService;
@@ -25,6 +27,9 @@ public class OrderController {
 
 	@Autowired
 	DonHangDAO DHDao;
+
+	@Autowired
+	DanhGiaDAO danhGiaDAO;
 	@Autowired
     HttpServletRequest request;
 	@Autowired
@@ -46,7 +51,7 @@ public class OrderController {
 	}
 
 	@RequestMapping("/order/list")
-	public String list(Model model, HttpServletRequest request) {
+	public String list(Model model, HttpServletRequest request, String ma) {
 		String username = request.getRemoteUser();
 		model.addAttribute("orders", DHDao.findByUsername(username));
 		model.addAttribute("choxacnhan",DHDao.findByUsernameAndTrangThai(username,0));
@@ -54,6 +59,7 @@ public class OrderController {
 		model.addAttribute("dahuy", DHDao.findByUsernameAndTrangThai(username,2));
 		model.addAttribute("vanchuyen", DHDao.findByUsernameAndTrangThai(username,3));
 		model.addAttribute("hoanthanh", DHDao.findByUsernameAndTrangThai(username,4));
+
 		return "order/index";
 	}
 
@@ -66,7 +72,7 @@ public class OrderController {
 	}
 
 	@RequestMapping("/order/detail/{id}")
-	public String detail(@PathVariable("id") Long id, Model model) {
+	public String detail(@PathVariable("id") Long id, Model model,String ma) {
 		model.addAttribute("order", DHService.findById(id));
 		return "order/detail";
 	}

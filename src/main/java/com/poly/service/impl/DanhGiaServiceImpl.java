@@ -29,9 +29,13 @@ public class DanhGiaServiceImpl implements DanhGiaService {
     }
 
     @Override
-    public List<DanhGia> findByIdSP(Integer id) {
-        return danhGiaDAO.getDanhGiaByid(id);
+    public Boolean findByUserAndProduct(String ma, String username) {
+        List<DanhGia> danhGiaList = danhGiaDAO.getDanhGiaByUser(ma, username);
+
+        // Kiểm tra xem danhGiaList có đánh giá từ user cụ thể cho sản phẩm không
+        return danhGiaList != null && !danhGiaList.isEmpty();
     }
+
 
     @Override
     public DanhGia create(DanhGia danhGia, String user, String maSp) {
