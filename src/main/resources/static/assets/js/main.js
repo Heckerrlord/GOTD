@@ -199,7 +199,21 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                     sweetalert("Đã xảy ra lỗi khi đặt hàng!");
                     console.log("Error", error);
                 });
-        }
+        },
+        getPaymentUrl : function() {
+            if (confirm("Bạn có chắc chắn muốn thanh toán không?")) {
+                $http.get('rest/payments/pay', {
+                    params: { price: $scope.getTotalMoney() },
+                    transformResponse: function(data, headers) {
+                        return data;
+                    },
+                    responseType: 'text'
+                }).then(function(response) {
+                    window.location.href = response.data;
+                }).catch(function(error) {
+                    console.error('Đã xảy ra lỗi:', error);
+                });
+            }}
     };
 
 
