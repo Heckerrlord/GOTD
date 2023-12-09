@@ -75,7 +75,7 @@
 									<div class="content">
 										<h5 class="title">{{item.chiTietSanPham.sanPham.ten}}</h5>
 										<span class="product-quantity">x{{item.soLuong}}</span>
-										<span class="product-price">{{item.donGia | number:2}}</span>
+										<span class="product-price">{{item.donGia | number:0}} đ</span>
 										<a class="cart-trash" href="javascript:void(0);" ng-click="removeItem(item.id)">
 											<i class="fa fa-trash"></i>
 										</a>
@@ -84,7 +84,7 @@
 								<div class="cart-total-money">
 									<h5>
 										Tổng:
-										<span class="money">${{getTotalMoney()}}</span>
+										<span class="money">{{getTotalMoney()}} đ</span>
 									</h5>
 								</div>
 								<div class="cart-btn">

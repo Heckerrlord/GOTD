@@ -18,14 +18,10 @@ import com.poly.config.Config;
 
 import com.poly.dao.DonHangDAO;
 import com.poly.entity.DonHang;
+import com.poly.entity.GioHang;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -37,42 +33,31 @@ public class VNPayRestController {
     @Autowired
     private DonHangDAO orderDAO;
 
-    @GetMapping("payment-callback")
-    public void paymentCallback(@RequestParam Map<String, String> queryParams, HttpServletResponse response) throws IOException, NotFoundException {
-        String vnp_ResponseCode = queryParams.get("vnp_ResponseCode");
 
+    @GetMapping("/pay")
+    public String getPay(
+            @RequestParam("price") long price) throws UnsupportedEncodingException{
 
-    }
-
-
-
-    @GetMapping("pay")
-	public String getPay(@PathParam("price") long price, @PathParam("id") Integer contractId) throws UnsupportedEncodingException{
-		String vnp_Version = "2.1.0";
+        String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
         long amount = price*100;
         String bankCode = "NCB";
-
         String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAddr = "127.0.0.1";
-
         String vnp_TmnCode = Config.vnp_TmnCode;
-
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
-
         vnp_Params.put("vnp_BankCode", bankCode);
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
         vnp_Params.put("vnp_OrderType", orderType);
-
         vnp_Params.put("vnp_Locale", "vn");
-        vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl+"?contractId="+contractId);
+        vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -110,11 +95,20 @@ public class VNPayRestController {
         String queryUrl = query.toString();
         String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-        String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+        String paymentUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?" + queryUrl;
+        return paymentUrl;
+    }
 
-		return paymentUrl;
-	}
-
+    @GetMapping("/call-back")
+    public void payCallback(@RequestParam Map<String, String> queryParams,HttpServletResponse response
+            ) throws IOException{
+        String vnp_ResponseCode = queryParams.get("vnp_ResponseCode");
+        if (vnp_ResponseCode.equals("00")){
+            response.sendRedirect("http://localhost:8080/cart/checkout");
+        }else{
+            response.sendRedirect("http://localhost:8080/index");
+        }
+    }
 
     @GetMapping("pay-service")
 	public String getPayService(@PathParam("price") long price,@PathParam("id") Integer registerServiceId) throws UnsupportedEncodingException{

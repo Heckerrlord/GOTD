@@ -62,8 +62,8 @@ public class CTSPRestController {
 @GetMapping("detail/{sanPhamMa}")
 public ResponseEntity<Object> detailSanPham(
 		@PathVariable String sanPhamMa,
-		String kichCoCode,
-		String mauSacCode
+		@RequestParam(required = false) String kichCoCode,
+		@RequestParam(required = false) String mauSacCode
 ) {
 	ChiTietSanPham item;
 	// Lấy thông tin chi tiết sản phẩm từ các mã kích cỡ và màu sắc
