@@ -24,6 +24,6 @@ public interface DonHangService {
     Double thongKeThangHienTai();
     Integer getSoLuongDon();
     List<Object[]> thongkeNgay();
-
+    List<Object[]> thongKeSanPhamTuan();
 
 }

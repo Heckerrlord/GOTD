@@ -136,5 +136,48 @@
 				</div>
 			</div>
 		</div>
+
+
+<!--		<table class="table">-->
+<!--			<thead>-->
+<!--			<tr>-->
+<!--				<th scope="col">#</th>-->
+<!--				<th scope="col">Ảnh</th>-->
+<!--				<th scope="col">Mã sản phẩm</th>-->
+<!--				<th scope="col">Tên sản phẩm</th>-->
+<!--				<th scope="col">Số lượng bán ra</th>-->
+<!--				<th scope="col">Doanh thu</th>-->
+<!--			</tr>-->
+<!--			</thead>-->
+<!--			<tbody>-->
+<!--			<tr>-->
+
+<!--			</tr>-->
+<!--			</tbody>-->
+<!--		</table>-->
+<h2 style="text-align: center">Thống kê sản phẩm</h2>
+		<br>
+		<table class="table" style="text-align: center">
+			<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Ảnh</th>
+				<th scope="col">Mã sản phẩm</th>
+				<th scope="col">Tên sản phẩm</th>
+				<th scope="col">Số lượng bán ra</th>
+				<th scope="col">Doanh thu</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="item in tkSPTuan">
+				<td>{{$index + 1}}</td>
+				<td><img ng-src="{{item[0]}}" width="50" height="50"></td>
+				<td>{{item[1]}}</td>
+				<td>{{item[2]}}</td>
+				<td>{{item[3]}}</td>
+				<td>{{item[4]}}</td>
+			</tr>
+			</tbody>
+		</table>
 	</div>
 	</div>

@@ -77,7 +77,11 @@ public class DonHangRestController {
 	  List<Object[]> result = orderService.thongkeNgay();
 	  return new ResponseEntity<>(result, HttpStatus.OK);
   }
-
+	@GetMapping("/tksanpham/tuan")
+	public ResponseEntity<List<Object[]>> getSpTuan() {
+		List<Object[]> result = orderService.thongKeSanPhamTuan();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 
 
