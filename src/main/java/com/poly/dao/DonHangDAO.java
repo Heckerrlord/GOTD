@@ -26,6 +26,11 @@ public interface DonHangDAO extends JpaRepository<DonHang, Long> {
     @Query(value = "SELECT SUM(TongTien) AS DoanhThu, MONTH(NgayDatHang) AS Thang FROM DonHang WHERE YEAR(NgayDatHang) = ?1 AND TrangThai = 4 GROUP BY MONTH(NgayDatHang)", nativeQuery = true)
     List<Object[]> getDoanhThuThang(int year);
 
+    @Query(value = "SELECT SUM(a.tongTien) FROM DonHang a where a.account.username=?1 AND a.trangThai = 4")
+    Double tongTienDaSd(String user);
+
+    @Query(value = "select count(a) FROM DonHang a where a.account.username=?1 AND a.trangThai = 4")
+    Integer donHang(String user);
 
     @Query(value = "SELECT YEAR (NgayDatHang) From DonHang GROUP BY  YEAR(NgayDatHang)", nativeQuery = true)
     List<Integer> getYear();
