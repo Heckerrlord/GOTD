@@ -1,122 +1,71 @@
-<div class="left side-menu">
-    <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
-        <i class="mdi mdi-close"></i>
-    </button>
-    <div class="topbar-left">
-        <div class="text-center bg-logo">
-            <a href="/" class="logo">
-                <p style="font-weight: bold; font-size: larger;">GOTD</p>
-            </a>
-        </div>
-    </div>
-    <div class="sidebar-inner slimscrollleft">
-        <div id="sidebar-menu">
+
+
+
+
+
+
+
+
+
+
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
             <ul>
-                <li>
-                    <a href="/admin" class="waves-effect">
-                        <i class="dripicons-device-desktop"></i>
-                        <span>Dashboard</span>
-                    </a>
+                <li class="active">
+                    <a href="/admin"><img src="/assetss/img/icons/dashboard.svg" alt="img"><span> Trang chủ</span> </a>
+                </li>
+                <li class="submenu">
+                    <a href="javascript:void(0);"><img src="/assetss/img/icons/product.svg" alt="img"><span> Sản phẩm</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="#!sanpham">Sản phẩm</a></li>
+                        <li><a href="#">Chi tiết sản phẩm</a></li>
+                        <li><a href="#!thuonghieu">Thương hiệu</a></li>
+                        <li><a href="#!mausac">Màu sắc</a></li>
+                        <li><a href="#">Kích cỡ</a></li>
+                        <li><a href="#">Chất liệu</a></li>
+                        <li><a href="#">Cổ áo</a></li>
+                        <li><a href="#">Thương hiệu</a></li>
+                        <li><a href="#">Phân khúc</a></li>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="javascript:void(0);"><img src="/assetss/img/icons/sales1.svg" alt="img"><span>Đơn hàng</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="#">Chờ xác nhận</a></li>
+                        <li><a href="#">Đã xác nhận</a></li>
+                        <li><a href="#">Giao hàng</a></li>
+                        <li><a href="#">Hoàn thành</a></li>
+                        <li><a href="#">Đã hủy</a></li>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="javascript:void(0);"><img src="/assetss/img/icons/expense1.svg" alt="img"><span> VN pay</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="expenselist.html">Expense List</a></li>
+                        <li><a href="createexpense.html">Add Expense</a></li>
+                        <li><a href="expensecategory.html">Expense Category</a></li>
+                    </ul>
                 </li>
 
-                <li>
-                    <a href="#!account" class="waves-effect">
-                        <i class="dripicons-to-do"></i>
-                        <span>Tài Khoản</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#!authorize" class="waves-effect">
-                        <i class="dripicons-to-do"></i>
-                        <span>Phân Quyền</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#!order" class="waves-effect">
-                        <i class="dripicons-to-do"></i>
-                        <span>Đơn hàng</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#!sanpham" class="waves-effect">
-                        <i class="dripicons-to-do"></i>
-                        <span>Sản phẩm</span>
-                    </a>
-                </li>
+                <li class="submenu">
+                    <a href="javascript:void(0);"><img src="/assetss/img/icons/users1.svg" alt="img"><span> Người dùng</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="customerlist.html">Người dùng</a></li>
+                        <li><a href="supplierlist.html">Phân quyền</a></li>
+                        <li><a href="addsupplier.html">Thống kê</a></li>
 
+                    </ul>
+                <li>
+                    <a href="components.html"><i data-feather="layers"></i><span> Blogs</span> </a>
+                </li>
+                <li>
+                <li class="submenu">
+                    <a href="javascript:void(0);"><img src="/assetss/img/icons/settings.svg" alt="img"><span> Thiết lập</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="generalsettings.html">Banner</a></li>
+                        <li><a href="emailsettings.html">Thông tin liên hệ</a></li>
+                    </ul>
+                </li>
             </ul>
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Quản lý bảng phụ
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-					<hr>
-                    <li>
-                        <a href="#!color" class="waves-effect">
-                            <i class="dripicons-to-do"></i>
-                            <span>Màu sắc</span>
-                        </a>
-                    </li>
-					<hr>
-					<li>
-                        <a href="#!kichco" class="waves-effect">
-                            <i class="dripicons-to-do"></i>
-                            <span>Kích cỡ</span>
-                        </a>
-                    </li>
-					<hr>
-					<li>
-                        <a href="#!chatlieu" class="waves-effect">
-                            <i class="dripicons-to-do"></i>
-                            <span>Chất liệu</span>
-                        </a>
-                    </li>
-					<hr>
-					<li>
-                        <a href="#!coao" class="waves-effect">
-                            <i class="dripicons-to-do"></i>
-                            <span>Cổ áo</span>
-                        </a>
-                    </li>
-					<hr>
-					<li>
-                        <a href="#!thuonghieu" class="waves-effect">
-                            <i class="dripicons-to-do"></i>
-                            <span>Thương hiệu</span>
-                        </a>
-                    </li>
-					<hr>
-					<li>
-                        <a href="#!loaikhachhang" class="waves-effect">
-                            <i class="dripicons-to-do"></i>
-                            <span>Loại khách hàng</span>
-                        </a>
-                    </li>
-					<hr>
-					<li>
-						<a href="#!diachi" class="waves-effect">
-							<i class="dripicons-to-do"></i>
-							<span>Địa chỉ</span>
-						</a>
-					</li>
-					<hr>
-					<li>
-						<a href="#!magiamgia" class="waves-effect">
-							<i class="dripicons-to-do"></i>
-							<span>Mã giảm giá</span>
-						</a>
-					</li>
-                    <hr>
-                    <li>
-                        <a href="#!anh" class="waves-effect">
-                            <i class="dripicons-to-do"></i>
-                            <span>Anh</span>
-                        </a>
-                    </li>
-                    <hr>
-
-                </ul>
-            </div>
         </div>
-        <div class="clearfix"></div>
     </div>
-</div>
