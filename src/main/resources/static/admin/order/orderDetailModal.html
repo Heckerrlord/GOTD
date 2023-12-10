@@ -1,0 +1,46 @@
+<!-- Modal -->
+<div>
+   <p>Id: {{selectedOrder.id}}</p>
+   <p>Khách hàng: {{selectedOrder.account.username}}</p>
+   <div class="text-white p-3" style="background-color: #f27474;">THÔNG TIN MUA HÀNG</div>
+   <div class="row mt-2 mx-2">
+      <div class="form-group col-sm-4">
+         <label class="form-label">Mã mua:</label>
+         <input ng-model="selectedOrder.id" class="form-control" readonly>
+      </div>
+      <div class="form-group col-sm-4">
+         <label class="form-label">Tên người đặt:</label>
+         <input ng-model="selectedOrder.account.fullname" class="form-control" readonly>
+      </div>
+      <div class="form-group col-sm-4">
+         <label class="form-label">Ngày đặt:</label>
+         <p>{{ formatDate(selectedOrder.ngayDatHang) }}</p>
+      </div>
+      <div class="form-group ">
+         <p class="form-label">Địa chỉ mua hàng:</p>
+         <div class="row mt-2 mx-2">
+         <div class="col-sm-4"><input ng-model="selectedOrder.tinh" class="form-control"></div>
+         <div class="col-sm-4"><input ng-model="selectedOrder.huyen" class="form-control"></div>
+         <div class="col-sm-4"><input ng-model="selectedOrder.xa" class="form-control"></div>
+         </div>
+      </div>
+      <div class="form-group col-sm-5">
+         <label class="form-label">Trạng thái:</label>
+         <p ng-if="selectedOrder.trangThai === 0">Chờ xác nhận</p>
+         <p ng-if="selectedOrder.trangThai === 1">Đang giao hàng</p>
+      </div>
+      <div class="form-group col-sm-5">
+         <label class="form-label">Thanh toán:</label>
+         <p ng-if="selectedOrder.thanhToan === 0">Chưa thanh toán</p>
+         <p ng-if="selectedOrder.thanhToan === 1">Đã thanh toán</p>
+      </div>
+
+   </div>
+   <tr >
+      <div class="row">
+        {{selectedOrder.chiTietDonHangList.chiTietSanPham}}
+      </div>
+
+   </tr>
+
+</div>

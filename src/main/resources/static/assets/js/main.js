@@ -142,7 +142,9 @@ app.controller("shopping-ctrl", function ($scope, $http) {
     $scope.getDiscount = function (ma) {
         return $http.get('/rest/order/discount/' + ma)
             .then(function (response) {
+                $scope.getTotalMoney();
                 return response.data.gtd;
+
             })
             .catch(function (error) {
                 console.error('Đã xảy ra lỗi:', error);
@@ -201,16 +203,35 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                 });
         },
         getPaymentUrl : function() {
+            let pricee = $scope.getSubtotal();
             if (confirm("Bạn có chắc chắn muốn thanh toán không?")) {
+                if (!this.soDienThoai || !$("#thanhpho option:selected").text() || !$("#huyen option:selected").text() || !$("#xa option:selected").text() || !this.dcChiTiet) {
+                    sweetalert("Vui lòng điền đầy đủ thông tin '*'");
+                    return;
+                }
+                var self = this;
+                $scope.getDiscount(this.maGiamGia)
+                    .then(function (tienGiam) {
+                        self.tienGiam = tienGiam || 0;
+                        self.tongTien = $scope.getTotalMoney();
+                        self.tinh = $("#thanhpho option:selected").text();
+                        self.huyen = $("#huyen option:selected").text();
+                        self.xa = $("#xa option:selected").text();
+                        return $http.post(url2, self);
+                    })
+                    .then(function (resp) {
+                        if (resp) {
+                        }
+                    })
                 $http.get('rest/payments/pay', {
-                    params: { price: $scope.getTotalMoney() },
-                    transformResponse: function(data, headers) {
+                    params: {price: pricee},
+                    transformResponse: function (data, headers) {
                         return data;
                     },
                     responseType: 'text'
-                }).then(function(response) {
+                }).then(function (response) {
                     window.location.href = response.data;
-                }).catch(function(error) {
+                }).catch(function (error) {
                     console.error('Đã xảy ra lỗi:', error);
                 });
             }}

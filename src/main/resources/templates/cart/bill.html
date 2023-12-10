@@ -53,14 +53,16 @@
                                 <div class="col-md-6">
                                     <address>
                                         <strong>Phương thức thanh toán:</strong><br>
-                                        Thanh toán khi nhận hàng<br>
+                                        <span th:block th:if="${order.thanhToan == 0}">Thanh toán khi nhận hàng</span>
+                                        <span th:block th:if="${order.thanhToan == 1}">Đã thanh toán online <i class="fa-solid fa-check"></i></span>
                                     </address>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <address>
                                         <strong>Ngày đặt hàng:</strong><br>
-                                        [[*{ngayDatHang}]]
+                                        <span th:text="${#temporals.format(order.ngayDatHang, 'HH:mm dd/MM/yyyy')}"></span>
                                     </address>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -87,8 +89,8 @@
                                             <td class="align-middle name" th:text="${detail.chiTietSanPham.kichCo.name}"></td>
                                             <td class="align-middle name" th:text="${detail.chiTietSanPham.mauSac.name}"></td>
                                             <td class="align-middle name" th:text="${detail.soLuong}"></td>
-                                            <td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia,0,'COMMA',2,'POINT')}]]</td>
-                                            <td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia * detail.soLuong,0,'COMMA',2,'POINT')}]]</td>
+                                            <td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia,0,'COMMA',0,'POINT')}]]<strong>vnđ</strong></td>
+                                            <td class="align-middle price">[[${#numbers.formatDecimal(detail.donGia * detail.soLuong,0,'COMMA',0,'POINT')}]] <strong>vnđ</strong></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -109,11 +111,11 @@
                                         <ul>
                                             <li>
                                                 Đơn hàng
-                                                <span class="money">{{getSubtotal()}} <sup>VND</sup></span>
+                                                <span class="money">{{getSubtotal()}}<sup>VND</sup></span>
                                             </li>
                                             <li>
                                                 Giảm giá
-                                                <span class="money">[[*{#numbers.formatDecimal(tienGiam,0,'COMMA',2,'POINT')}]] <sup>VND</sup></span>
+                                                <span class="money">[[*{#numbers.formatDecimal(tienGiam,0,'COMMA',0,'POINT')}]] <sup>VND</sup></span>
                                             </li>
 <!--                                            <li>-->
 <!--                                                Phí giao hàng-->
@@ -121,7 +123,7 @@
 <!--                                            </li>-->
                                             <li>
                                                 Tổng cộng
-                                                <span class="money">[[*{#numbers.formatDecimal(tongTien,0,'COMMA',2,'POINT')}]] <sup>VND</sup>  </span>
+                                                <span class="money">[[*{#numbers.formatDecimal(tongTien,0,'COMMA',0,'POINT')}]] <sup>VND</sup>  </span>
                                             </li>
                                         </ul>
                                     </div>

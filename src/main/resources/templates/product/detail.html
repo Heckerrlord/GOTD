@@ -77,7 +77,7 @@
                                     <div class="prices">[[*{ThuongHieu.name}]] <p class="text-success">Số lượng:
                                         {{p.soLuong}}</p></div>
                                     <div class="prices">
-                                        <span class="price">$ {{ p.giaBan | number:2 }}</span>
+                                        <span class="price"> {{ p.giaBan | number:0 }} <strong>vnđ</strong></span>
                                     </div>
                                     <div class="prices">Tag: [[*{CoAo.name}]], [[*{LoaiKhachHang.name}]]</div>
 
@@ -337,7 +337,7 @@
                                                     <a th:href="@{|/product/detail/${p.sanPham.ma}|}">[[${p.sanPham.ten}]]</a>
                                                 </h4>
                                                 <div class="prices">
-                                                    <span class="price">$[[${#numbers.formatDecimal(p.giaBan,0,'COMMA',0,'POINT')}]]</span>
+                                                    <span class="price">[[${#numbers.formatDecimal(p.giaBan,0,'COMMA',0,'POINT')}]] <strong>vnđ</strong> </span>
                                                 </div>
                                             </div>
                                         </div>

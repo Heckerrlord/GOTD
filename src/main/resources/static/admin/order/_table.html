@@ -6,10 +6,10 @@
                 <th>Id</th>
                 <th>Khách hàng</th>
                 <th>Địa chỉ</th>
-                <th>Ngày đặt hàng</th>
                 <th>Mã giảm giá</th>
                 <th>Phí giao hàng</th>
                 <th>Tổng tiền</th>
+                <th>Thanh toán</th>
                 <th>Chi tiết</th>
                 <th>#</th>
             </tr>
@@ -19,7 +19,6 @@
                 <td class="align-center">{{item.id}}</td>
                 <td class="align-center">{{item.account.username}}</td>
                 <td class="align-center">{{item.tinh}},{{item.huyen}},{{item.xa}},{{item.dcChiTiet}}</td>
-                <td class="align-center">{{item.ngayDatHang}}</td>
                 <td class="align-center">
                     {{item.maGiamGia ? item.maGiamGia : 'Không có'}}
                 </td>
@@ -29,11 +28,16 @@
                 </td>
                 <td class="align-center">{{item.tongTien}}</td>
                 <td class="align-center">
-                    <a href="/order/detail/{{item.id}}" class="btn btn-sm btn-default border-0"
-                       title="View your Order Details">
+                    <span ng-if="item.thanhToan === 0">Chưa thanh toán</span>
+                    <span ng-if="item.thanhToan === 1">Đã thanh toán</span>
+                </td>
+                <td class="align-center">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-default border-0"
+                       title="View your Order Details" ng-click="openModal(item)">
                         <i class="fa fa-eye"></i>
                     </a>
                 </td>
+
                 <td class="align-center">
                     <div class="btn-group btn-group-xs">
                         <button ng-click="xacNhan(item)" class="btn btn-icon">
@@ -49,19 +53,25 @@
         </table>
     </div>
 </div>
-<!-- <div class="card-header text-center">
-	<button ng-click="pager.first()" class="btn btn-danger">
-		<i class="fas fa-arrow-to-left"></i>
-	</button>
-	<button ng-click="pager.prev()" class="btn btn-primary">
-		<i class="fas fa-arrow-left"></i>
-	</button>
-	<button class="btn btn-success">{{pager.page + 1}} of {{pager.count?pager.count:'1'}}</button>
-	<button ng-click="pager.next()" class="btn btn-primary">
-		<i class="fas fa-arrow-right"></i>
-	</button>
-	<button ng-click="pager.last()" class="btn btn-danger">
-		<i class="fas fa-arrow-to-right"></i>
-	</button>
-</div> -->
 <script src="/assetss/js/init.js"></script>
+
+<!-- Modal -->
+<div id="orderDetailModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chi tiết đơn hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include="'/admin/order/orderDetailModal.html'"></div>
+                <!-- Display selectedOrder data -->
+                <div>
+
+                    <!-- Display other information as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
