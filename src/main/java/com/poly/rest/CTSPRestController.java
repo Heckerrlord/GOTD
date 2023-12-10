@@ -8,6 +8,7 @@ import com.poly.dao.CTSPDAO;
 import com.poly.dao.daoPhu.KichCoDAO;
 import com.poly.dao.daoPhu.MauSacDAO;
 import com.poly.entity.ChiTietSanPham;
+import com.poly.entity.DanhSachYeuThich;
 import com.poly.entity.KichCo;
 import com.poly.entity.MauSac;
 import com.poly.service.CTSPService;
@@ -59,7 +60,15 @@ public class CTSPRestController {
 		productService.delete(id);
 	}
 
-@GetMapping("detail/{sanPhamMa}")
+	@GetMapping("/favorites")
+	public ResponseEntity<List<ChiTietSanPham>> getFavorites(@RequestParam String username) {
+		List<ChiTietSanPham> favorites = productService.findFavorites(username);
+		return ResponseEntity.ok(favorites);
+	}
+
+
+
+	@GetMapping("detail/{sanPhamMa}")
 public ResponseEntity<Object> detailSanPham(
 		@PathVariable String sanPhamMa,
 		@RequestParam(required = false) String kichCoCode,

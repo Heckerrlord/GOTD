@@ -17,6 +17,8 @@ public interface DonHangDAO extends JpaRepository<DonHang, Long> {
     @Query("SELECT o FROM DonHang o WHERE o.account.username=?1 and o.trangThai=?2")
     List<DonHang> findByUsernameAndTrangThai (String username,Integer tt);
     List<DonHang> findAllByTrangThai(int trangThai);
+    DonHang findFirstByAccount_UsernameOrderByNgayDatHangDesc(String maKhachHang);
+
 
     @Query(value = "SELECT COUNT(*) FROM DonHang WHERE TrangThai = 0", nativeQuery = true)
     Integer getSoLuongDon();
