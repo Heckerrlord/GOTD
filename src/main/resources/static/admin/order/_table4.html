@@ -10,6 +10,7 @@
                 <th>Mã giảm giá</th>
                 <th>Phí giao hàng</th>
                 <th>Tổng tiền</th>
+                <th>Đổi hàng</th>
             </tr>
             </thead>
             <tbody>
@@ -26,6 +27,13 @@
                     {{item.phiGiaoHang}}
                 </td>
                 <td class="align-center">{{item.tongTien}}</td>
+                <td class="align-center">
+                    <div class="btn-group btn-group-xs">
+                        <button class="btn btn-icon">
+                            <i class="fa fa-exchange" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </td>
 
             </tr>
             </tbody>

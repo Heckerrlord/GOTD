@@ -52,6 +52,12 @@ public class ProductResContronller {
 //        return ResponseEntity.ok(filteredProducts);
 //    }
 
+    @GetMapping("/getall")
+    public ResponseEntity<?> getAll(){
+        List<ChiTietSanPham> list = ctspService.findAll();
+        return ResponseEntity.ok(list);
+    }
+
     @GetMapping("/brands")
     public ResponseEntity<?> getAllBrands() {
         List<ThuongHieu> brands = thuongHieuService.findAll();
@@ -73,23 +79,57 @@ public class ProductResContronller {
     }
 
 
+//    @GetMapping("/getList")
+//    public ResponseEntity<?> getAllSanPham(@RequestParam(name = "brandNames", required = false,defaultValue = "") String brandNames,
+//                                                              @RequestParam(name = "sizes", required = false,defaultValue = "") String sizes,
+//                                                              @RequestParam(name = "colors", required = false,defaultValue = "") String colors,
+//                                                              @RequestParam(name = "minPrice", required = false,defaultValue ="0") Long minPrice,
+//                                                              @RequestParam(name = "maxPrice", required = false,defaultValue = "9999999") Long maxPrice) {
+//        List<ChiTietSanPham> item;
+//        if (brandNames.isEmpty() && sizes.isEmpty() && colors.isEmpty() && minPrice == null && maxPrice == null) {
+//            item = ctspService.findDistinctByMasp();
+//        } else {
+//            item = ctspService.findByFilters(brandNames, sizes, colors, minPrice, maxPrice);
+//        }
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("item", item);
+//        return ResponseEntity.ok().body(item);
+//    }
+
     @GetMapping("/getList")
-    public ResponseEntity<?> getAllSanPham(@RequestParam(name = "brandNames", required = false,defaultValue = "") String brandNames,
-                                                              @RequestParam(name = "sizes", required = false,defaultValue = "") String sizes,
-                                                              @RequestParam(name = "colors", required = false,defaultValue = "") String colors,
-                                                              @RequestParam(name = "minPrice", required = false,defaultValue ="0") Long minPrice,
-                                                              @RequestParam(name = "maxPrice", required = false,defaultValue = "9999999") Long maxPrice) {
-        List<ChiTietSanPham> item;
+    public ResponseEntity<Map<String, Object>> getAllSanPham(
+            @RequestParam(name = "brandNames", required = false, defaultValue = "") String brandNames,
+            @RequestParam(name = "sizes", required = false, defaultValue = "") String sizes,
+            @RequestParam(name = "colors", required = false, defaultValue = "") String colors,
+            @RequestParam(name = "minPrice", required = false, defaultValue = "0") Long minPrice,
+            @RequestParam(name = "maxPrice", required = false, defaultValue = "9999999") Long maxPrice,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "pageSize", defaultValue = "12") int pageSize) {
+
+        Page<ChiTietSanPham> pageResult;
+
         if (brandNames.isEmpty() && sizes.isEmpty() && colors.isEmpty() && minPrice == null && maxPrice == null) {
-            item = ctspService.findDistinctByMasp();
-        } else {
-            item = ctspService.findByFilters(brandNames, sizes, colors, minPrice, maxPrice);
+            pageResult = ctspService.findDistinctByMaspp(PageRequest.of(page, pageSize));
+        } else if(brandNames.isEmpty() && sizes.isEmpty() && colors.isEmpty() && minPrice == null && maxPrice == null){
+            pageResult = ctspService.findAllOrderByGiaBanAsc(PageRequest.of(page, pageSize));
+        }
+        else {
+            pageResult = ctspService.findByFilters(brandNames, sizes, colors, minPrice, maxPrice, PageRequest.of(page, pageSize));
         }
 
+        List<ChiTietSanPham> items = pageResult.getContent();
+
         Map<String, Object> response = new HashMap<>();
-        response.put("item", item);
-        return ResponseEntity.ok().body(item);
+        response.put("items", items);
+        response.put("totalItems", pageResult.getTotalElements());
+        response.put("totalPages", pageResult.getTotalPages());
+        response.put("currentPage", pageResult.getNumber());
+
+        return ResponseEntity.ok().body(response);
     }
+
+
 
 
 }

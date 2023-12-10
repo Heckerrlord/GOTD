@@ -579,8 +579,63 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         return /^\d+$/.test(value);
     }
 
+    // todo: Paging
+
+    $scope.pager = {};
+    $scope.pager.currentPage = 0;
+    $scope.pager.pageSize = 12; // Số sản phẩm trên mỗi trang
+
+    $scope.setPage = function (page) {
+        $scope.pager.currentPage = page;
+        $scope.filterProducts();
+    };
+
+    $scope.$watch('items', function () {
+        // Không cần thiết khi sử dụng thông tin phân trang từ API
+    }, true);
+
+    $scope.pager.prev = function () {
+        $scope.setPage($scope.pager.currentPage - 1);
+    };
+
+    $scope.pager.next = function () {
+        $scope.setPage($scope.pager.currentPage + 1);
+    };
+
+    $scope.pager.first = function () {
+        $scope.setPage(0);
+    };
+
+    $scope.pager.last = function () {
+        $scope.setPage($scope.pager.pageCount - 1);
+    };
+
+    $scope.sort = function (type) {
+        switch (type) {
+            case 'new':
+                // Gọi API sắp xếp theo Hàng mới
+                break;
+            case 'best':
+                // Gọi API sắp xếp theo Bán chạy
+                break;
+            case 'lowToHigh':
+                // Gọi hàm filterProducts với tham số 'lowToHigh'
+                $scope.filterProducts('lowToHigh');
+                break;
+            case 'highToLow':
+                // Gọi hàm filterProducts với tham số 'highToLow'
+                $scope.filterProducts('highToLow');
+                break;
+            default:
+                break;
+        }
+    };
+
+
+
+
     //  to filter
-    $scope.filterProducts = function () {
+    $scope.filterProducts = function (sortType) {
         // Get the selected brands
         var selectedBrands = Object.keys($scope.selectedBrands).filter(function (brandNames) {
             return $scope.selectedBrands[brandNames];
@@ -607,14 +662,30 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             'sizes=' + encodeURIComponent(selectedSizes.join(',')),
             'colors=' + encodeURIComponent(selectedColors.join(',')),
             'minPrice=' + encodeURIComponent($scope.filterParams.minPrice),
-            'maxPrice=' + encodeURIComponent($scope.filterParams.maxPrice)
+            'maxPrice=' + encodeURIComponent($scope.filterParams.maxPrice),
+            'page=' + $scope.pager.currentPage, // Thêm page vào URL
+            'pageSize=' + $scope.pager.pageSize,
+            'sort=' + sortType // Thêm tham số sắp xếp// Thêm pageSize vào URL,
         ].join('&');
+
 
         var urlWithParams = url + '?' + queryParams;
 
         $http.get(urlWithParams)
             .then(function (response) {
-                $scope.items = response.data;
+                $scope.items = response.data.items;
+
+                // Cập nhật thông tin phân trang dựa trên dữ liệu từ API
+                $scope.pager.itemCount = response.data.totalItems;
+                $scope.pager.pageCount = response.data.totalPages;
+                $scope.pager.currentPage = response.data.currentPage;
+
+
+                // Tạo mảng các trang để hiển thị trong phân trang
+                $scope.pager.pages = [];
+                for (var i = 0; i < $scope.pager.pageCount; i++) {
+                    $scope.pager.pages.push(i);
+                }
             })
             .catch(function (error) {
                 console.error('Error in fetching data:', error);
@@ -646,7 +717,6 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             $scope.selectedColors.length > 0 ||
             ($scope.filterParams.minPrice !== '' && $scope.filterParams.maxPrice !== '');
     };
-
 
 
 });
