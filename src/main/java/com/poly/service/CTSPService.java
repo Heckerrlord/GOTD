@@ -16,6 +16,7 @@ public interface CTSPService {
 	ChiTietSanPham update(ChiTietSanPham product);
 
 	void delete(Long id);
+
 	List<ChiTietSanPham> findFavorites(String username);
 
 	Page<ChiTietSanPham> getListCTSP(String maThuongHieu, String maMau, String maKichCo, Long minGiaBan, Long maxGiaBan, Pageable pageable);

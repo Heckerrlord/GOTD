@@ -84,6 +84,8 @@ public class DonHangServiceImpl implements DonHangService {
 
 	@Override
 	public List<Object[]> thongKeSanPhamTuan() {
-		return dao.thongKeSanPhamTuan();
+		return null;
 	}
+
+
 }

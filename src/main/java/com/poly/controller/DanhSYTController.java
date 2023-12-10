@@ -3,10 +3,13 @@ package com.poly.controller;
 
 import com.poly.dao.CTSPDAO;
 import com.poly.dao.DSYTDAO;
-import com.poly.entity.*;
+import com.poly.entity.ChiTietSanPham;
+import com.poly.entity.DanhSachYeuThich;
+import com.poly.entity.CoAo;
+import com.poly.entity.MauSac;
+import com.poly.entity.ThuongHieu;
 
 import com.poly.service.serPhu.CoAoService;
-import com.poly.service.serPhu.KichCoService;
 import com.poly.service.serPhu.MauSacService;
 import com.poly.service.serPhu.ThuongHieuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +36,11 @@ public class DanhSYTController {
     HttpServletRequest request;
     @Autowired
     DSYTDAO dsytdao;
-    @Autowired
-    KichCoService kichcoService;
 
 
     @GetMapping("/favorites")
     public String getShopPage(Model model,String ma) {
         // Get list brand
-
         List<ThuongHieu> brands = thuongHieuService.findAll();
         model.addAttribute("brands", brands);
         ArrayList<Integer> brandIds = new ArrayList<Integer>();
@@ -50,14 +50,16 @@ public class DanhSYTController {
         model.addAttribute("brandIds", brandIds);
 
         // Get list category
-        List<KichCo> kichCos = kichcoService.findAll();
-        model.addAttribute("categories", kichCos);
+        List<CoAo> coAos = coAoService.findAll();
+        model.addAttribute("categories", coAos);
         ArrayList<Integer> categoryIds = new ArrayList<Integer>();
-        for (KichCo category : kichCos) {
+        for (CoAo category : coAos) {
             categoryIds.add(category.getId());
         }
 
-
+        // Get list color
+        /*List<MauSac> sizeVn = mauSacService.findAll();
+        model.addAttribute("sizeVn", sizeVn);*/
 
         List<ChiTietSanPham> list = pdao.findFavorite(request.getRemoteUser());
         model.addAttribute("items", list);

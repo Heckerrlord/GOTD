@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 
 import com.poly.dao.AuthorityDAO;
+import com.poly.dao.DonHangDAO;
 import com.poly.dao.RoleDAO;
 import com.poly.entity.Account;
 import com.poly.entity.Authority;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Controller
 public class AuthController {
@@ -57,6 +59,8 @@ public class AuthController {
     AuthorityDAO aDao;
     @Autowired
     RoleDAO roleDAO;
+    @Autowired
+    DonHangDAO donHangDAO;
 
 
     @CrossOrigin("*")
@@ -129,6 +133,10 @@ public class AuthController {
             model.addAttribute("message", "Tên đăng nhập đã tồn tại");
             return "auth/register";
         }
+        if (accountService.isEmailExists(account.getEmail())){
+            model.addAttribute("message","Email này đã tồn tại");
+            return "auth/register";
+        }
         account.setPhoto("user.png");
         account.setToken("token");
         account.setTrangThai(0);
@@ -152,12 +160,17 @@ public class AuthController {
     public String processForgotPassword(@RequestParam("email") String email, HttpServletRequest request, Model model)
             throws Exception {
         try {
-            String token = RandomString.make(50);
-            accountService.updateToken(token, email);
-            String resetLink = getSiteURL(request) + "/auth/reset-password?token=" + token;
-            mailer.sendEmail(email, resetLink);
-            model.addAttribute("message", "We have sent a reset password link to your email. "
-                    + "If you don't see the email, check your spam folder.");
+            Optional<Account> optionalAccount = accountService.findByEmail(email);
+           if (optionalAccount.isPresent()) {
+               String token = RandomString.make(50);
+               accountService.updateToken(token, email);
+               String resetLink = getSiteURL(request) + "/auth/reset-password?token=" + token;
+               mailer.sendEmail(email, resetLink);
+               model.addAttribute("message", "We have sent a reset password link to your email. "
+                       + "If you don't see the email, check your spam folder.");
+           }else{
+               model.addAttribute("message", "Email không tồn tại");
+           }
         } catch (MessagingException e) {
             e.printStackTrace();
             model.addAttribute("error", "Error while sending email");
@@ -210,6 +223,8 @@ public class AuthController {
         String username = userDetails.getUsername();
         Account account = accountService.findById(username);
         model.addAttribute("account", account);
+        model.addAttribute("tiensd", donHangDAO.tongTienDaSd(rq.getRemoteUser()));
+        model.addAttribute("donmua" , donHangDAO.donHang(rq.getRemoteUser()));
         return "auth/index";
     }
 
@@ -226,9 +241,7 @@ public class AuthController {
         if (file != null && !file.isEmpty()) {
             try {
                 String folder = "images";
-
                 File savedFile = uploadService.save(file, folder);
-
                 String relativeImagePath = savedFile.getName();
                 account.setPhoto(relativeImagePath);
             } catch (Exception e) {
@@ -245,6 +258,7 @@ public class AuthController {
         account.setTrangThai(account.getTrangThai());
         account.setToken(account.getToken());
         accountService.update(account);
+
         model.addAttribute("updateSuccess", true);
         return "auth/index";
     }

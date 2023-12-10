@@ -1,6 +1,7 @@
 package com.poly.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.poly.entity.Account;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -13,7 +14,11 @@ public interface AccountService {
 
 	List<Account> findAll();
 
-	 boolean isUsernameExists(String username);
+	boolean isUsernameExists(String username);
+
+	boolean isEmailExists(String email);
+
+	Optional<Account> findByEmail(String email);
 
 	List<Account> getAdministrators();
 

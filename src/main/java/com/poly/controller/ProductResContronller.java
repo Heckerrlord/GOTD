@@ -51,6 +51,12 @@ public class ProductResContronller {
 //        List<ChiTietSanPham> filteredProducts = ctspService.findByFilters(brandNames, sizes, colors, minPrice, maxPrice);
 //        return ResponseEntity.ok(filteredProducts);
 //    }
+@GetMapping
+public ResponseEntity<?> getAll(){
+    List<ChiTietSanPham> list = ctspService.findAll();
+    return ResponseEntity.ok(list);
+}
+
 
     @GetMapping("/brands")
     public ResponseEntity<?> getAllBrands() {

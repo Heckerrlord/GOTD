@@ -12,12 +12,14 @@ import com.poly.service.serPhu.KichCoService;
 import com.poly.service.serPhu.MauSacService;
 import com.poly.service.serPhu.ThuongHieuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,9 @@ public class ProductController {
 
 	@Autowired
 	private DanhGiaDAO danhGiaDAO;
+
+	@Autowired
+	HttpServletRequest request;
 
 
 
@@ -100,6 +105,9 @@ public class ProductController {
 		for (KichCo category : kichCos) {
 			categoryIds.add(category.getId());
 		}
+
+		String username = request.getRemoteUser();
+		model.addAttribute("usern",username);
 
 
 
