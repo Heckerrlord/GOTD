@@ -10,7 +10,7 @@ app.run(function ($http, $rootScope) {
 })
 
 
-app.controller("shopping-ctrl", function ($scope, $http) {
+app.controller("shopping-ctrl", function ($scope, $http,$timeout) {
 
     var url2 = "/rest/order";
     $scope.items = [];
@@ -241,6 +241,45 @@ app.controller("shopping-ctrl", function ($scope, $http) {
 //yêu thích
     var url12 = "/rest/favorites";
 
+
+
+
+    $http.get('/api/products')
+        .then(function(response) {
+            $scope.products = response.data;
+            console.log(response.data)
+            console.log($scope.isFavorite.sanPham.ma)
+        })
+        .catch(function(error) {
+            console.error('Error fetching products:', error);
+        });
+    $scope.products;
+
+    $scope.getFavoriteProducts = function () {
+        let user = userLogin;
+        $http.get(`/rest/products/favorites?username=${user}`).then(function (resp) {
+            $scope.favoriteProducts = resp.data;
+            console.log("dataf", resp.data);
+        });
+    };
+
+    $scope.getFavoriteProducts();
+
+    $scope.checkFavorites = function (ma,user) {
+        user = userLogin;
+        $http.get(`${url12}/check?username=${user}&ma=${ma}`).then(function (resp) {
+            $scope.isFavorite = resp.data;
+            if ($scope.isFavorite && $scope.isFavorite.sanPham) {
+                console.log($scope.isFavorite.sanPham);
+            } else {
+                console.log('Không có thông tin yêu thích cho sản phẩm này');
+            }
+        });
+    };
+
+
+
+
     $scope.addFavorite = function (ma, user1) {
         ngay = new Date();
         user1 = userLogin;
@@ -274,7 +313,6 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             console.error("Lỗi: " + err.data);
         });
     }
-
 
     //Dia Chi
     const host = "https://provinces.open-api.vn/api/";
@@ -517,6 +555,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             })
                 .then(resp => {
                     $scope.resetR();
+                    location.reload();
                     sweetalert("Gửi đánh giá thành công")
                 })
                 .catch(err => {
@@ -524,7 +563,6 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                     sweetalert("Gửi đánh giá không thành công")
                 });
         }
-        ;
     }
     // Loc san pham
 
@@ -586,6 +624,30 @@ app.controller("shopping-ctrl", function ($scope, $http) {
 
         $scope.filterProducts();
     }
+            var urlcheck = 'rest/danhgia/check';
+    $scope.checkReviewOnInit = function (maSanPham, user) {
+        user = userLogin;
+
+        $http.get(urlcheck + '/' + maSanPham, { params: { username: user } }).then(function (response) {
+            var hasReviewed = response.data;
+            console.log('hasReviewed:', hasReviewed);
+
+            // Sử dụng $timeout để chạy trong chu kỳ $digest
+            $timeout(function () {
+                // Kiểm tra giá trị và thiết lập các biến để hiển thị nút đánh giá và mua lại
+                if (hasReviewed) {
+                    // Nếu đã đánh giá
+                    $scope.showReviewButton = false; // Ẩn nút đánh giá
+                    $scope.showBuyAgainButton = true; // Hiển thị nút mua lại
+                } else {
+                    // Nếu chưa đánh giá
+                    $scope.showReviewButton = true; // Hiển thị nút đánh giá
+                    $scope.showBuyAgainButton = false; // Ẩn nút mua lại
+                }
+            });
+        });
+    };
+
 
     // to do: loc gia
     $scope.applyPriceFilter = function() {
