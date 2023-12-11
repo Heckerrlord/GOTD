@@ -40,7 +40,7 @@ public class GioHang {
     private String dcChiTiet;
 
     @Column(name = "NgayDatHang")
-    private Date ngayDatHang;
+    private LocalDateTime  ngayDatHang;
 
     @Column(name = "TienGiam")
     private BigDecimal tienGiam;

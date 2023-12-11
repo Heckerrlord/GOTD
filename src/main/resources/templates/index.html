@@ -43,70 +43,7 @@
 		<div class="row m-t-50 m-r-10 m-l-10"
 		style="box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);border: 2px solid transparent; background-color: #fff none repeat scroll 0 0;">
 		<div class="products" style="width: 100%;">
-			<div class="container-fuild">
-				<div class="row">
-					<div class="col-12">
-						<div class="row">
-							<div class="col-lg-7 m-auto">
-								<div class="section-title text-center">
-									<h2 class="title">Sản phẩm bán chạy trong tuần</h2>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3" th:each="p:${selling}">
-								<div class="product-item">
-									<div class="inner-content">
-										<div class="product-thumb">
-											<a th:href="@{|/product/detail/${p.ma}|}" ng-click="searchDetail()">
-												<img class="product-item m-auto d-block"
-													 th:src="@{|/assets/images/${p.getImage().get(0).ma}|}"
-													 th:title="${p.ten}">
-											</a>
-											<div class="product-action">
-												<div class="addto-wrap" th:each="a:${favorite}">
-													<!-- Hiển thị nút "remove" -->
-													<a class="add-wishlist" href="javascript:void(0)"
-													   title="Xóa khỏi yêu thích"
-													   th:if="${a.sanPham == p.ma && a.accounts == #request.remoteUser}"
-													   th:attr="ng-click='removeFavorite(\'' + ${p.ma} + '\', username)'">
-														<i class="zmdi zmdi-favorite" style="color: #a52834"></i>
-													</a>
 
-													<!-- Nếu sản phẩm chưa có trong danh sách yêu thích, hiển thị nút "Thêm vào yêu thích" -->
-													<a class="add-wishlist" href="javascript:void(0)"
-													   title="Thêm vào yêu thích"
-													   th:if="${a.accounts != #request.remoteUser}"
-													   th:attr="ng-click='addFavorite(\'' + ${p.ma} + '\', user1)'">
-														<i class="zmdi zmdi-favorite-outline zmdi-hc-fw icon"></i>
-													</a>
-
-													<a class="add-cart" th:href="@{|/product/detail/${p.ma}|}">
-														<i class="zmdi zmdi-shopping-cart-plus icon"></i>
-													</a>
-												</div>
-											</div>
-										</div>
-										<div class="product-desc">
-											<div class="product-info">
-												<h4 class="title">
-													<a th:href="@{|/product/detail/${p.ma}|}"
-													   ng-click="searchDetail()">[(${p.ten})]</a>
-												</h4>
-
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			<div class="flex-c-m flex-w w-full p-t-5">
-				<a href="/sanpham" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Xem tất cả
-				</a>
-			</div>
 		</div>
 	</div>
 
@@ -131,9 +68,7 @@
 											<a th:href="@{|/product/detail/${p.sanPham.ma}|}">
 												<img class="product-item m-auto d-block" th:src="@{|/assets/images/${p.sanPham.getImage().get(0).ma}|}"
 													 th:title="${p.sanPham.ten}">
-												<div style="text-align: center" class="prices">
-													<span class="price">$[[${#numbers.formatDecimal(p.giaBan,0,'COMMA',2,'POINT')}]]</span>
-												</div>
+
 											</a>
 											<div class="product-action">
 												<div class="addto-wrap" th:each="a:${favorite}">
@@ -162,7 +97,11 @@
 												<h4 class="title">
 													<a th:href="@{|/product/detail/${p.sanPham.ma}|}" >[(${p.sanPham.ten})]</a>
 												</h4>
-
+												<h5>
+												<div class="prices">
+													<span class="price">[[${#numbers.formatDecimal(p.giaBan,0,'COMMA',0,'POINT')}]] <strong>vnđ</strong> </span>
+												</div>
+													</h5>
 
 											</div>
 										</div>

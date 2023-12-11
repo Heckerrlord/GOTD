@@ -27,7 +27,12 @@ public class DSYTServiceImpl implements DSYTService {
     }
 
     @Override
-    public void delete(String ma,String username) {
-        dsytdao.delete(ma,username);
+    public void delete(String ma, String username) {
+        dsytdao.delete(ma, username);
+    }
+
+    @Override
+    public List<DanhSachYeuThich> getFavorite(String user, String ma) {
+        return dsytdao.getFavorite(user, ma);
     }
 }

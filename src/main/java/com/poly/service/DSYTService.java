@@ -7,6 +7,7 @@ import java.util.List;
 public interface DSYTService {
     List<DanhSachYeuThich> findAll();
     DanhSachYeuThich create(DanhSachYeuThich danhSachYeuThich);
-
     void delete(String ma, String username);
+    List<DanhSachYeuThich> getFavorite(String user, String ma);
+    
 }

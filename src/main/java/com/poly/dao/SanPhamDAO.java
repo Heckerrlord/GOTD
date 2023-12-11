@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface SanPhamDAO extends JpaRepository<SanPham,Integer> {
     Integer getSoLuongSP();
 
     @Query("SELECT p.id FROM DonHang p WHERE p.ngayDatHang >= :startDate")
-    List<Long> getShoppingWithinLast7Days(Date startDate);
+    List<Long> getShoppingWithinLast7Days(LocalDateTime startDate);
 
     @Query("SELECT p FROM SanPham p WHERE p.id IN :productIds ORDER BY p.id DESC")
     List<SanPham> getTrending(@Param("productIds") List<Integer> productIds, Pageable pageable);

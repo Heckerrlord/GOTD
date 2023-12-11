@@ -26,6 +26,23 @@ app.controller("order-ctrl", function ($scope, $http) {
     //khoi dau
     $scope.initialize(0);
 
+    $scope.openModal = function (item) {
+        $scope.selectedOrder = angular.copy(item);
+        $('#orderDetailModal').modal('show');
+    };
+    $scope.closeModal = function () {
+        $('#orderDetailModal').modal('hide'); // Đóng modal
+    };
+    $scope.formatDate = function(dateString) {
+        var date = new Date(dateString);
+        var formattedDate = ('0' + date.getHours()).slice(-2) + ':' +
+            ('0' + date.getMinutes()).slice(-2) + ' ' +
+            ('0' + date.getDate()).slice(-2) + '/' +
+            ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+            date.getFullYear();
+        return formattedDate;
+    };
+
 
 
     //hien thi len form
@@ -111,5 +128,8 @@ app.controller("order-ctrl", function ($scope, $http) {
             this.page = this.count - 1;
         }
     }
+
+
+
 
 });

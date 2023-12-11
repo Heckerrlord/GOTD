@@ -51,12 +51,18 @@ public class ProductResContronller {
 //        List<ChiTietSanPham> filteredProducts = ctspService.findByFilters(brandNames, sizes, colors, minPrice, maxPrice);
 //        return ResponseEntity.ok(filteredProducts);
 //    }
+@GetMapping
+public ResponseEntity<?> getAll(){
+    List<ChiTietSanPham> list = ctspService.findAll();
+    return ResponseEntity.ok(list);
+}
 
-    @GetMapping("/getall")
-    public ResponseEntity<?> getAll(){
-        List<ChiTietSanPham> list = ctspService.findAll();
-        return ResponseEntity.ok(list);
-    }
+
+//    @GetMapping("/getall")
+//    public ResponseEntity<?> getAll(){
+//        List<ChiTietSanPham> list = ctspService.findAll();
+//        return ResponseEntity.ok(list);
+//    }
 
     @GetMapping("/brands")
     public ResponseEntity<?> getAllBrands() {
@@ -111,8 +117,6 @@ public class ProductResContronller {
 
         if (brandNames.isEmpty() && sizes.isEmpty() && colors.isEmpty() && minPrice == null && maxPrice == null) {
             pageResult = ctspService.findDistinctByMaspp(PageRequest.of(page, pageSize));
-        } else if(brandNames.isEmpty() && sizes.isEmpty() && colors.isEmpty() && minPrice == null && maxPrice == null){
-            pageResult = ctspService.findAllOrderByGiaBanAsc(PageRequest.of(page, pageSize));
         }
         else {
             pageResult = ctspService.findByFilters(brandNames, sizes, colors, minPrice, maxPrice, PageRequest.of(page, pageSize));

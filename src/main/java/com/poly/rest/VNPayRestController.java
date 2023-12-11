@@ -2,6 +2,7 @@ package com.poly.rest;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
 
@@ -32,12 +34,13 @@ import javax.websocket.server.PathParam;
 public class VNPayRestController {
     @Autowired
     private DonHangDAO orderDAO;
+    @Autowired
+    HttpServletRequest rq;
 
 
     @GetMapping("/pay")
     public String getPay(
             @RequestParam("price") long price) throws UnsupportedEncodingException{
-
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
@@ -103,10 +106,13 @@ public class VNPayRestController {
     public void payCallback(@RequestParam Map<String, String> queryParams,HttpServletResponse response
             ) throws IOException{
         String vnp_ResponseCode = queryParams.get("vnp_ResponseCode");
+        DonHang dh = orderDAO.findFirstByAccount_UsernameOrderByNgayDatHangDesc(rq.getRemoteUser());
         if (vnp_ResponseCode.equals("00")){
-            response.sendRedirect("http://localhost:8080/cart/checkout");
+            dh.setThanhToan(1);
+            orderDAO.save(dh);
+            response.sendRedirect("http://localhost:8080/cart/bill/"+dh.getId());
         }else{
-            response.sendRedirect("http://localhost:8080/index");
+            response.sendRedirect("http://localhost:8080/cart/bill/"+dh.getId());
         }
     }
 

@@ -21,4 +21,5 @@ public interface DSYTDAO extends JpaRepository<DanhSachYeuThich,Integer> {
     List<DanhSachYeuThich> getFavorite (String username,String ma);
 
 
+
 }

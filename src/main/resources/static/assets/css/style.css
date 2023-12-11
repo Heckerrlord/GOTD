@@ -907,6 +907,9 @@ section .container-fluid {
   height: 50px;
   line-height: 50px;
 }
+.fillColor{
+  color: red;
+}
 .header-area.transparent {
   color: #fff;
   position: absolute;

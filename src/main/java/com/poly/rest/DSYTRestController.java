@@ -21,8 +21,8 @@ public class DSYTRestController {
     CTSPService ctspService;
 
     @GetMapping
-    public List<ChiTietSanPham> load(String username){
-        return ctspService.findFavorites(username);
+    public List<DanhSachYeuThich> load(String username,String ma){
+        return dsytService.getFavorite(username, ma);
     }
 
     @PostMapping
@@ -32,6 +32,11 @@ public class DSYTRestController {
     @DeleteMapping
     public void  delete(String ma,String username){
      dsytService.delete(ma, username);
+    }
+
+    @GetMapping("/check")
+    public List<DanhSachYeuThich> getFavo(@RequestParam(name = "username") String username,@RequestParam(name = "ma") String ma){
+        return dsytService.getFavorite(username,ma);
     }
 
 }

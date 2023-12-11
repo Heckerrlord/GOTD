@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -42,7 +43,7 @@ public class DonHang {
     private String xa;
 
     @Column(name = "NgayDatHang")
-        private Date ngayDatHang;
+    private LocalDateTime  ngayDatHang;
 
     @Column(name = "TienGiam")
     private BigDecimal tienGiam;
@@ -50,15 +51,17 @@ public class DonHang {
     @Column(name = "PhiGiaoHang")
     private BigDecimal phiGiaoHang;
 
-
     @Column(name = "TongTien")
     private BigDecimal tongTien;
 
     @Column(name = "TrangThai")
     private Integer trangThai;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "donHang", cascade = CascadeType.ALL)
+    @Column(name = "ThanhToan")
+    private Integer thanhToan;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "donHang", fetch = FetchType.LAZY)
     private List<DonHangChiTiet> chiTietDonHangList;
 
 
@@ -75,12 +78,13 @@ public class DonHang {
         this.phiGiaoHang = gioHang.getPhiGiaoHang();
         this.tongTien = gioHang.getTongTien();
         this.trangThai = gioHang.getTrangThai();
+        this.thanhToan =0;
     }
 
     public DonHang() {
     }
 
-    public DonHang(Long id, Account account, String maGiamGia, String soDienThoai, String dcChiTiet, String tinh, String huyen, String xa, Date ngayDatHang, BigDecimal tienGiam, BigDecimal phiGiaoHang, BigDecimal tongTien, Integer trangThai, List<DonHangChiTiet> chiTietDonHangList) {
+    public DonHang(Long id, Account account, String maGiamGia, String soDienThoai, String dcChiTiet, String tinh, String huyen, String xa, LocalDateTime  ngayDatHang, BigDecimal tienGiam, BigDecimal phiGiaoHang, BigDecimal tongTien, Integer trangThai, Integer thanhToan, List<DonHangChiTiet> chiTietDonHangList) {
         this.id = id;
         this.account = account;
         this.maGiamGia = maGiamGia;
@@ -93,8 +97,10 @@ public class DonHang {
         this.tienGiam = tienGiam;
         this.phiGiaoHang = phiGiaoHang;
         this.tongTien = tongTien;
+        this.thanhToan = thanhToan;
         this.trangThai = trangThai;
         this.chiTietDonHangList = chiTietDonHangList;
+
     }
 
     // Constructors, getters, and setters

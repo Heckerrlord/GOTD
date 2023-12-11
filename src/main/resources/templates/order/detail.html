@@ -56,20 +56,6 @@
                     <div class="text-white p-3" style="background-color: #f27474;">THÔNG TIN ĐẶT HÀNG</div>
                     <div class="shopping-cart-wrap">
                         <div class="cart-table table-responsive">
-                            <!--								<table class="table" >-->
-                            <!--									<thead>-->
-                            <!--									<tr>-->
-
-                            <!--										<th class="indecor-product-name">Sản phẩm</th>-->
-                            <!--										<th class="indecor-product-price">Size</th>-->
-                            <!--										<th class="indecor-product-price">Màu sắc</th>-->
-                            <!--										<th class="indecor-product-quantity">Số Lượng</th>-->
-                            <!--										<th class="indecor-product-price">Giá</th>-->
-                            <!--										<th class="indecor-product-subtotal">Tổng tiền</th>-->
-                            <!--										<th th:if="${order.trangThai == 4}"> </th>-->
-                            <!--									</tr>-->
-                            <!--									</thead>-->
-                            <!--									<tbody>-->
                             <tr th:each="detail : ${order.chiTietDonHangList}" th:object="${detail}">
                                 <div class="row">
                                     <div class="col-1">
@@ -87,7 +73,7 @@
                                     <div class="col-1"
                                          style="color: red;display: flex;align-items: center;justify-content: center">
                                             [[${#numbers.formatDecimal(detail.donGia *
-                                            detail.soLuong,0,'COMMA',2,'POINT')}]]
+                                            detail.soLuong,0,'COMMA',0,'POINT')}]] <strong> vnđ</strong>
                                     </div>
 
                                 </div>
@@ -104,13 +90,15 @@
                             <div style="float:right; width: 30%">
                                 <br>
                                 <div style="float: left">Tổng tiền: </div>
-                                <div style="float: right">[[${order.tongTien}+${order.tienGiam}]]</div>
+                                <div style="float: right">[[${#numbers.formatDecimal(
+                                    order.tongTien + order.tienGiam,0,'COMMA',0,'POINT')}]]<strong> vnđ</strong></div>
                                 <br>
                                 <div style="float: left">Giảm giá: </div>
-                                <div style="float: right">[[${order.tienGiam}]]</div>
+                                <div style="float: right">[[${#numbers.formatDecimal(
+                                    order.tienGiam,0,'COMMA',0,'POINT')}]]<strong> vnđ</strong></div>
                                 <br>
                                 <div style="float: left">Thành tiền: </div>
-                                <div style="float: right">[[${order.tongTien}]]</div>
+                                <div style="float: right"> [[${#numbers.formatDecimal(order.tongTien,0,'COMMA',0,'POINT')}]] <strong> vnđ</strong></div>
                                 <br>
                             </div>
                             <!--									</tbody>-->

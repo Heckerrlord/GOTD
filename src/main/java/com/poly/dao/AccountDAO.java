@@ -1,6 +1,7 @@
 package com.poly.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.poly.entity.Account;
 
@@ -21,6 +22,9 @@ public interface AccountDAO extends JpaRepository<Account, String> {
 	@Query("SELECT a FROM Account a WHERE a.email=?1")
 	public Account findByEmail(String email);
 
+	@Query("SELECT a FROM Account a WHERE a.email=?1")
+	public Optional<Account> findEmail(String email);
+
 	@Query("SELECT a FROM Account a WHERE a.token=?1")
 	public Account findByToken(String token);
 
@@ -31,6 +35,8 @@ public interface AccountDAO extends JpaRepository<Account, String> {
 
 	@Query(value = "SELECT COUNT(*) FROM Accounts WHERE TrangThai = 0",nativeQuery = true)
 	Integer getSoluong();
+
+
 
 
 }

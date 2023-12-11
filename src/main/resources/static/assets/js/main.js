@@ -10,7 +10,7 @@ app.run(function ($http, $rootScope) {
 })
 
 
-app.controller("shopping-ctrl", function ($scope, $http) {
+app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
 
     var url2 = "/rest/order";
     $scope.items = [];
@@ -142,7 +142,9 @@ app.controller("shopping-ctrl", function ($scope, $http) {
     $scope.getDiscount = function (ma) {
         return $http.get('/rest/order/discount/' + ma)
             .then(function (response) {
+                $scope.getTotalMoney();
                 return response.data.gtd;
+
             })
             .catch(function (error) {
                 console.error('Đã xảy ra lỗi:', error);
@@ -200,59 +202,134 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                     console.log("Error", error);
                 });
         },
-        getPaymentUrl : function() {
+        getPaymentUrl: function () {
+            let pricee = $scope.getSubtotal();
             if (confirm("Bạn có chắc chắn muốn thanh toán không?")) {
+                if (!this.soDienThoai || !$("#thanhpho option:selected").text() || !$("#huyen option:selected").text() || !$("#xa option:selected").text() || !this.dcChiTiet) {
+                    sweetalert("Vui lòng điền đầy đủ thông tin '*'");
+                    return;
+                }
+                var self = this;
+                $scope.getDiscount(this.maGiamGia)
+                    .then(function (tienGiam) {
+                        self.tienGiam = tienGiam || 0;
+                        self.tongTien = $scope.getTotalMoney();
+                        self.tinh = $("#thanhpho option:selected").text();
+                        self.huyen = $("#huyen option:selected").text();
+                        self.xa = $("#xa option:selected").text();
+                        return $http.post(url2, self);
+                    })
+                    .then(function (resp) {
+                        if (resp) {
+                        }
+                    })
                 $http.get('rest/payments/pay', {
-                    params: { price: $scope.getTotalMoney() },
-                    transformResponse: function(data, headers) {
+                    params: {price: pricee},
+                    transformResponse: function (data, headers) {
                         return data;
                     },
                     responseType: 'text'
-                }).then(function(response) {
+                }).then(function (response) {
                     window.location.href = response.data;
-                }).catch(function(error) {
+                }).catch(function (error) {
                     console.error('Đã xảy ra lỗi:', error);
                 });
-            }}
+            }
+        }
     };
 
 
 //yêu thích
     var url12 = "/rest/favorites";
 
+    $http.get('/api/products')
+        .then(function (response) {
+            $scope.products = response.data;
+        })
+        .catch(function (error) {
+            console.error('Error fetching products:', error);
+        });
+    $scope.products;
+
+
+    // $scope.checkFavorites = function (maSanPham, user) {
+    //     user = userLogin;
+    //     let ma = maSanPham;
+    //     $http.get(`${url12}/check?username=${user}&ma=${ma}`).then(function (resp) {
+    //         $scope.isFavorite = resp.data;
+    //         console.log("Mã :" + ma);
+    //     });
+    // };
+
+    $scope.isProductFavorite = false;
+
+    $scope.checkFavorites = function (maSanPham) {
+        if (userLogin) {
+            let user = userLogin;
+            $http.get(`${url12}/check?username=${user}&ma=${maSanPham}`).then(function (resp) {
+                $scope.isFavorite = resp.data;
+                $scope.isProductFavorite = $scope.isFavorite && $scope.isFavorite.sanPham !== null;
+                console.log("Mã: " + maSanPham + ", Trạng thái yêu thích: " + $scope.isProductFavorite);
+            });
+        }
+    };
+
+
+    $scope.getFavoriteProducts = function () {
+        let user = userLogin;
+        $http.get(`/rest/products/favorites?username=${user}`).then(function (resp) {
+            $scope.favoriteProducts = resp.data;
+            console.log("dataf", resp.data);
+        });
+    };
+
+    $scope.getFavoriteProducts();
+
     $scope.addFavorite = function (ma, user1) {
+
+        $scope.checkFavorites(ma);
+
         ngay = new Date();
         user1 = userLogin;
         if (user1) {
-
             let favoriteData = {
                 sanPham: ma,
                 accounts: user1,
                 date: ngay,
                 trangThai: 0
             };
+
             $http.post(url12, favoriteData).then(function (response) {
-                console.log(favoriteData.sanPham);
-                location.reload();
+                sweetalert("Thêm yêu thích thành công!");
+                console.log("Thêm yêu thích thành công");
+                $scope.getFavoriteProducts();
+                $scope.filterProducts();
             }).catch(function (error) {
-                console.log(favoriteData);
-                console.error("Lỗi: " + error.data);
+                console.error("Lỗi khi thêm yêu thích: " + error.data);
             });
+
         } else {
             window.location.href = 'auth/login/form';
         }
     };
 
+    $scope.removeFavorite = function (ma) {
 
-    $scope.removeFavorite = function (ma, username) {
-        username = userLogin;
-        $http.delete(url12 + '?ma=' + ma + '&username=' + username).then(function (resp) {
-            console.log("Đã xóa khỏi yêu thích");
-            location.reload();
-        }).catch(function (err) {
-            console.error("Lỗi: " + err.data);
-        });
-    }
+        if (userLogin) {
+            let user = userLogin;
+
+            $http.delete(url12 + '?ma=' + ma + '&username=' + user).then(function (response) {
+                console.log("Xóa yêu thích thành công");
+                sweetalert("Xóa yêu thích thành công!");
+                $scope.getFavoriteProducts();
+                $scope.filterProducts();
+            }).catch(function (error) {
+                console.error("Lỗi khi xóa yêu thích: " + error.data);
+            });
+        } else {
+            window.location.href = 'auth/login/form';
+        }
+    };
 
 
     //Dia Chi
@@ -496,6 +573,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             })
                 .then(resp => {
                     $scope.resetR();
+                    location.reload();
                     sweetalert("Gửi đánh giá thành công")
                 })
                 .catch(err => {
@@ -503,8 +581,33 @@ app.controller("shopping-ctrl", function ($scope, $http) {
                     sweetalert("Gửi đánh giá không thành công")
                 });
         }
-        ;
     }
+
+    var urlcheck = 'rest/danhgia/check';
+    $scope.checkReviewOnInit = function (maSanPham, user) {
+        user = userLogin;
+
+        $http.get(urlcheck + '/' + maSanPham, {params: {username: user}}).then(function (response) {
+            var hasReviewed = response.data;
+            console.log('hasReviewed:', hasReviewed);
+
+            // Sử dụng $timeout để chạy trong chu kỳ $digest
+            $timeout(function () {
+                // Kiểm tra giá trị và thiết lập các biến để hiển thị nút đánh giá và mua lại
+                if (hasReviewed) {
+                    // Nếu đã đánh giá
+                    $scope.showReviewButton = false; // Ẩn nút đánh giá
+                    $scope.showBuyAgainButton = true; // Hiển thị nút mua lại
+                } else {
+                    // Nếu chưa đánh giá
+                    $scope.showReviewButton = true; // Hiển thị nút đánh giá
+                    $scope.showBuyAgainButton = false; // Ẩn nút mua lại
+                }
+            });
+        });
+    };
+
+
     // Loc san pham
 
     // hien thi brands
@@ -547,27 +650,27 @@ app.controller("shopping-ctrl", function ($scope, $http) {
     };
 
 
-
     //to do:loc color
-    $scope.onColorClick = function(color) {
+    $scope.onColorClick = function (color) {
         color.selected = !color.selected;
         updateSelectedColors();
     };
 
     function updateSelectedColors() {
         $scope.selectedColors = $scope.colors
-            .filter(function(color) {
+            .filter(function (color) {
                 return color.selected;
             })
-            .map(function(color) {
+            .map(function (color) {
                 return color.name;
             });
 
         $scope.filterProducts();
     }
 
+
     // to do: loc gia
-    $scope.applyPriceFilter = function() {
+    $scope.applyPriceFilter = function () {
         if (isValidPrice($scope.filterParams.minPrice) && isValidPrice($scope.filterParams.maxPrice)) {
             $scope.filterProducts();
         } else {
@@ -632,8 +735,6 @@ app.controller("shopping-ctrl", function ($scope, $http) {
     };
 
 
-
-
     //  to filter
     $scope.filterProducts = function (sortType) {
         // Get the selected brands
@@ -647,6 +748,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         });
 
         var selectedColors = $scope.selectedColors;
+
 
         // Log or use the selected filters as needed
         console.log('Selected Brands:', selectedBrands);
@@ -663,9 +765,9 @@ app.controller("shopping-ctrl", function ($scope, $http) {
             'colors=' + encodeURIComponent(selectedColors.join(',')),
             'minPrice=' + encodeURIComponent($scope.filterParams.minPrice),
             'maxPrice=' + encodeURIComponent($scope.filterParams.maxPrice),
-            'page=' + $scope.pager.currentPage, // Thêm page vào URL
+            'page=' + $scope.pager.currentPage,
             'pageSize=' + $scope.pager.pageSize,
-            'sort=' + sortType // Thêm tham số sắp xếp// Thêm pageSize vào URL,
+            'sort=' + sortType
         ].join('&');
 
 
@@ -673,13 +775,19 @@ app.controller("shopping-ctrl", function ($scope, $http) {
 
         $http.get(urlWithParams)
             .then(function (response) {
-                $scope.items = response.data.items;
-
+                $scope.items = response.data.items.map(el => {
+                    if ($scope.favoriteProducts.filter(fa => fa.id === el.id).length !== 0) {
+                        el.myFavorite = 1;
+                    } else {
+                        el.myFavorite = 0;
+                    }
+                    return el;
+                })
+                console.log($scope.items)
                 // Cập nhật thông tin phân trang dựa trên dữ liệu từ API
                 $scope.pager.itemCount = response.data.totalItems;
                 $scope.pager.pageCount = response.data.totalPages;
                 $scope.pager.currentPage = response.data.currentPage;
-
 
                 // Tạo mảng các trang để hiển thị trong phân trang
                 $scope.pager.pages = [];
@@ -696,7 +804,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
 
 
     // to clearFilter
-    $scope.clearFilters = function() {
+    $scope.clearFilters = function () {
         // Xóa tất cả các bộ lọc đã chọn
         $scope.selectedBrands = {};
         $scope.selectedSizes = {};
@@ -704,7 +812,7 @@ app.controller("shopping-ctrl", function ($scope, $http) {
         $scope.filterParams.minPrice = '';
         $scope.filterParams.maxPrice = '';
 
-        angular.forEach($scope.colors, function(color) {
+        angular.forEach($scope.colors, function (color) {
             color.selected = false;
         });
 

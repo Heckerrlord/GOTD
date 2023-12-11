@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,25 +44,27 @@ public class HomeController {
     @RequestMapping({"/", "/index"})
     public String home(Model model, @RequestParam("cid") Optional<String> cid) {
         List<DanhSachYeuThich> list1 = dsytdao.findAll();
-
         List<ChiTietSanPham> list = pdao.findDistinctByMasp();
         model.addAttribute("favorite", list1);
         model.addAttribute("items", list);
 
-        // lấy danh sách đơn hàng trong 30 ngày gần đây
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DAY_OF_MONTH, -30);
-        Date startDate = calendar.getTime();
+        // Lấy danh sách đơn hàng trong 30 ngày gần đây
+        LocalDateTime startDate = LocalDateTime.now().minusDays(7);
 
+        // Lấy danh sách đơn hàng trong 30 ngày gần đây từ sanPhamDAO
         List<Long> list2 = sanPhamDAO.getShoppingWithinLast7Days(startDate);
-        // lấy danh sách những sản phẩm có trong đơn hàng đó
-        List<Integer> ProductIdList = donHangCTDAO.getProductIdList(list2);
+
+        // Lấy danh sách ID sản phẩm từ danh sách đơn hàng list2
+        List<Integer> productIdList = donHangCTDAO.getProductIdList(list2);
+
+        // Lấy danh sách sản phẩm bán chạy nhất từ productIdList
         Pageable pageable = PageRequest.of(0, 4); // Lấy tối đa 4 sản phẩm
-        List<SanPham> listSelling = sanPhamDAO.getTrending(ProductIdList, pageable);
+        List<SanPham> listSelling = sanPhamDAO.getTrending(productIdList, pageable);
+
         model.addAttribute("selling", listSelling);
         return "index";
     }
+
 
     @RequestMapping({"/admin", "/admin/index"})
     public String admin(Model model) {

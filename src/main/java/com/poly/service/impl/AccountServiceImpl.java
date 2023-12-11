@@ -1,6 +1,7 @@
 package com.poly.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.poly.entity.Account;
 
@@ -50,6 +51,16 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean isUsernameExists(String username) {
 		return adao.existsById(username);
+	}
+
+	@Override
+	public boolean isEmailExists(String email) {
+		return adao.existsById(email);
+	}
+
+	@Override
+	public Optional<Account> findByEmail(String email) {
+		return adao.findEmail(email);
 	}
 
 	@Override
