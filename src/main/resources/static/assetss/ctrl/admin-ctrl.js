@@ -65,7 +65,7 @@ app.config(function ($routeProvider) {
             controller: "order-ctrl"
         })
         .when("/sanpham", {
-            templateUrl: "/admin/sanpham/index.html",
+            templateUrl: "/admin/sanpham/_table.html",
             controller: "sanpham-ctrl"
         })
 

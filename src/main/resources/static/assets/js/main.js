@@ -584,26 +584,11 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
     }
 
     var urlcheck = 'rest/danhgia/check';
-    $scope.checkReviewOnInit = function (maSanPham, user) {
-        user = userLogin;
-
-        $http.get(urlcheck + '/' + maSanPham, {params: {username: user}}).then(function (response) {
-            var hasReviewed = response.data;
-            console.log('hasReviewed:', hasReviewed);
-
-            // Sử dụng $timeout để chạy trong chu kỳ $digest
-            $timeout(function () {
-                // Kiểm tra giá trị và thiết lập các biến để hiển thị nút đánh giá và mua lại
-                if (hasReviewed) {
-                    // Nếu đã đánh giá
-                    $scope.showReviewButton = false; // Ẩn nút đánh giá
-                    $scope.showBuyAgainButton = true; // Hiển thị nút mua lại
-                } else {
-                    // Nếu chưa đánh giá
-                    $scope.showReviewButton = true; // Hiển thị nút đánh giá
-                    $scope.showBuyAgainButton = false; // Ẩn nút mua lại
-                }
-            });
+    $scope.checkReviewOnInit = function (maSanPham) {
+        var user = userLogin;
+        $http.get(`${urlcheck}?maSanPham=${maSanPham}&username=${user}`).then(function (response) {
+            $scope.hasReviewed = response.data;
+            console.log('hasReviewed:', $scope.hasReviewed);
         });
     };
 

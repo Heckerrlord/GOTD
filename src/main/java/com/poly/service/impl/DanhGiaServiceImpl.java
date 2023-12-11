@@ -29,11 +29,8 @@ public class DanhGiaServiceImpl implements DanhGiaService {
     }
 
     @Override
-    public Boolean findByUserAndProduct(String ma, String username) {
-        List<DanhGia> danhGiaList = danhGiaDAO.getDanhGiaByUser(ma, username);
-
-        // Kiểm tra xem danhGiaList có đánh giá từ user cụ thể cho sản phẩm không
-        return danhGiaList != null && !danhGiaList.isEmpty();
+    public List<DanhGia> findByUserAndProduct(String ma, String username) {
+        return danhGiaDAO.getDanhGiaByUser(ma, username);
     }
 
 

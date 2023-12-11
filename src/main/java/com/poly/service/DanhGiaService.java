@@ -7,7 +7,7 @@ import java.util.List;
 public interface DanhGiaService {
     List<DanhGia> getDanhGiaByMaSp(String masp);
 
-    Boolean findByUserAndProduct(String ma,String username);
+    List<DanhGia> findByUserAndProduct(String ma,String username);
 
 
     DanhGia create(DanhGia danhGia,String user,String maSp);
