@@ -37,6 +37,17 @@ app.controller("thuonghieu-ctrl", function ($scope, $http) {
         $(".nav-tabs a:eq(0)").tab('show');
     }
 
+    $scope.editForm = {};
+
+    $scope.openEditModal = function(item) {
+        // Gán dữ liệu cần chỉnh sửa vào biến editForm
+        $scope.editForm = angular.copy(item); // Sử dụng angular.copy để sao chép dữ liệu mà không ảnh hưởng đến dữ liệu ban đầu
+
+        // Hiển thị modal khi người dùng nhấp vào nút chỉnh sửa
+        $('#editModal').modal('show');
+    };
+
+
     //them sp moi
     $scope.create = function () {
         var item = angular.copy($scope.form);

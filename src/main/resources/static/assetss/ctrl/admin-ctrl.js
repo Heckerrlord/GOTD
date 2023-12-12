@@ -3,7 +3,7 @@ var app = angular.module("admin-app", ["ngRoute"]);
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/account", {
-            templateUrl: "/admin/account/index.html",
+            templateUrl: "/admin/account/_table.html",
             controller: "account-ctrl"
         })
         .when("/product", {

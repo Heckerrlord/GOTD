@@ -1,4 +1,4 @@
-app.controller("sanpham-ctrl", function ($scope, $http) {
+app.controller("sanpham-ctrl", function ($scope, $http,$timeout) {
     var url = "/rest/sanPham";
     var url2 = "/rest/upload/images";
     $scope.items = [];
@@ -16,14 +16,41 @@ app.controller("sanpham-ctrl", function ($scope, $http) {
     }
 
     $scope.initialize = function () {
-        //load product
-        $http.get(url).then(resp => {
+        $http.get(url).then(function (resp) {
             $scope.items = resp.data;
-        });
-    }
+            // Sử dụng $timeout để chờ cho digest cycle hoàn tất
+            $timeout(function () {
+                // Đây là nơi bạn khởi tạo DataTables và niceScroll
+                $(".boxscroll").niceScroll({
+                    cursorborder: "",
+                    cursorcolor: "#eff3f6",
+                    boxzoom: true
+                });
 
-    //khoi dau
+
+                // Khởi tạo DataTables cho các phần tử có ID là 'datatable'
+                $('#datatable').DataTable();
+
+                // Khởi tạo DataTables cho các phần tử có ID là 'datatable-buttons'
+                var table = $('#datatable-buttons').DataTable({
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, 'All']
+                    ],
+                    pagingType: 'full_numbers',
+                    lengthChange: false,
+                    buttons: ['excel', 'pdf', 'print']
+                });
+
+                // Di chuyển các nút tới vị trí mong muốn
+                table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+            }, 0); // 0 ms delay để chạy ngay sau digest cycle
+        });
+    };
+
+// Gọi hàm initialize khi controller được tải
     $scope.initialize();
+
 
     //xoa form
     $scope.reset = function () {

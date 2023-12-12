@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>GOTD - Admin Dashboard</title>
     <link rel="shortcut icon" href="/assetss/img/favicon.ico">
-
-
     <link rel="stylesheet" href="/assetss/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assetss/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="/assetss/plugins/fontawesome/css/all.min.css">
@@ -46,16 +44,16 @@
                         <div class="searchinputs">
                             <input type="text" placeholder="Search Here ...">
                             <div class="search-addon">
-                                <span><img src="/assetssss/img/icons/closes.svg" alt="img"></span>
+                                <span><img src="/assetss/img/icons/closes.svg" alt="img"></span>
                             </div>
                         </div>
-                        <a class="btn" id="searchdiv"><img src="/assetssss/img/icons/search.svg" alt="img"></a>
+                        <a class="btn" id="searchdiv"><img src="/assetss/img/icons/search.svg" alt="img"></a>
                     </form>
                 </div>
             </li>
             <!--        <li class="nav-item dropdown">-->
             <!--            <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">-->
-            <!--                <img src=/"assetssss/img/icons/notification-bing.svg" alt="img"> <span class="badge rounded-pill">4</span>-->
+            <!--                <img src=/"assetss/img/icons/notification-bing.svg" alt="img"> <span class="badge rounded-pill">4</span>-->
             <!--            </a>-->
             <!--            <div class="dropdown-menu notifications">-->
             <!--                <div class="topnav-dropdown-header">-->
@@ -88,7 +86,7 @@
                         <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My Profile</a>
                         <a class="dropdown-item" href="generalsettings.html"><i class="me-2" data-feather="settings"></i>Settings</a>
                         <hr class="m-0">
-                        <a class="dropdown-item logout pb-0" href="signin.html"><img src="assetssss/img/icons/log-out.svg" class="me-2" alt="img">Logout</a>
+                        <a class="dropdown-item logout pb-0" href="signin.html"><img src="assetss/img/icons/log-out.svg" class="me-2" alt="img">Logout</a>
                     </div>
                 </div>
             </li>
@@ -145,7 +143,7 @@
                 <li class="submenu">
                     <a href="javascript:void(0);"><img src="/assetss/img/icons/users1.svg" alt="img"><span> Người dùng</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="customerlist.html">Người dùng</a></li>
+                        <li><a href="#!account">Người dùng</a></li>
                         <li><a href="supplierlist.html">Phân quyền</a></li>
                         <li><a href="addsupplier.html">Thống kê</a></li>
 
@@ -203,16 +201,12 @@
 <!--        </div>-->
 <!--    </div>-->
     <!-- Include AngularJS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
     <!-- Include Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Include chartjs-plugin-zoom -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
-    <!-- Include XLSX -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="/assetss/js/jquery.min.js"></script>
 <script src="/assetss/js/popper.min.js"></script>
 <script src="/assetss/js/bootstrap.min.js"></script>
@@ -237,43 +231,17 @@
 <script src="/assetss/ctrl/category-ctrl.js"></script>
 <script src="/assetss/ctrl/authority-ctrl.js"></script>
 <script src="/assetss/ctrl/order-ctrl.js"></script>
-
-
 <script src="/assetss/js/feather.min.js"></script>
 <script src="/assetss/js/script.js"></script>
-
-
-
-
-
-    <script src="/assetss/ctrl/ctrlPhu/colors-ctrl.js"></script>
-    <script src="/assetss/ctrl/ctrlPhu/kichco-ctrl.js"></script>
-    <script src="/assetss/ctrl/ctrlPhu/chatlieu-ctrl.js"></script>
-    <script src="/assetss/ctrl/ctrlPhu/coao-ctrl.js"></script>
-    <script src="/assetss/ctrl/ctrlPhu/loaikhachhang-ctrl.js"></script>
-    <script src="/assetss/ctrl/ctrlPhu/thuonghieu-ctrl.js"></script>
-    <script src="/assetss/ctrl/ctrlPhu/diachi-ctrl.js"></script>
-    <script src="/assetss/ctrl/ctrlPhu/magiamgia-ctrl.js"></script>
-    <script src="/assetss/ctrl/sanpham-ctrl.js"></script>
-    <!-- Thêm thư viện Chart.js -->
-
-    <!-- Thêm thư viện Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <!-- Thêm thư viện angular-chart.js -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="/assetss/ctrl/ctrlPhu/colors-ctrl.js"></script>
+<script src="/assetss/ctrl/ctrlPhu/kichco-ctrl.js"></script>
+<script src="/assetss/ctrl/ctrlPhu/chatlieu-ctrl.js"></script>
+<script src="/assetss/ctrl/ctrlPhu/coao-ctrl.js"></script>
+<script src="/assetss/ctrl/ctrlPhu/loaikhachhang-ctrl.js"></script>
+<script src="/assetss/ctrl/ctrlPhu/thuonghieu-ctrl.js"></script>
+<script src="/assetss/ctrl/ctrlPhu/diachi-ctrl.js"></script>
+<script src="/assetss/ctrl/ctrlPhu/magiamgia-ctrl.js"></script>
+<script src="/assetss/ctrl/sanpham-ctrl.js"></script>
 
 </body>
 

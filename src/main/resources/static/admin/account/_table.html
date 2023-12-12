@@ -1,6 +1,6 @@
-<div class="row mx-0 bg-white" ng-if="items">
+<div class="row mx-0 bg-white" >
 	<div class="col-12 py-3">
-		<table class="table table-collapse table-bordered">
+		<table ng-if="items"  class="table table-collapse table-bordered" >
 			<thead>
 				<tr>
 					<th>Username</th>
@@ -13,11 +13,11 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="item in pager.items">
-					<td class="align-center">{{item.username}}</td>
-					<td class="align-center">{{item.password}}</td>
-					<td class="align-center">{{item.fullname}}</td>
-					<td class="align-center">{{item.email}}</td>
-					<td class="align-center">{{item.photo}}</td>
+					<td >{{item.username}}</td>
+					<td >{{item.password}}</td>
+					<td >{{item.fullname}}</td>
+					<td >{{item.email}}</td>
+					<td >{{item.photo}}</td>
 					<td class="align-center">
 						<div class="btn-group btn-group-xs">
 							<button ng-click="edit(item)" class="btn btn-icon">
@@ -32,20 +32,5 @@
 			</tbody>
 		</table>
 	</div>
-</div>
-<div class="card-header text-center">
-	<button ng-click="pager.first()" class="btn btn-danger">
-		<i class="fas fa-arrow-to-left"></i>
-	</button>
-	<button ng-click="pager.prev()" class="btn btn-primary">
-		<i class="fas fa-arrow-left"></i>
-	</button>
-	<button class="btn btn-success">{{pager.page + 1}} of {{pager.count?pager.count:'1'}}</button>
-	<button ng-click="pager.next()" class="btn btn-primary">
-		<i class="fas fa-arrow-right"></i>
-	</button>
-	<button ng-click="pager.last()" class="btn btn-danger">
-		<i class="fas fa-arrow-to-right"></i>
-	</button>
 </div>
 <script src="/assetss/js/init.js"></script>

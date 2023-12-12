@@ -50,12 +50,12 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     $scope.getDoanhThuNam = function (year) {
         $http.get(`${apiUrl}/doanhthu/nam?year=` + year).then(function (resp) {
             $scope.doanhThuNam = resp.data;
-            console.log("Doanh Thu Nam:", $scope.doanhThuNam);
+
         });
     };
 
     $scope.drawBarChart = function () {
-        console.log("Dữ liệu vẽ biểu đồ cột: ", $scope.doanhThuThang);
+
         var ctx = document.getElementById('barChart').getContext('2d');
         // kiểm tra xem có biểu đồ của năm nào không
         var existingChart = Chart.getChart(ctx);
@@ -128,7 +128,7 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     };
 
     $scope.getDoanhThuThang = function (selectedYear) {
-        console.log("Selected Year:", selectedYear);
+
         $http.get(`${apiUrl}/doanhthu/thang?year=` + selectedYear).then(function (resp) {
             $scope.doanhThuThang = resp.data;
             $scope.drawBarChart();
@@ -170,12 +170,11 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
         var formattedCurrentDate = moment(currentDate).format('DD/MM/YYYY');
         var formattedSevenDaysAgo = moment(sevenDaysAgo).format('DD/MM/YYYY');
 
-        console.log("Formatted Current Date:", formattedCurrentDate);
-        console.log("Formatted Seven Days Ago:", formattedSevenDaysAgo);
+
 
         $http.get(`${apiUrl}/doanhthu/7ngay?sevenDaysAgo=` + formattedSevenDaysAgo + '&currentDate=' + formattedCurrentDate).then(function (resp) {
             $scope.doanhThu7Ngay = resp.data;
-            console.log("test 7 ngay"+resp.data);
+
         });
     };
 
@@ -187,7 +186,7 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
 
         $http.get(`${apiUrl}/doanhthu/7ngay?sevenDaysAgo=` + formattedStartDate + '&currentDate=' + formattedEndDate).then(function (resp) {
             $scope.doanhThuKhoangThoiGian = resp.data;
-            console.log("Theo khoảng thời gian", resp.data);
+
             $scope.formattedStartDate = formattedStartDate;
             $scope.formattedEndDate = formattedEndDate;
             $scope.showDateRange = true;
@@ -198,7 +197,7 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     $scope.getDoanhthuHientai = function (){
         $http.get(`${apiUrl}/doanhthu/hientai`).then(function (resp){
             $scope.doanhHientai = resp.data;
-            console.log(resp.data)
+
         })
     }
 
