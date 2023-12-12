@@ -79,13 +79,14 @@
                                 </div>
                                 <div style="float:right;">
                                     <td th:if="${order.trangThai == 4}">
-                                        <a type="button" class="rating-button">
-                                            <span class="star">&#9733;</span> Mua lại
+                                        <a type="button" class="rating-button" th:href="@{|/product/detail/${detail.chiTietSanPham.sanPham.ma}|}" target="_blank">
+                                            <span class="star"></span> Mua lại
                                         </a>
-                                        <a type="button" class="rating-button" data-bs-toggle="modal" th:attr="data-bs-target='#sizeGuideModal' + ${detail.chiTietSanPham.sanPham.ma}">
-                                                    <span class="star">&#9733;</span> Đánh giá
+                                        <a type="button" class="rating-button" data-bs-toggle="modal"
+                                           th:attr="data-bs-target='#sizeGuideModal' + ${detail.chiTietSanPham.sanPham.ma}"
+                                           th:unless="${#strings.contains(checkProductIds, detail.chiTietSanPham.sanPham.ma)}">
+                                            <span class="star">&#9733;</span> Đánh giá
                                         </a>
-
                                     </td>
                                 </div>
                                 <hr>

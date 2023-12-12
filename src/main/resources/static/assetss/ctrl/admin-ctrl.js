@@ -7,8 +7,8 @@ app.config(function ($routeProvider) {
             controller: "account-ctrl"
         })
         .when("/product", {
-            templateUrl: "/admin/product/index.html",
-            controller: "product-ctrl"
+            templateUrl: "/admin/rating/rating.html",
+            controller: "rating-ctrl"
         })
         .when("/doanhthu", {
             templateUrl: "/admin/doanhthu/index.html",

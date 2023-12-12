@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class OrderController {
@@ -73,7 +74,14 @@ public class OrderController {
 
 	@RequestMapping("/order/detail/{id}")
 	public String detail(@PathVariable("id") Long id, Model model,String ma) {
+
 		model.addAttribute("order", DHService.findById(id));
+
+		List<String> checkProductIds = danhGiaDAO.getDanhGiaUser(request.getRemoteUser())
+				.stream()
+				.map(danhGia -> danhGia.getSanPham().getMa())
+				.collect(Collectors.toList());
+		model.addAttribute("checkProductIds", checkProductIds);
 
 		return "order/detail";
 	}

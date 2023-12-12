@@ -1,0 +1,58 @@
+<div class="table-responsive">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <div class="btn-group float-right">
+                    <ol class="breadcrumb hide-phone p-0 m-0">
+                        <li class="breadcrumb-item">
+                            <a href="#">GOTD</a>
+                        </li>
+                        <li class="breadcrumb-item active">Đánh giá</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Đánh giá</h4>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; align-items: center;">
+    <span style="color: red; margin-right: 30px;">
+        <i class="fa fa-circle"></i> Đang chờ duyệt:{{countPendingReviews()}}
+    </span>
+        <span style="color: green; margin-right: 30px;">
+        <i class="fa fa-circle"></i> Đã duyệt:{{countApprovedReviews()}}
+    </span>
+    </div>
+
+    <table class="table user-list">
+        <thead>
+        <tr>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Người đánh giá</th>
+            <th>Đánh giá</th>
+            <th>Số sao</th>
+            <th>Trạng thái</th>
+            <th>Hoạt động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="a in items">
+            <td>{{a.sanPham.ma}}</td>
+            <td>{{a.sanPham.ten}}</td>
+            <td>{{a.account.username}}</td>
+            <td>{{a.comment}}</td>
+            <td>{{a.sao}}</td>
+            <td>
+                <!-- Hiển thị trạng thái -->
+                <span ng-if="a.trangThai === 0" class="badges bg-lightred"><a ng-click="accept(a)">Chờ duyệt</a></span>
+                <span ng-if="a.trangThai === 1" class="badges bg-lightgreen">Đã duyệt</span>
+            </td>
+            <td>
+                <a class="me-3 confirm-text" href="javascript:void(0);" ng-click="delete(a)">
+                    <i class="fa fa-trash" data-bs-toggle="tooltip" title="Xóa" style="color: red"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

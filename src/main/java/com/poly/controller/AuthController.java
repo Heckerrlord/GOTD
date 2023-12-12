@@ -257,6 +257,8 @@ public class AuthController {
         account.setPassword(account.getPassword());
         account.setTrangThai(account.getTrangThai());
         account.setToken(account.getToken());
+        model.addAttribute("tiensd", donHangDAO.tongTienDaSd(rq.getRemoteUser()));
+        model.addAttribute("donmua" , donHangDAO.donHang(rq.getRemoteUser()));
         accountService.update(account);
 
         model.addAttribute("updateSuccess", true);

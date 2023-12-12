@@ -6,6 +6,7 @@ import com.poly.entity.DonHang;
 import com.poly.entity.SanPham;
 import org.springframework.data.jpa.repository.Query;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public interface DonHangService {
     Double thongKeThangHienTai();
     Integer getSoLuongDon();
     List<Object[]> thongkeNgay();
+    List<Object[]> thongKeTheoKhoang(LocalDateTime sevenDaysAgo, LocalDateTime currentDate);
     List<Object[]> thongKeSanPhamTuan();
 
 }

@@ -73,8 +73,11 @@ public class DonHangRestController {
 	}
 
   @GetMapping("/doanhthu/ngay")
-  public ResponseEntity<List<Object[]>> getDoanhThuNgay() {
-	  List<Object[]> result = orderService.thongkeNgay();
+  public ResponseEntity<List<Object[]>> getDoanhThuNgay(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate sevenDaysAgo,
+														@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate currentDate) {
+	  LocalDateTime startDateTime = sevenDaysAgo.atStartOfDay();
+	  LocalDateTime endDateTime = currentDate.atTime(LocalTime.MAX);
+	  List<Object[]> result = orderService.thongKeTheoKhoang(startDateTime,endDateTime);
 	  return new ResponseEntity<>(result, HttpStatus.OK);
   }
 	@GetMapping("/tksanpham/tuan")

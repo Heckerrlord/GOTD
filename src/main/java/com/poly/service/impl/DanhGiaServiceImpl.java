@@ -33,6 +33,17 @@ public class DanhGiaServiceImpl implements DanhGiaService {
         return danhGiaDAO.getDanhGiaByUser(ma, username);
     }
 
+    @Override
+    public List<DanhGia> findAll() {
+        return danhGiaDAO.findAll();
+    }
+
+
+    @Override
+    public void delete(Integer id) {
+        danhGiaDAO.deleteById(id);
+    }
+
 
     @Override
     public DanhGia create(DanhGia danhGia, String user, String maSp) {

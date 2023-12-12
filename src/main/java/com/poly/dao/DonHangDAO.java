@@ -37,6 +37,8 @@ public interface DonHangDAO extends JpaRepository<DonHang, Long> {
     @Query(value = "SELECT YEAR (NgayDatHang) From DonHang GROUP BY  YEAR(NgayDatHang)", nativeQuery = true)
     List<Integer> getYear();
 
+
+
     @Query(value = " SELECT SUM(TongTien) From DonHang WHERE YEAR(NgayDatHang) = ? AND TrangThai = 4", nativeQuery = true)
     Double getDoamhThuNam(int year);
 
@@ -48,6 +50,9 @@ public interface DonHangDAO extends JpaRepository<DonHang, Long> {
 
     @Query(value = "SELECT NgayDatHang AS Ngay,SUM(TongTien) AS DoanhThu FROM DonHang WHERE TrangThai = 4 GROUP BY NgayDatHang ORDER BY  NgayDatHang", nativeQuery = true)
     List<Object[]> thongkeNgay();
+
+    @Query(value = "SELECT NgayDatHang,SUM(TongTien) FROM DonHang WHERE NgayDatHang BETWEEN :sevenDaysAgo AND :currentDate AND TrangThai = 4 GROUP BY NgayDatHang ORDER BY  NgayDatHang ", nativeQuery = true)
+    List<Object[]> thongKeTheoKhoang(Timestamp sevenDaysAgo, Timestamp currentDate);
 
 //    @Query(value = "SELECT SanPham.Ma, SanPham.Ten, SUM(DonHangChiTiet.SoLuong) AS 'Số lượng bán ra', DonHangChiTiet.DonGia * SUM(DonHangChiTiet.SoLuong) AS 'Doanh Thu' " +
 //            "FROM SanPham " +

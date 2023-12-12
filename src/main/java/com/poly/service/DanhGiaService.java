@@ -9,6 +9,11 @@ public interface DanhGiaService {
 
     List<DanhGia> findByUserAndProduct(String ma,String username);
 
+    List<DanhGia> findAll();
+
+
+    void delete(Integer id);
+
 
     DanhGia create(DanhGia danhGia,String user,String maSp);
 
