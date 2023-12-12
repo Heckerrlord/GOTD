@@ -79,10 +79,13 @@
                                 </div>
                                 <div style="float:right;">
                                     <td th:if="${order.trangThai == 4}">
-                                        <a type="button" class="rating-button" data-bs-toggle="modal"
-                                           th:attr="data-bs-target='#sizeGuideModal' + ${detail.chiTietSanPham.sanPham.ma}">
-                                            <span class="star">&#9733;</span> Đánh giá
+                                        <a type="button" class="rating-button">
+                                            <span class="star">&#9733;</span> Mua lại
                                         </a>
+                                        <a type="button" class="rating-button" data-bs-toggle="modal" th:attr="data-bs-target='#sizeGuideModal' + ${detail.chiTietSanPham.sanPham.ma}">
+                                                    <span class="star">&#9733;</span> Đánh giá
+                                        </a>
+
                                     </td>
                                 </div>
                                 <hr>
@@ -101,8 +104,6 @@
                                 <div style="float: right"> [[${#numbers.formatDecimal(order.tongTien,0,'COMMA',0,'POINT')}]] <strong> vnđ</strong></div>
                                 <br>
                             </div>
-                            <!--									</tbody>-->
-                            <!--								</table>-->
                         </div>
                     </div>
                 </div>

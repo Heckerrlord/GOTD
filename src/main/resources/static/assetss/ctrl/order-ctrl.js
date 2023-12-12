@@ -90,6 +90,12 @@ app.controller("order-ctrl", function ($scope, $http) {
     }
 
 
+    $.doiHang = function (item){
+
+    }
+
+
+
 
 
     //phan trang

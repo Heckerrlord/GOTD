@@ -51,13 +51,18 @@ public class CTSPServiceImpl implements CTSPService {
 	}
 
 	@Override
-	public List<ChiTietSanPham> findByFilters(String brandNames, String sizes, String colors, Long minPrice, Long maxPrice) {
-		return pdao.findByFilters(brandNames,sizes,colors,minPrice,maxPrice);
+	public Page<ChiTietSanPham> findByFilters(String brandNames, String sizes, String colors, Long minPrice, Long maxPrice, Pageable pageable) {
+		return pdao.findByFilters(brandNames, sizes, colors, minPrice, maxPrice, pageable);
 	}
 
 	@Override
-	public List<ChiTietSanPham> findDistinctByMasp() {
-		return pdao.findDistinctByMasp();
+	public Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable) {
+		return pdao.findDistinctByMaspp(pageable);
+	}
+
+	@Override
+	public Page<ChiTietSanPham> findAllOrderByGiaBanAsc(Pageable pageable) {
+		return pdao.findAllOrderByGiaBanAsc(pageable);
 	}
 
 

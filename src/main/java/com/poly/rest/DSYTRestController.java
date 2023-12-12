@@ -35,7 +35,7 @@ public class DSYTRestController {
     }
 
     @GetMapping("/check")
-    public List<DanhSachYeuThich> getFavo(@RequestParam String username,@RequestParam String ma){
+    public List<DanhSachYeuThich> getFavo(@RequestParam(name = "username") String username,@RequestParam(name = "ma") String ma){
         return dsytService.getFavorite(username,ma);
     }
 

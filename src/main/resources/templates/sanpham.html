@@ -106,17 +106,26 @@
             </div>
 
             <!-- List product -->
-            <div class="product-showing col-lg-9 col-12">
+            <div class="product-showing col-lg-9 col-12 ">
                 <div class="sort">
-                    <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i
-                            class="fas fa-filter"></i></div>
+                    <div class="sort-content" id="sortDropdownBtn">
+                        Sắp xếp theo <span class="sort-name">Hàng mới</span><i class="zmdi zmdi-chevron-down"></i>
+                        <div class="sort-dropdown" id="sortDropdown">
+                            <div class="sort-item new-arrival active">Hàng mới</div>
+                            <div class="sort-item best-seller">Bán chạy</div>
+                            <div class="sort-item low-to-high-price" ng-click="sort('lowToHigh')">Giá thấp đến cao</div>
+                            <div class="sort-item high-to-low-price" ng-click="sort('highToLow')">Giá cao đến thấp</div>
+                        </div>
+                    </div>
+                    <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i class="fas fa-filter"></i></div>
                 </div>
+
                 <div class="no-products">
                     <img th:src="@{assetss/img/noresult.png}" alt="noresult.png">
                     <h4>Không tìm thấy sản phẩm phù hợp</h4>
                 </div>
                 <div class="row">
-                    <div class="col-md-4" ng-repeat="p in items" ng-init="checkFavorites(p.sanPham.ma,user)">
+                    <div class="col-md-4" ng-repeat="p in items" >
                         <div class="product-item">
                             <div class="inner-content" >
                                 <div class="product-thumb">
@@ -127,19 +136,20 @@
                                     </a>
                                     <div class="product-action" >
                                         <div class="addto-wrap">
-                                            <a class="remove-wishlist" href="javascript:void(0)"
+                                            <a class="remove-wishlist" href=""
                                                title="Xóa khỏi yêu thích"
-                                               ng-if="isFavorite.sanPham === p.sanPham.ma"
-                                               ng-click="removeFavorite(p.sanPham.ma, user)">
+                                               ng-if="p.myFavorite === 1"
+                                               ng-click="removeFavorite(p.sanPham.ma)"
+                                               ng-class="{ 'fillColor': p.myFavorite === 1 }">
                                                 <i class="zmdi zmdi-favorite"></i>
                                             </a>
-                                            <a class="add-wishlist" href="javascript:void(0)"
+                                            <a class="add-wishlist" href=""
                                                title="Thêm vào yêu thích"
-                                               ng-if="!isFavorite || (isFavorite && isFavorite.sanPham !== p.sanPham.ma)"
+                                               ng-if="p.myFavorite === 0"
                                                ng-click="addFavorite(p.sanPham.ma, user)">
                                                 <i class="zmdi zmdi-favorite-outline"></i>
                                             </a>
-                                            <a class="add-cart" href="/product/detail/{{ p.sanPham.ma }}">
+                                            <a class="add-cart" ng-href="/product/detail/{{ p.sanPham.ma }}">
                                                 <i class="zmdi zmdi-shopping-cart-plus icon"></i>
                                             </a>
                                         </div>
@@ -159,11 +169,39 @@
                     </div>
                 </div>
                 <br>
-                <div>
-                    <button ng-click="prevPage()" ng-disabled="currentPage === 1" class="btn-danger"><i class="zmdi zmdi-skip-previous"></i></button>
-                    <span>Trang {{currentPage}}</span>
-                    <button ng-click="nextPage()" ng-disabled="currentPage === totalPages" class="btn-danger"><i class="zmdi zmdi-skip-next"></i></button>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="pagination-content-wrap border-bottom">
+                            <nav class="pagination-nav">
+                                <ul class="pagination justify-content-center">
+                                    <li>
+                                        <button class="prev" ng-click="pager.first()">First</button>
+                                    </li>
+                                    <li>
+                                        <button class="prev" ng-click="pager.prev()">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </button>
+                                    </li>
+                                    <li ng-repeat="page in pager.pages">
+                                        <button ng-click="pager.setPage(page)">
+                                            {{page}}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="next" ng-click="pager.next()">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="next" ng-click="pager.last()">Last</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>

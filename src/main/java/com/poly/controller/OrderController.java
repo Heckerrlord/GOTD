@@ -74,6 +74,7 @@ public class OrderController {
 	@RequestMapping("/order/detail/{id}")
 	public String detail(@PathVariable("id") Long id, Model model,String ma) {
 		model.addAttribute("order", DHService.findById(id));
+
 		return "order/detail";
 	}
 	@RequestMapping("/cart/bill/{id}")

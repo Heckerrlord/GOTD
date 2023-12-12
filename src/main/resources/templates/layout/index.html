@@ -240,6 +240,22 @@
         }
     }
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#sortDropdownBtn").click(function () {
+            $("#sortDropdown").toggle();
+        });
+
+        $(document).on("click", function (event) {
+            if (!event.target.matches("#sortDropdownBtn") && !event.target.matches(".sort-item")) {
+                $("#sortDropdown").hide();
+            }
+        });
+    });
+</script>
 <link rel="stylesheet" type="text/css"
 href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>

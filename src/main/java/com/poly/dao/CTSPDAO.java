@@ -16,6 +16,7 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
     @Query("SELECT c FROM ChiTietSanPham c WHERE c.id IN (SELECT MAX(c2.id) FROM ChiTietSanPham c2 GROUP BY c2.sanPham.ma)")
     List<ChiTietSanPham> findDistinctByMasp();
 
+
     @Query(value = "SELECT MIN(C.id) AS id, C.MaSanPham, MIN(C.MaLoaiKH) AS MaLoaiKH, MIN(C.MaThuongHieu) AS MaThuongHieu, " +
             "MIN(C.MaMau) AS MaMau, MIN(C.MaKichCo) AS MaKichCo, MIN(C.MaChatLieu) AS MaChatLieu, MIN(C.MaCoAo) AS MaCoAo ," +
             "SUM(C.SoLuong) AS SoLuong, MIN(C.GiaNhap) AS GiaNhap, MIN(C.GiaBan) AS GiaBan, MIN(C.MoTa) AS MoTa ,MIN(C.NgayThem) AS NgayThem, " +
@@ -53,7 +54,11 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
     Page<ChiTietSanPham> getListCTSP(String maThuongHieu, String maMau, String maKichCo, Long minGiaBan, Long maxGiaBan, Pageable pageable);
 
 
-    @Query(value = "SELECT * \n" +
+    @Query("SELECT c FROM ChiTietSanPham c WHERE c.id IN (SELECT MAX(c2.id) FROM ChiTietSanPham c2 GROUP BY c2.sanPham.ma)")
+    Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable);
+
+
+    @Query(value = "SELECT c.id AS ctsp_id, c.* \n" +
             "FROM ChiTietSanPham c\n" +
             "INNER JOIN ThuongHieu th ON c.MaThuongHieu = th.Ma\n" +
             "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma\n" +
@@ -61,12 +66,24 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             "WHERE (th.Ten IN (SELECT value FROM STRING_SPLIT(?1,',')) OR COALESCE(?1, '') = '')\n" +
             "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?2,',')) OR COALESCE(?2, '') = '')\n" +
             "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '')\n" +
-            "AND c.GiaBan BETWEEN COALESCE(?4, 0) AND COALESCE(?5, 999999999)", nativeQuery = true)
-    List<ChiTietSanPham> findByFilters(String brandNames,
+            "AND c.GiaBan BETWEEN COALESCE(?4, 0) AND COALESCE(?5, 999999999)",
+            countQuery = "SELECT COUNT(c.id) FROM ChiTietSanPham c\n" +
+                    "INNER JOIN ThuongHieu th ON c.MaThuongHieu = th.Ma\n" +
+                    "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma\n" +
+                    "INNER JOIN MauSac ms ON c.MaMau = ms.Ma\n" +
+                    "WHERE (th.Ten IN (SELECT value FROM STRING_SPLIT(?1,',')) OR COALESCE(?1, '') = '')\n" +
+                    "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?2,',')) OR COALESCE(?2, '') = '')\n" +
+                    "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '')\n" +
+                    "AND c.GiaBan BETWEEN COALESCE(?4, 0) AND COALESCE(?5, 999999999)",
+            nativeQuery = true)
+    Page<ChiTietSanPham> findByFilters(String brandNames,
                                        String sizes,
                                        String colors,
                                        Long minPrice,
-                                       Long maxPrice);
+                                       Long maxPrice,
+                                       Pageable pageable);
 
 
+    @Query("SELECT c FROM ChiTietSanPham c ORDER BY c.GiaBan ASC")
+    Page<ChiTietSanPham> findAllOrderByGiaBanAsc(Pageable pageable);
 }

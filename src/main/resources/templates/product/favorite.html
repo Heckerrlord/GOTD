@@ -155,10 +155,36 @@
                     </div>
                 </div>
                 <br>
-                <div>
-                    <button ng-click="prevPage()" ng-disabled="currentPage === 1">Trang trước</button>
-                    <span>Trang {{currentPage}}</span>
-                    <button ng-click="nextPage()" ng-disabled="currentPage === totalPages">Trang sau</button>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="pagination-content-wrap border-bottom">
+                            <nav class="pagination-nav">
+                                <ul class="pagination justify-content-center">
+                                    <li>
+                                        <button class="prev" ng-click="pager.first()">First</button>
+                                    </li>
+                                    <li>
+                                        <button class="prev" ng-click="pager.prev()">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </button>
+                                    </li>
+                                    <li ng-repeat="page in pager.pages">
+                                        <button ng-click="pager.setPage(page)">
+                                            {{page}}
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="next" ng-click="pager.next()">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="next" ng-click="pager.last()">Last</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

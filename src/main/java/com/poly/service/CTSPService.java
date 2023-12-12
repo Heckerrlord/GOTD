@@ -21,11 +21,15 @@ public interface CTSPService {
 
 	Page<ChiTietSanPham> getListCTSP(String maThuongHieu, String maMau, String maKichCo, Long minGiaBan, Long maxGiaBan, Pageable pageable);
 
-	List<ChiTietSanPham> findByFilters(String brandNames,
+
+	Page<ChiTietSanPham> findByFilters(String brandNames,
 									   String sizes,
 									   String colors,
 									   Long minPrice,
-									   Long maxPrice);
+									   Long maxPrice,
+									   Pageable pageable);
 
-	List<ChiTietSanPham> findDistinctByMasp();
+	Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable);
+
+	Page<ChiTietSanPham> findAllOrderByGiaBanAsc(Pageable pageable);
 }
