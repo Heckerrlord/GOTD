@@ -37,7 +37,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class AuthController {
@@ -63,6 +66,7 @@ public class AuthController {
     DonHangDAO donHangDAO;
 
 
+
     @CrossOrigin("*")
     @ResponseBody
     @RequestMapping("/rest/auth/authentication")
@@ -77,13 +81,18 @@ public class AuthController {
 
     @RequestMapping("/auth/login/success")
     public String logInSuccess(HttpSession session, Model model, @ModelAttribute("account") Account account) {
-        // Đối tượng `account` ở đây là tài khoản đã được xác thực
-
-        // Lưu tài khoản vào session
         session.setAttribute("authenticatedAccount", account);
-        System.out.println(account.getUsername());
-        model.addAttribute("message", "Đăng nhập thành công");
-        return "redirect:/index";
+        Account account1 = accountDAO.findByUsername(rq.getRemoteUser());
+        String[] roles = account1.getAuthorities().stream()
+                .map(er -> er.getRole().getId())
+                .toArray(String[]::new); // Chuyển kết quả thành một mảng String[]
+        boolean hasDireRole = Arrays.asList(roles).contains("DIRE"); // Kiểm tra xem mảng roles có chứa role "DIRE" không
+        if (hasDireRole) {
+            return "redirect:/admin";
+        } else {
+            model.addAttribute("message", "Đăng nhập thành công");
+            return "redirect:/index";
+        }
     }
 
 

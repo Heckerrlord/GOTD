@@ -26,12 +26,7 @@ app.controller("sanpham-ctrl", function ($scope, $http,$timeout) {
                     cursorcolor: "#eff3f6",
                     boxzoom: true
                 });
-
-
-                // Khởi tạo DataTables cho các phần tử có ID là 'datatable'
                 $('#datatable').DataTable();
-
-                // Khởi tạo DataTables cho các phần tử có ID là 'datatable-buttons'
                 var table = $('#datatable-buttons').DataTable({
                     lengthMenu: [
                         [10, 25, 50, -1],
@@ -39,12 +34,10 @@ app.controller("sanpham-ctrl", function ($scope, $http,$timeout) {
                     ],
                     pagingType: 'full_numbers',
                     lengthChange: false,
-                    buttons: ['excel', 'pdf', 'print']
+                    buttons: ['excel', 'pdf', 'print',  'copyHtml5']
                 });
-
-                // Di chuyển các nút tới vị trí mong muốn
                 table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
-            }, 0); // 0 ms delay để chạy ngay sau digest cycle
+            }, 0);
         });
     };
 

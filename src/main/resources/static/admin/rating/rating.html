@@ -10,38 +10,48 @@
                         <li class="breadcrumb-item active">Đánh giá</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Đánh giá</h4>
+
             </div>
         </div>
     </div>
-    <div style="display: flex; align-items: center;">
-    <span style="color: red; margin-right: 30px;">
-        <i class="fa fa-circle"></i> Đang chờ duyệt:{{countPendingReviews()}}
-    </span>
-        <span style="color: green; margin-right: 30px;">
-        <i class="fa fa-circle"></i> Đã duyệt:{{countApprovedReviews()}}
-    </span>
+    <div class="row" style="display: flex; align-items: center;">
+        <div class="col-6">
+            <h4 class="page-title">Đánh giá</h4>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+        <span style="color: red; margin-right: 30px;">
+            <i class="fa fa-circle"></i> Đang chờ duyệt:{{countPendingReviews()}}
+        </span>
+            <span style="color: green; margin-right: 30px;">
+            <i class="fa fa-circle"></i> Đã duyệt:{{countApprovedReviews()}}
+        </span>
+        </div>
     </div>
 
-    <table class="table user-list">
-        <thead>
-        <tr>
-            <th>Mã sản phẩm</th>
-            <th>Tên sản phẩm</th>
-            <th>Người đánh giá</th>
-            <th>Đánh giá</th>
-            <th>Số sao</th>
-            <th>Trạng thái</th>
-            <th>Hoạt động</th>
-        </tr>
+
+</div>
+<div class="card-body">
+    <div class="e-table">
+        <div class="table-responsive">
+            <table class="table" id="datatable-buttons">
+                <thead>
+                <tr>
+                    <th>Người đánh giá</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Đánh giá</th>
+                    <th>Số sao</th>
+                    <th>Thời gian</th>
+                    <th>Trạng thái</th>
+                    <th>Hoạt động</th>
+                </tr>
         </thead>
         <tbody>
         <tr ng-repeat="a in items">
-            <td>{{a.sanPham.ma}}</td>
+            <td>{{a.account.fullname}}({{a.account.username}})</td>
             <td>{{a.sanPham.ten}}</td>
-            <td>{{a.account.username}}</td>
             <td>{{a.comment}}</td>
             <td>{{a.sao}}</td>
+            <td>{{a.ngayCmt | date:'mm:HH dd/MM/yyyy' }}</td>
             <td>
                 <!-- Hiển thị trạng thái -->
                 <span ng-if="a.trangThai === 0" class="badges bg-lightred"><a ng-click="accept(a)">Chờ duyệt</a></span>
@@ -54,5 +64,8 @@
             </td>
         </tr>
         </tbody>
-    </table>
+            </table>
+        </div>
+    </div>
+</div>
 </div>

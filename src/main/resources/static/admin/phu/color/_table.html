@@ -1,6 +1,8 @@
+
+
 <div class="row mx-0 bg-white" ng-if="items">
     <div class="col-12 py-3">
-        <table id="datatable-buttons" class="table table-collapse table-bordered dt-responsive">
+        <table id="datatable-buttons" class="table">
             <thead>
             <tr>
                 <th>STT</th>
@@ -13,12 +15,12 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in items">
-                <td class="align-center">{{$index+1}}</td>
-                <td hidden class="align-center">{{item.id}}</td>
-                <td class="align-center">{{item.code}}</td>
-                <td class="align-center">{{item.name}}</td>
-                <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
-                <td class="align-center">
+                <td >{{$index+1}}</td>
+                <td hidden >{{item.id}}</td>
+                <td >{{item.code}}</td>
+                <td >{{item.name}}</td>
+                <td >{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
+                <td >
                     <div class="btn-group btn-group-xs">
                         <button ng-click="edit(item)" class="btn btn-icon">
                             <i class="fa fa-xs fa-pen"></i>

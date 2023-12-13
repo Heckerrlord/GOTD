@@ -218,56 +218,54 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     }
 
 
-    $scope.doanhthungay = function () {
-        $http.get(`${apiUrl}/doanhthu/ngay`).then(function (response) {
-            const data = response.data;
-            const labels = data.map(item => moment(item[0]).format('DD/MM/YYYY')); // Định dạng ngày dd/mm/yyyy
-            const values = data.map(item => item[1]);
-
-            const ctx = document.getElementById('myLineChart').getContext('2d');
-            const myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Doanh Thu:',
-                        data: values,
-                        borderColor: 'rgb(75, 192, 192)',
-                        borderWidth: 2,
-                        fill: false
-                    }]
-                },
-                options: {
-                    scales: {
-                        x: {
-                            display: false
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Doanh Thu'
-                            }
-                        }
-                    },
-                    plugins: {
-                        zoom: {
-                            pan: {
-                                enabled: true,
-                                mode: 'x',
-                            },
-                            zoom: {
-                                enabled: true,
-                                mode: 'x',
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    };
-
-
-
+    // $scope.doanhthungay = function () {
+    //     $http.get(`${apiUrl}/doanhthu/ngay`).then(function (response) {
+    //         const data = response.data;
+    //         const labels = data.map(item => moment(item[0]).format('DD/MM/YYYY')); // Định dạng ngày dd/mm/yyyy
+    //         const values = data.map(item => item[1]);
+    //
+    //         const ctx = document.getElementById('myLineChart').getContext('2d');
+    //         const myLineChart = new Chart(ctx, {
+    //             type: 'line',
+    //             data: {
+    //                 labels: labels,
+    //                 datasets: [{
+    //                     label: 'Doanh Thu:',
+    //                     data: values,
+    //                     borderColor: 'rgb(75, 192, 192)',
+    //                     borderWidth: 2,
+    //                     fill: false
+    //                 }]
+    //             },
+    //             options: {
+    //                 scales: {
+    //                     x: {
+    //                         display: false
+    //                     },
+    //                     y: {
+    //                         title: {
+    //                             display: true,
+    //                             text: 'Doanh Thu'
+    //                         }
+    //                     }
+    //                 },
+    //                 plugins: {
+    //                     zoom: {
+    //                         pan: {
+    //                             enabled: true,
+    //                             mode: 'x',
+    //                         },
+    //                         zoom: {
+    //                             enabled: true,
+    //                             mode: 'x',
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     });
+    // };
+    //
 
 
 
@@ -275,7 +273,9 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
 
 
 
-    $scope.doanhthungay();
+
+
+    // $scope.doanhthungay();
     $scope.getDoanhthuHientai();
     $scope.getDon();
     $scope.getAc();
