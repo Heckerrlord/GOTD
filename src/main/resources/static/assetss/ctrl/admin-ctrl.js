@@ -72,6 +72,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/blogs/blogs.html",
             controller: "blogs-ctrl"
         })
+        // .when("/about", {
+        //     templateUrl: "/about",
+        //     controller: "blogs-ctrl"
+        // })
         .otherwise({
             templateUrl: "/admin/dashboard.html",
             controller: "diachi-ctrl"

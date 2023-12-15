@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+<html>
+
+<body>
+<main class="main-content">
+    <section class="contact-info-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img ng-src="{{'/assets/images/2021.webp'}}">
+                </div>
+                <div class="col-md-8">
+                    <p>{{blogs[0].tieuDe}}</p>
+                    <div style="font-size: 13px">{{blogs[0].noiDung}}</div>
+                    <div style="font-size: 13px; margin-top: 10px" class="row">
+                        <div class="col-6">
+                            {{blogs[0].ngayTao}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 50px ">
+                <div class="col-md-4" ng-repeat="item in blogs.slice(1)">
+                    <div class="contact-info-item">
+                        <img ng-src="{{'/assets/images/2021.webp'}}">
+                        <p style="margin-top: 20px">{{item.tieuDe}}</p>
+                        <div style="font-size: 13px">{{item.noiDung | limitTo:item.noiDung.length/4}}.....</div>
+                        <div style="font-size: 13px; margin-top: 10px" class="row">
+                            <div class="col-6">
+                                {{item.ngayTao}}
+                            </div>
+                            <div class="col-6">
+                                <a style="float: right">Đọc thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

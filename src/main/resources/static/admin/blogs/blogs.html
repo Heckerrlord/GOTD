@@ -1,177 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-<!--    <title>Trang Blog</title>-->
-<!--    <style>-->
-<!--        body {-->
-<!--            font-family: Arial, sans-serif;-->
-<!--            margin: 0;-->
-<!--            padding: 0;-->
-<!--            background-color: #f1f1f1;-->
-<!--        }-->
-
-<!--        .container {-->
-<!--            max-width: 960px;-->
-<!--            margin: 0 auto;-->
-<!--            padding: 20px;-->
-<!--        }-->
-
-<!--        header {-->
-<!--            background-color: #333;-->
-<!--            color: #fff;-->
-<!--            padding: 20px;-->
-<!--        }-->
-
-<!--        header h1 {-->
-<!--            margin: 0;-->
-<!--        }-->
-
-<!--        nav ul {-->
-<!--            list-style-type: none;-->
-<!--            padding: 0;-->
-<!--        }-->
-
-<!--        nav ul li {-->
-<!--            display: inline;-->
-<!--            margin-right: 10px;-->
-<!--        }-->
-
-<!--        nav ul li a {-->
-<!--            color: #fff;-->
-<!--            text-decoration: none;-->
-<!--        }-->
-
-<!--        section {-->
-<!--            margin-bottom: 40px;-->
-<!--        }-->
-
-<!--        h2 {-->
-<!--            margin-top: 0;-->
-<!--        }-->
-
-<!--        table {-->
-<!--            width: 100%;-->
-<!--            border-collapse: collapse;-->
-<!--        }-->
-
-<!--        table th, table td {-->
-<!--            padding: 10px;-->
-<!--            text-align: left;-->
-<!--            border-bottom: 1px solid #ccc;-->
-<!--        }-->
-
-<!--        .edit, .delete {-->
-<!--            display: inline-block;-->
-<!--            padding: 6px 12px;-->
-<!--            text-decoration: none;-->
-<!--            color: #fff;-->
-<!--        }-->
-
-<!--        .edit {-->
-<!--            background-color: #333;-->
-<!--        }-->
-
-<!--        .delete {-->
-<!--            background-color: #f44336;-->
-<!--        }-->
-
-<!--        #new-blog-form form {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--        }-->
-
-<!--        #new-blog-form form .form-group {-->
-<!--            margin-bottom: 10px;-->
-<!--        }-->
-
-<!--        #new-blog-form form label {-->
-<!--            display: block;-->
-<!--            margin-bottom: 5px;-->
-<!--        }-->
-
-<!--        #new-blog-form form input[type="text"],-->
-<!--        #new-blog-form form textarea {-->
-<!--            width: 100%;-->
-<!--            padding: 10px;-->
-<!--        }-->
-
-<!--        #new-blog-form form input[type="submit"] {-->
-<!--            background-color: #4caf50;-->
-<!--            color: #fff;-->
-<!--            border: none;-->
-<!--            padding: 10px 20px;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--<main>-->
-<!--    <div class="container">-->
-<!--        <section id="blog-list">-->
-<!--            <h2>Danh sách bài viết</h2>-->
-<!--            <table>-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Tiêu đề</th>-->
-<!--                    <th>Ngày đăng</th>-->
-<!--                    <th>Thao tác</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr>-->
-<!--                    <td>Bài viết 1</td>-->
-<!--                    <td>01/12/2023</td>-->
-<!--                    <td>-->
-<!--                        <a href="#" class="edit">Chỉnh sửa</a>-->
-<!--                        <a href="#" class="delete">Xóa</a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td>Bài viết 2</td>-->
-<!--                    <td>02/12/2023</td>-->
-<!--                    <td>-->
-<!--                        <a href="#" class="edit">Chỉnh sửa</a>-->
-<!--                        <a href="#" class="delete">Xóa</a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td>Bài viết 3</td>-->
-<!--                    <td>03/12/2023</td>-->
-<!--                    <td>-->
-<!--                        <a href="#" class="edit">Chỉnh sửa</a>-->
-<!--                        <a href="#" class="delete">Xóa</a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </section>-->
-
-<!--        <section id="new-blog-form">-->
-<!--            <h2>Tạo bài viết mới</h2>-->
-<!--            <form>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="title">Tiêu đề</label>-->
-<!--                    <input type="text" id="title" name="title">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="content">Nội dung</label>-->
-<!--                    <textarea id="content" name="content"></textarea>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="image">Ảnh</label>-->
-<!--                    <input type="file" id="image" name="image">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <input type="submit" value="Tạo">-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </section>-->
-<!--    </div>-->
-<!--</main>-->
-<!--</body>-->
-<!--</html>-->
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -289,6 +115,7 @@
     <div class="container">
         <section id="blog-list">
             <h2>Danh sách bài viết</h2>
+            <a class="create" data-toggle="modal" data-target="#user-form-modal">Thêm mới</a>
             <table id="blog-table">
                 <thead>
                 <tr>
@@ -314,41 +141,6 @@
                 </tbody>
             </table>
         </section>
-        <section id="new-blog-form">
-            <h2>Tạo bài viết mới</h2>
-            <form ng-submit="create()">
-                <div class="form-group">
-                    <label for="tieuDe">Tiêu đề</label>
-                    <input type="text" id="tieuDe" name="tieuDe" ng-model="form.tieuDe">
-                </div>
-                <div class="form-group">
-                    <label for="noiDung">Nội dung</label>
-                    <textarea id="noiDung" name="noiDung" ng-model="form.noiDung"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Ảnh</label>
-                    <div class="row">
-                        <div class="col-md-4 text-center">
-                                        <span ng-if="form.image == null">
-                                            <img ng-src="{{'/assets/images/cloud-upload.jpg'}}"
-                                                 style="max-width: 100%;">
-                                        </span>
-                            <span ng-if="form.image != null">
-                                            <img ng-src="{{'/assets/images/'+form.image}}"
-                                                 style="max-width: 100%;">
-                                        </span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="file" class="form-control" id="image"
-                                   onchange="angular.element(this).scope().imageChanged(this.files)" style="margin-top: 5rem">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Tạo">
-                </div>
-            </form>
-        </section>
     </div>
 </main>
 </body>
@@ -360,7 +152,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Chỉnh sửa bài viết</h5>
-                <button type="button" class="close" data-dismiss="modal">
+                <button type="button" class="close" data-dismiss="modal" ng-click="resetModal()">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -392,7 +184,7 @@
                                         </span>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="file" class="form-control" id="image1"
+                                            <input type="file" class="custom-file-input" id="image" name="anh" ng-model="form.anh"
                                                    onchange="angular.element(this).scope().imageChanged(this.files)" style="margin-top: 5rem">
                                         </div>
                                     </div>
@@ -401,7 +193,14 @@
                         </div>
                         <div class="row">
                             <div class="col d-flex justify-content-end">
-                                <button class="btn btn-primary" type="submit" ng-click="update(item)" data-dismiss="modal" onclick="resetModal()" >Lưu</button>
+                                <div class="card-header text-center">
+                                    <button ng-click="create()" class="btn btn-primary" ng-if="!isEditing">
+                                        <i class="zmdi zmdi-floppy"></i> Thêm mới
+                                    </button>
+                                    <button ng-click="update(item)" class="btn btn-success" ng-if="isEditing">
+                                        <i class="far fa-save"></i> Hoàn thành
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
