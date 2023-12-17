@@ -1,0 +1,165 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="btn-group float-right">
+                <ol class="breadcrumb hide-phone p-0 m-0">
+                    <li class="breadcrumb-item">
+                        <a href="#">GOTD</a>
+                    </li>
+                    <li class="breadcrumb-item active">Thêm sản phẩm</li>
+                </ol>
+            </div>
+            <h4 class="page-title">ADD PRODUCT</h4>
+        </div>
+    </div>
+</div>
+                <div class="py-1">
+                    <form class="form" novalidate="">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>MÃ SẢN PHẨM</label>
+                                    <input type="text" class="form-control" ng-model="productData.ma">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>TÊN SẢN PHẨM</label>
+                                    <input type="text" class="form-control" ng-model="productData.ten">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>MÔ TẢ SẢN PHẨM</label>
+                                    <textarea class="form-control" ng-model="productData.moTa"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>THƯƠNG HIỆU</label>
+                                    <select class="select form-control" ng-init="brands()"
+                                            ng-model="productData.thuongHieu.code">
+                                        <option  value="" selected>Chọn thương hiệu</option>
+                                        <option ng-repeat="item in thuonghieu" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>CHẤT LIỆU</label>
+                                    <select class="select form-control" ng-init="chat()"
+                                            ng-model="productData.chatLieu.code">
+                                        <option  value="" selected>Chọn chất liệu</option>
+                                        <option ng-repeat="item in chatlieu" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>LOẠI ÁO</label>
+                                    <select class="select form-control" ng-init="loai()"
+                                            ng-model="productData.loaiKhachHang.code">
+                                        <option  value="" selected>Chọn loại áo</option>
+                                        <option ng-repeat="item in loaiao" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>CỔ ÁO</label>
+                                    <select class="select form-control" ng-init="cao()"
+                                            ng-model="productData.coAo.code">
+                                        <option value="" selected >Chọn cổ áo</option>
+                                        <option ng-repeat="item in coao" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-5">
+                                <label class="form-label mb-5">HÌNH ẢNH SẢN PHẨM</label>
+                                <div class="row">
+                                    <div class="col-3 mr-5 ml-3 mb-5" style="padding-right: 70px;">
+                                        <div class="image-upload">
+                                            <input id="photo-upload" type="file" multiple onchange="angular.element(this).scope().onFileChange(this)" />
+
+                                            <div class="image-uploads">
+                                                <img
+                                                        src="/assetss/img/icons/upload.svg"
+                                                        alt="img">
+                                                <h4>Nhấp để chọn ảnh</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3" ng-repeat="preview in imagePreviews">
+                                        <div class="img-wrap img-upload">
+                                            <img class="w-50" ng-src="{{preview}}" alt="Xem trước" />
+                                            <span class="btn-danger" ng-click="removeImagePreview($index)"><i class="fa fa-trash"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--CHI TIẾT SẢN PHẨM-->
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="text-dark">Chi tiết sản phẩm</span>
+                                        <button class="btn btn-primary mb-2" ng-click="addProductDetail(productDetail)" ><i class="fa fa-plus"></i></button>
+
+                                    </h4>
+                                </div>
+                                <div class="row">
+                                <div class="col-lg-6 mb-3" ng-repeat="productDetail in productData.ctsp track by $index">
+                                    <div class="card mb-3">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-1">
+                                            <button class="btn btn-danger mb-2" ng-click="removeProductDetail($index)"><i class="fa fa-trash"></i></button>
+                                        </h4>
+                                        <div class="form-group mb-0">
+                                            <label for="kichCo">Kích cỡ</label>
+                                            <select id="kichCo" class="form-control" ng-init="size()" ng-model="productDetail.kichCo.code" ng-change="updateIds(productDetail)">
+                                                <option value="" selected>Chọn size</option>
+                                                <option ng-repeat="item in kichco" value="{{item.code}}">{{item.name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="mauSac">Màu sắc</label>
+                                            <select id="mauSac" class="form-control" ng-init="mau()" ng-model="productDetail.mauSac.code" ng-change="updateIds(productDetail)">
+                                                <option value="" selected>Chọn màu sắc</option>
+                                                <option ng-repeat="item in color" value="{{item.code}}">{{item.name}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="soLuong">Số lượng</label>
+                                            <input id="soLuong" type="text" class="form-control" ng-model="productDetail.soLuong">
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="giaNhap">Giá nhập</label>
+                                            <input id="giaNhap" type="text" class="form-control" ng-model="productDetail.giaNhap">
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="giaBan">Giá bán</label>
+                                            <input id="giaBan" type="text" class="form-control" ng-model="productDetail.giaBan">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                    <a href="javascript:void(0);" class="btn btn-submit me-2"
+                                       ng-click="addProduct()">Lưu</a>
+                                    <a class="btn btn-cancel" ng-click="reset()">Hủy</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>

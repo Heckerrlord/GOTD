@@ -854,6 +854,54 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
     };
 
 
+    var urlblogs = "/rest/blogs";
+    $scope.blogs = null
+
+
+    $scope.listBlogs = function (){
+        $http.get(urlblogs+'/listBlogs').then(function (resp){
+            $scope.blogs = resp.data;
+            console.log("thu thao nee " + $scope.blogs)
+        });
+    }
+    $scope.listBlogs()
+
+    var urla = "/allAnh";
+    $scope.ah = null
+
+
+    $scope.lanh = function (){
+        $http.get(urlblogs).then(function (resp){
+            $scope.ah = resp.data;
+            console.log("thu thao nee " + $scope.ah)
+        });
+    }
+    $scope.lanh()
+
+    var urlblogs = "/rest/blogs";
+    $scope.blogs = null
+
+
+    $scope.listBlogs = function (){
+        $http.get(urlblogs+'/listBlogs').then(function (resp){
+            $scope.blogs = resp.data;
+            console.log("thu thao nee " + $scope.blogs)
+        });
+    }
+    $scope.listBlogs()
+
+    var urla = "/allAnh";
+    $scope.ah = null
+
+
+    $scope.lanh = function (){
+        $http.get(urlblogs).then(function (resp){
+            $scope.ah = resp.data;
+            console.log("thu thao nee " + $scope.ah)
+        });
+    }
+    $scope.lanh()
+
 
 
     //------------------todo:  Loc san pham-----------------------

@@ -24,39 +24,39 @@ public class UploadServiceImpl implements UploadService {
 	private ResourceLoader resourceLoader;
 
 
+//	@Override
+//	public File save(MultipartFile file, String folder) {
+//		try {
+//			// Lấy Resource đến thư mục trong dự án
+//			Resource resource = resourceLoader.getResource("classpath:static/assets/images");
+//			String imagesFolderPath = resource.getFile().getAbsolutePath();
+//
+//			int count = 0;
+//			String name;
+//
+//			do {
+//				String timestamp = String.valueOf(System.currentTimeMillis());
+//				String originalFilename = file.getOriginalFilename();
+//				String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+//				name = timestamp + "_" + count + extension;
+//				count++;
+//			} while (new File(imagesFolderPath, name).exists());
+//
+//			try {
+//				File savedFile = new File(imagesFolderPath, name);
+//				file.transferTo(savedFile);
+//				System.out.println(savedFile.getAbsolutePath());
+//				return savedFile;
+//			} catch (Exception e) {
+//				throw new RuntimeException(e);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+//		}
+//	}
+
 	@Override
-	public File save(MultipartFile file, String folder) {
-		try {
-			// Lấy Resource đến thư mục trong dự án
-			Resource resource = resourceLoader.getResource("classpath:static/assets/images");
-			String imagesFolderPath = resource.getFile().getAbsolutePath();
-
-			int count = 0;
-			String name;
-
-			do {
-				String timestamp = String.valueOf(System.currentTimeMillis());
-				String originalFilename = file.getOriginalFilename();
-				String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-				name = timestamp + "_" + count + extension;
-				count++;
-			} while (new File(imagesFolderPath, name).exists());
-
-			try {
-				File savedFile = new File(imagesFolderPath, name);
-				file.transferTo(savedFile);
-				System.out.println(savedFile.getAbsolutePath());
-				return savedFile;
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
-
-	/*@Override
         public File save(MultipartFile file, String folder) {
             File dir = new File(app.getRealPath("/assets/" + folder));
             if (!dir.exists()) {
@@ -84,7 +84,7 @@ public class UploadServiceImpl implements UploadService {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }*/
+        }
 
 
 

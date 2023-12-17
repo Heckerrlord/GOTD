@@ -35,10 +35,14 @@ public class CTSPRestController {
 	MauSacDAO mdao;
 	@Autowired
 	KichCoDAO kcdao;
+
+
 	@GetMapping
 	public List<ChiTietSanPham> getAll() {
 		return productService.findAll();
+
 	}
+
 
 	@GetMapping("{id}")
 	public ChiTietSanPham getOne(@PathVariable("id") Long id) {
@@ -69,7 +73,7 @@ public class CTSPRestController {
 
 
 	@GetMapping("detail/{sanPhamMa}")
-public ResponseEntity<Object> detailSanPham(
+    public ResponseEntity<Object> detailSanPham(
 		@PathVariable String sanPhamMa,
 		@RequestParam(required = false) String kichCoCode,
 		@RequestParam(required = false) String mauSacCode

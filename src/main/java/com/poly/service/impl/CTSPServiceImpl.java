@@ -30,10 +30,11 @@ public class CTSPServiceImpl implements CTSPService {
         return pdao.save(product);
     }
 
-    @Override
-    public ChiTietSanPham update(ChiTietSanPham product) {
-        return pdao.save(product);
-    }
+	@Override
+	public ChiTietSanPham update(ChiTietSanPham product) {
+
+		return pdao.save(product);
+	}
 
     @Override
     public void delete(Long id) {

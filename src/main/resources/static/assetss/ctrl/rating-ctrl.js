@@ -1,30 +1,11 @@
-app.controller("rating-ctrl", function ($scope, $http,$timeout) {
+app.controller("rating-ctrl", function ($scope, $http) {
+
     var url = "/rest/danhgia";
 
     $scope.items = []
     $scope.getAll = function (){
         $http.get(url).then(function (reso){
             $scope.items = reso.data;
-            $timeout(function () {
-                // Đây là nơi bạn khởi tạo DataTables và niceScroll
-                $(".boxscroll").niceScroll({
-                    cursorborder: "",
-                    cursorcolor: "#eff3f6",
-                    boxzoom: true
-                });
-                $('#datatable').DataTable();
-                var table = $('#datatable-buttons').DataTable({
-                    lengthMenu: [
-                        [10, 25, 50, -1],
-                        [10, 25, 50, 'All']
-                    ],
-                    pagingType: 'full_numbers',
-                    lengthChange: false,
-                    buttons: ['excel', 'pdf', 'print']
-                });
-                table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
-            }, 0);
-
         })
     }
 

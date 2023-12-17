@@ -3,6 +3,7 @@ package com.poly.dao;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.MauSac;
 import com.poly.model.dto.ChiTietSanPhamDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
 
@@ -41,6 +43,9 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
     List<ChiTietSanPham> findFavorite(String username);
 
     ChiTietSanPham findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(String sp, String kc, String ms);
+    @Query("SELECT a FROM ChiTietSanPham a WHERE a.mauSac.code = :mau AND a.kichCo.code = :size AND a.sanPham.ma = :ma")
+    Optional<ChiTietSanPham> findExistingChiTiet(String mau,String size, String ma);
+
 
     ChiTietSanPham findFirstBySanPhamMaAndKichCoCode(String sp, String kc);
 

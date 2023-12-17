@@ -1,6 +1,7 @@
 package com.poly.rest;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.websocket.server.PathParam;
 
@@ -23,9 +24,8 @@ public class UploadRestController {
 	UploadService uploadService;
 
 	@PostMapping("/rest/upload/{folder}")
-	public JsonNode upload(@PathParam("file") MultipartFile file, @PathVariable("folder") String folder) {
+	public JsonNode upload(@PathParam("file") MultipartFile file, @PathVariable("folder") String folder) throws IOException {
 		File savedFile = uploadService.save(file, folder);
-
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode node = mapper.createObjectNode();
 		node.put("name", savedFile.getName());

@@ -14,6 +14,15 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     $scope.soLuongTaiKhoan = null;
     $scope.soLuongDon = null;
 
+    $scope.xemSPTheoKhoang = function () {
+        var formattedStartDate = moment($scope.sevenDaysAgo).format('DD/MM/YYYY');
+        var formattedEndDate = moment($scope.currentDate).format('DD/MM/YYYY');
+
+        $http.get(`${apiUrl}/sp/ngay?sevenDaysAgo=` + formattedStartDate + '&currentDate=' + formattedEndDate).then(function (resp) {
+            $scope.tkSPTuan = resp.data;
+        });
+    };
+
     $scope.getYears = function () {
         $http.get(apiUrl + '/nam').then(function (resp) {
             $scope.years = resp.data;
@@ -255,7 +264,6 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     //     });
     // };
     //
-
 
 
 

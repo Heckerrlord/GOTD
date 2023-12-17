@@ -3,6 +3,7 @@ package com.poly.controller;
 import com.poly.dao.CTSPDAO;
 import com.poly.dao.DSYTDAO;
 import com.poly.dao.DanhGiaDAO;
+import com.poly.dao.SanPhamDAO;
 import com.poly.dao.daoPhu.KichCoDAO;
 import com.poly.dao.daoPhu.MauSacDAO;
 import com.poly.entity.*;
@@ -36,6 +37,8 @@ public class ProductController {
 	@Autowired
 	KichCoDAO kcdao;
 	@Autowired
+	SanPhamDAO spdao;
+	@Autowired
 	KichCoService kichcoService;
 	@Autowired
 	private ThuongHieuService thuongHieuService;
@@ -64,6 +67,7 @@ public class ProductController {
 			@RequestParam(required = false) String size,
 			@RequestParam(required = false) String color
 	) {
+	try {
 		Double averageRating = danhGiaDAO.findAverageRatingByMaSanPham(sanPhamMa);
 		averageRating = (averageRating != null) ? averageRating : 5;
 		Integer countRT = danhGiaDAO.countRating(sanPhamMa);
@@ -78,14 +82,25 @@ public class ProductController {
 			item = pdao.findFirstBySanPhamMa(sanPhamMa);
 		}
 
+
+ 		List<SanPham> lsanpham =item.getSanPham().getThuongHieu().getLthuonghieu();
+		lsanpham.removeIf(sanPham -> sanPham.getMa().equals(sanPhamMa));
+
 		List<DanhSachYeuThich> list1 = dsytdao.findAll();
+		model.addAttribute("item", item);
 		model.addAttribute("favorite",list1);
 		model.addAttribute("m", mdao.findMauSacByMaSanPham(item.getSanPham().getMa()));
 		model.addAttribute("kc", kcdao.findAll());
-		model.addAttribute("item", item);
 		model.addAttribute("averageRating",averageRating);
+		model.addAttribute("lthuonghieu",lsanpham);
 		model.addAttribute("countRT",countRT);
 		return "product/detail";
+	}catch (Exception e){
+		e.printStackTrace();
+		return null;
+	}
+
+
 	}
 
 	@GetMapping("/sanpham")

@@ -32,6 +32,11 @@ public class AnhRestController {
     public Anh update(@PathVariable("id") Integer id, @RequestBody Anh anh) {
         return anhService.update(anh);
     }
+
+    @GetMapping("/allAnh")
+    public List<Anh> getAll1() {
+        return anhService.findAll();
+    }
 //
 //    @DeleteMapping("{id}")
 //    public void delete(@PathVariable("id") Integer id) {

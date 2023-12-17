@@ -18,6 +18,25 @@ app.controller("thuonghieu-ctrl", function ($scope, $http) {
         //load product
         $http.get(url).then(resp => {
             $scope.items = resp.data;
+            $timeout(function () {
+                // Đây là nơi bạn khởi tạo DataTables và niceScroll
+                $(".boxscroll").niceScroll({
+                    cursorborder: "",
+                    cursorcolor: "#eff3f6",
+                    boxzoom: true
+                });
+                $('#datatable').DataTable();
+                var table = $('#datatable-buttons').DataTable({
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, 'All']
+                    ],
+                    pagingType: 'full_numbers',
+                    lengthChange: false,
+                    buttons: ['excel', 'pdf', 'print',  'copyHtml5']
+                });
+                table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+            }, 0);
         });
     }
 

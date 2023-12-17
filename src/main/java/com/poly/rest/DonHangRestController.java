@@ -82,7 +82,14 @@ public class DonHangRestController {
   }
 
 
-
+	@GetMapping("/sp/ngay")
+	public ResponseEntity<List<Object[]>> getSPNgay(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate sevenDaysAgo,
+														  @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate currentDate) {
+		LocalDateTime startDateTime = sevenDaysAgo.atStartOfDay();
+		LocalDateTime endDateTime = currentDate.atTime(LocalTime.MAX);
+		List<Object[]> result = orderService.thongKeSPTheoKhoang(startDateTime,endDateTime);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 
 
