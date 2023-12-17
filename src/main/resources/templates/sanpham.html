@@ -11,7 +11,7 @@
     <!-- Breadcrumb -->
     <div class="breadcrumb container">
         <a class="previous-page" href="/">Trang chủ</a>
-        <i class="fas fa-chevron-right arrow"></i>
+        <i class="zmdi zmdi-chevron-right"></i>
         <span class="current-page">Sản phẩm</span>
     </div>
     <!-- Main content -->
@@ -20,7 +20,7 @@
             <!-- Filter -->
             <div class="filter-bar col-lg-3">
                 <div class="filter-header content">
-                    <div class="left-side d-flex align-items-center"><i class="fas fa-sliders-h"></i>
+                    <div class="left-side d-flex align-items-center"><i class="zmdi zmdi-filter-list"></i>
                         <div class="text">Lọc</div>
                     </div>
                     <button class="clear-filter btn btn-primary" ng-click="clearFilters()" ng-disabled="!isAnyFilterSelected()">Bỏ lọc</button>
@@ -103,21 +103,44 @@
                            placeholder="Đến" />
                     <button class="btn btn-primary red-btn" ng-click="applyPriceFilter()">Áp dụng</button>
                 </div>
+
+                <div class="break-line"></div>
+
+                <div class="release-date content">
+                    <div class="title" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <div class="text">Danh mục</div><i class="zmdi zmdi-chevron-up"></i>
+                    </div>
+                    <div class="select-filter collapse show" id="collapseExample">
+                        <div class="date-row" style="display: flex; flex-wrap: wrap;" >
+                            <div class="item" ng-repeat="category in categories" style="flex: 0 0 50%; max-width: 50%;" >
+                                <div class="pretty p-svg p-curve">
+                                    <input class="filter-checkbox" type="checkbox" ng-model="selectedCategories[category.name]" ng-change="filterProducts()"/>
+                                    <div class="state p-success">
+                                        <svg class="svg svg-icon" viewbox="0 0 20 20">
+                                            <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                        </svg>
+                                        <label class="checkbox-label" ng-bind="category.name"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- List product -->
             <div class="product-showing col-lg-9 col-12 ">
                 <div class="sort">
                     <div class="sort-content" id="sortDropdownBtn">
-                        Sắp xếp theo <span class="sort-name">Hàng mới</span><i class="zmdi zmdi-chevron-down"></i>
+                        Sắp xếp theo <span class="sort-name">{{ sortType }}</span><i class="zmdi zmdi-chevron-down"></i>
                         <div class="sort-dropdown" id="sortDropdown">
-                            <div class="sort-item new-arrival active">Hàng mới</div>
-                            <div class="sort-item best-seller">Bán chạy</div>
-                            <div class="sort-item low-to-high-price" ng-click="sort('lowToHigh')">Giá thấp đến cao</div>
-                            <div class="sort-item high-to-low-price" ng-click="sort('highToLow')">Giá cao đến thấp</div>
+                            <div class="sort-item new-arrival ">DRX</div>
+                            <div class="sort-item new-arrival" ng-class="{ 'active': sortType === 'Hàng mới' }" ng-click="sort('Hàng mới')">Hàng mới</div>
+                            <div class="sort-item low-to-high-price" ng-class="{ 'active': sortType === 'Giá thấp đến cao' }" ng-click="sort('Giá thấp đến cao')">Giá thấp đến cao</div>
+                            <div class="sort-item high-to-low-price" ng-class="{ 'active': sortType === 'Giá cao đến thấp' }" ng-click="sort('Giá cao đến thấp')">Giá cao đến thấp</div>
                         </div>
                     </div>
-                    <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i class="fas fa-filter"></i></div>
+                    <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i class="zmdi zmdi-filter-list"></i></div>
                 </div>
 
                 <div class="no-products">
@@ -131,7 +154,7 @@
                                 <div class="product-thumb">
                                     <a href="/product/detail/{{ p.sanPham.ma }}" ng-click="searchDetail()">
                                         <img id="an" class="product-item m-auto d-block"
-                                             ng-src="/assets/images/{{ p.sanPham.image[0].ma }}"
+                                             ng-src="/assets/images/{{p.sanPham.image[0].ma}}"
                                              alt="{{ p.sanPham.ten }}">
                                     </a>
                                     <div class="product-action" >
@@ -162,6 +185,11 @@
                                             <a href="/product/detail/{{ p.sanPham.ma }}"
                                                ng-click="searchDetail()">{{ p.sanPham.ten }}</a>
                                         </h4>
+                                        <h5>
+                                            <div class="prices">
+                                                <span class="price">{{ numbers.formatDecimal(p.giaBan, 0, ',', '.') }} <strong>vnđ</strong></span>
+                                            </div>
+                                        </h5>
                                     </div>
                                 </div>
                             </div>
@@ -175,25 +203,25 @@
                             <nav class="pagination-nav">
                                 <ul class="pagination justify-content-center">
                                     <li>
-                                        <button class="prev" ng-click="pager.first()">First</button>
+                                        <button class="prev" ng-click="pager.first()" ng-disabled="pager.prevDisabled()">First</button>
                                     </li>
                                     <li>
-                                        <button class="prev" ng-click="pager.prev()">
+                                        <button class="prev" ng-click="pager.prev()" ng-disabled="pager.prevDisabled()">
                                             <i class="fa fa-chevron-left"></i>
                                         </button>
                                     </li>
                                     <li ng-repeat="page in pager.pages">
-                                        <button ng-click="pager.setPage(page)">
-                                            {{page}}
+                                        <button ng-click="setPage(page)">
+                                            {{page + 1}}
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="next" ng-click="pager.next()">
+                                        <button class="next" ng-click="pager.next()" ng-disabled="pager.nextDisabled()">
                                             <i class="fa fa-chevron-right"></i>
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="next" ng-click="pager.last()">Last</button>
+                                        <button class="next" ng-click="pager.last()" ng-disabled="pager.nextDisabled()">Last</button>
                                     </li>
                                 </ul>
                             </nav>

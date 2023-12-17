@@ -58,6 +58,29 @@ public class SanPham implements Serializable {
     @JoinColumn(name = "MaLoaiAo", referencedColumnName = "Ma")
     @JsonIgnoreProperties("ctsplkh")
     private LoaiKhachHang loaiKhachHang;
+    @OneToMany(mappedBy = "sanPham")
+    private List<ChiTietSanPham> ctsp;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "MaThuongHieu", referencedColumnName = "ma")
+    private ThuongHieu thuongHieu;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MaChatLieu", referencedColumnName = "Ma")
+    @JsonIgnoreProperties("Lchatlieu")
+    private ChatLieu chatLieu;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MaCoAo", referencedColumnName = "Ma")
+    @JsonIgnoreProperties("LCoAo")
+    private CoAo coAo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MaLoaiAo", referencedColumnName = "Ma")
+    @JsonIgnoreProperties("ctsplkh")
+    private LoaiKhachHang loaiKhachHang;
 
     @JsonIgnore
     @OneToMany(mappedBy = "sanPham")

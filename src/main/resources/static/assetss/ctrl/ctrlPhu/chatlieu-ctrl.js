@@ -64,6 +64,30 @@ app.controller("chatlieu-ctrl", function ($scope, $http) {
         });
     }
 
+    //cap nhat sp
+    $scope.doiTT = function (item) {
+        item.tt = 0;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật chất liệu thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật chất liệu!");
+            console.log("Error", error);
+        });
+    }
+
+    //cap nhat sp
+    $scope.doiTT2 = function (item) {
+        item.tt = 1;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật chất liệu thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật chất liệu!");
+            console.log("Error", error);
+        });
+    }
+
     //xoa sp
     $scope.delete = function (item) {
         $http.delete(`${url}/${item.id}`).then(resp => {
@@ -83,7 +107,7 @@ app.controller("chatlieu-ctrl", function ($scope, $http) {
         data.append('file', files[0]);
         $http.post(url2, data, {
             transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
+            headers: {'Content-Type': undefined}
         }).then(resp => {
             $scope.form.image = resp.data.name;
         }).catch(error => {

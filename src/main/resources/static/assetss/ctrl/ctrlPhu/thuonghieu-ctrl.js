@@ -107,6 +107,30 @@ app.controller("thuonghieu-ctrl", function ($scope, $http) {
         });
     }
 
+    //cap nhat sp
+    $scope.doiTT = function (item) {
+        item.tt = 0;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật thương hiệu thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật thương hiệu!");
+            console.log("Error", error);
+        });
+    }
+
+    //cap nhat sp
+    $scope.doiTT2 = function (item) {
+        item.tt = 1;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật thương hiệu thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật thương hiệu!");
+            console.log("Error", error);
+        });
+    }
+
     //upload hinh
     $scope.imageChanged = function (files) {
         var data = new FormData();

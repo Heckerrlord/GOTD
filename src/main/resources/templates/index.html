@@ -2,195 +2,267 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 <body>
 <main>
-	<section class="home-slider-area">
-		<div class="swiper-container swiper-slide-gap home-slider-container default-slider-container">
-			<div class="swiper-wrapper home-slider-wrapper slider-default">
-				<div class="swiper-slide">
-					<div class="slider-content-area" data-bg-img="assets/img/slider/slider-04.png">
-						<div class="slider-content">
-							<h5 class="sub-title">GIÁ TỐT : $866</h5>
-							<h2 class="">SẢN PHẨM MỚI</h2>
-							<h4>70% GIẢM GIÁ CHO FA</h4>
-							<p>There are many variations of passages of Lorem Ipsum availables, but the majority have
-								suffered alteration in some form.</p>
-							<a class="btn-slider" href="/shop">Shop Now</a>
-						</div>
-					</div>
-				</div>
-				<div class="swiper-slide">
-					<div class="slider-content-area" data-bg-img="assets/img/slider/slider-02.png">
-						<div class="slider-content">
-							<h5 class="sub-title">GIÁ TỐT : $866</h5>
-							<h2 >SẢN PHẨM MỚI</h2>
-							<h4>70% GIẢM GIÁ CHO FA</h4>
-							<p>There are many variations of passages of Lorem Ipsum availables, but the majority have
-								suffered alteration in some form.</p>
-							<a class="btn-slider" href="/shop">Shop Now</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="swiper-button-next">
-				<i class="zmdi zmdi-chevron-right"></i>
-			</div>
-			<div class="swiper-button-prev">
-				<i class="zmdi zmdi-chevron-left"></i>
-			</div>
-		</div>
-	</section>
+    <section class="home-slider-area">
+        <div class="swiper-container swiper-slide-gap home-slider-container default-slider-container">
+            <div class="swiper-wrapper home-slider-wrapper slider-default">
+                <div class="swiper-slide">
+                    <div class="slider-content-area" data-bg-img="assets/img/slider/slider-04.png">
+                        <div class="slider-content">
+                            <h5 class="sub-title">GIÁ TỐT : $866</h5>
+                            <h2 class="">SẢN PHẨM MỚI</h2>
+                            <h4>70% GIẢM GIÁ CHO FA</h4>
+                            <p>There are many variations of passages of Lorem Ipsum availables, but the majority have
+                                suffered alteration in some form.</p>
+                            <a class="btn-slider" href="/shop">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="slider-content-area" data-bg-img="assets/img/slider/slider-02.png">
+                        <div class="slider-content">
+                            <h5 class="sub-title">GIÁ TỐT : $866</h5>
+                            <h2>SẢN PHẨM MỚI</h2>
+                            <h4>70% GIẢM GIÁ CHO FA</h4>
+                            <p>There are many variations of passages of Lorem Ipsum availables, but the majority have
+                                suffered alteration in some form.</p>
+                            <a class="btn-slider" href="/shop">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-next">
+                <i class="zmdi zmdi-chevron-right"></i>
+            </div>
+            <div class="swiper-button-prev">
+                <i class="zmdi zmdi-chevron-left"></i>
+            </div>
+        </div>
+    </section>
 
-	<div class="container">
-		<div class="row m-t-50 m-r-10 m-l-10"
-		style="box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);border: 2px solid transparent; background-color: #fff none repeat scroll 0 0;">
-		<div class="products" style="width: 100%;">
+    <div class="container">
+        <div class="row m-t-50 m-r-10 m-l-10"
+             style="box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);border: 2px solid transparent; background-color: #fff none repeat scroll 0 0;">
+            <div class="products" style="width: 100%;">
 
-		</div>
-	</div>
+            </div>
+        </div>
+
+<!--        <section class="products-showcase best-seller container">-->
+<!--            <div class="row">-->
+<!--                <div class="title col-12">-->
+<!--                    <h2 class="h2">Sản phẩm bán chạy</h2><a-->
+<!--                        class="see-more-btn-text text-uppercase" href="/sanpham">Xem Thêm</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row product-row d-flex justify-content-md-between">-->
+<!--                <div ng-repeat="p in top5Items">-->
+<!--                    <a class="product position-relative" ng-href="/product/detail/{{ p.ma}}" ng-click="searchDetail()">-->
+<!--                        <div class="card">-->
+<!--                            <img class="card-img-top" ng-src="/assets/images/{{p.anh}}" alt="{{p.ten}}" />-->
+<!--                            <div class="card-body">-->
+<!--                                <h5 class="card-title" ng-bind="p.ten"></h5>-->
+
+<!--                                <p class="card-text sold">-->
+<!--                                    Đã bán <span ng-bind="p.tongSoLuong"></span> đôi-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="shadow mx-auto position-absolute"></div>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </section>-->
 
 
+        <section class="product-area">
+            <div class="container product-pb" data-padding-bottom="25">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-lg-7 m-auto">
+                                <div class="section-title text-center">
+                                    <h2 class="title">Sản phẩm mới</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" ng-repeat="p in list_product">
+                                <div class="product-item">
+                                    <div class="inner-content">
+                                        <div class="product-thumb">
+                                            <a href="/product/detail/{{ p.sanPham.ma }}" ng-click="searchDetail()">
+                                                <img id="an" class="product-item m-auto d-block"
+                                                     ng-src="/assets/images/{{p.sanPham.image[0].ma}}"
+                                                     alt="{{ p.sanPham.ten }}">
+                                            </a>
+                                            <div class="product-action">
+                                                <div class="addto-wrap">
+                                                    <a class="remove-wishlist" href=""
+                                                       title="Xóa khỏi yêu thích"
+                                                       ng-if="p.myFavorite === 1"
+                                                       ng-click="removeFavorite(p.sanPham.ma)"
+                                                       ng-class="{ 'fillColor': p.myFavorite === 1 }">
+                                                        <i class="zmdi zmdi-favorite"></i>
+                                                    </a>
+                                                    <a class="add-wishlist" href=""
+                                                       title="Thêm vào yêu thích"
+                                                       ng-if="p.myFavorite === 0"
+                                                       ng-click="addFavorite(p.sanPham.ma, user)">
+                                                        <i class="zmdi zmdi-favorite-outline"></i>
+                                                    </a>
+                                                    <a class="add-cart" ng-href="/product/detail/{{ p.sanPham.ma }}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus icon"></i>
+                                                    </a>
+                                                </div>
 
-		<section class="product-area">
-			<div class="container product-pb" data-padding-bottom="25">
-				<div class="row">
-					<div class="col-12">
-						<div class="row">
-							<div class="col-lg-7 m-auto">
-								<div class="section-title text-center">
-									<h2 class="title">Sản phẩm mới</h2>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3" th:each="p:${items}">
-								<div class="product-item">
-									<div class="inner-content">
-										<div class="product-thumb">
-											<a th:href="@{|/product/detail/${p.sanPham.ma}|}">
-												<img class="product-item m-auto d-block" th:src="@{|/assets/images/${p.sanPham.getImage().get(0).ma}|}"
-													 th:title="${p.sanPham.ten}">
+                                            </div>
+                                        </div>
+                                        <div class="product-desc">
+                                            <div class="product-info">
+                                                <h4 class="title">
+                                                    <a href="/product/detail/{{ p.sanPham.ma }}"
+                                                       ng-click="searchDetail()">{{ p.sanPham.ten }}</a>
+                                                </h4>
+                                                <h5>
+                                                    <div class="prices">
+                                                        <span class="price">{{ numbers.formatDecimal(p.giaBan, 0, ',', '.')
+                                                            }} <strong>vnđ</strong></span>
+                                                    </div>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-											</a>
-											<div class="product-action">
-												<div class="addto-wrap" th:each="a:${favorite}">
-													<!-- Hiển thị nút "remove" -->
-													<a class="add-wishlist" href="javascript:void(0)" title="Xóa khỏi yêu thích"
-													   th:if="${a.sanPham == p.sanPham.ma && a.accounts == #request.remoteUser}"
-													   th:attr="ng-click='removeFavorite(\'' + ${p.sanPham.ma} + '\', username)'">
-														<i class="zmdi zmdi-favorite" style="color: #a52834"></i>
-													</a>
+        <div class="row">
+            <div class="col-12">
+                <div class="pagination-content-wrap border-bottom">
+                    <nav class="pagination-nav">
+                        <ul class="pagination justify-content-center">
+                            <li>
+                                <button class="prev">First</button>
+                            </li>
+                            <li>
+                                <button class="prev">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <a class="active">{{pager_main.page + 1}} of
+                                    {{pager_main.count ? pager_main.count : '1'}}</a>
+                            </li>
+                            <li>
+                                <button class="next">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="next">Last</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
 
-													<!-- Nếu sản phẩm chưa có trong danh sách yêu thích, hiển thị nút "Thêm vào yêu thích" -->
-													<a class="add-wishlist"  href="javascript:void(0)" title="Thêm vào yêu thích"
-													   th:if="${a.accounts != #request.remoteUser}"
-													   th:attr="ng-click='addFavorite(\'' + ${p.sanPham.ma} + '\', user1)'">
-														<i class="zmdi zmdi-favorite-outline zmdi-hc-fw icon"></i>
-													</a>
+        <!-- Break Banner-->
+        <section class="break-banner"><a href="./sanpham"><img class="img-fluid" id="promo-banner-3"
+                                                               src="/assets/images/banneradiddas.webp"
+                                                               alt="promo-banner-3"/></a></section>
+        <!-- Category Section-->
+        <section class="categories-showcase container">
+            <div class="row">
+                <div class="title col-12">
+                    <h2 class="h2">B&#x1ED9; S&#x1B0;u T&#x1EAD;p</h2>
+                </div>
+            </div>
+            <div class="row categories-row d-flex justify-content-md-between">
+                <div class="categorys col-sm-4"><a class="category-wraps" href="./sanpham"><img class="img-fluid"
+                                                                                                src="/assets/images/Gucci.jpg"
+                                                                                                alt="category-1"/>
+                    <div class="tag">Nike</div>
+                </a></div>
+                <div class="categorys col-sm-4"><a class="category-wraps" href="./sanpham"><img class="img-fluid"
+                                                                                                src="/assets/images/girlPuma.jpg"
+                                                                                                alt="category-2"/>
+                    <div class="tag">Puma</div>
+                </a></div>
+                <div class="categorys col-sm-4"><a class="category-wraps" href="./sanpham"><img class="img-fluid"
+                                                                                                src="/assets/images/Nike.jpg"
+                                                                                                alt="category-3"/>
+                    <div class="tag">Adidas</div>
+                </a></div>
+                <div class="categorys col-sm-4"><a class="category-wraps" href="./sanpham"><img class="img-fluid"
+                                                                                                src="/assets/images/Puma.webp"
+                                                                                                alt="category-4"/>
+                    <div class="tag">Chanel</div>
+                </a></div>
+                <div class="categorys col-sm-4"><a class="category-wraps" href="./sanpham"><img class="img-fluid"
+                                                                                                src="/assets/images/Adidas.jpg"
+                                                                                                alt="category-5"/>
+                    <div class="tag">Gucci</div>
+                </a></div>
+                <div class="categorys col-sm-4" id="last-category"><a class="category-wraps" href="./sanpham"><img
+                        class="img-fluid" src="/assets/images/Stussy.jpg" alt="category-6"/>
+                    <div class="tag">Stussy</div>
+                </a></div>
+            </div>
+        </section>
 
-													<a class="add-cart" th:href="@{|/product/detail/${p.sanPham.ma}|}">
-														<i class="zmdi zmdi-shopping-cart-plus icon"></i>
-													</a>
-												</div>
-											</div>
-										</div>
-										<div class="product-desc">
-											<div class="product-info">
-												<h4 class="title">
-													<a th:href="@{|/product/detail/${p.sanPham.ma}|}" >[(${p.sanPham.ten})]</a>
-												</h4>
-												<h5>
-												<div class="prices">
-													<span class="price">[[${#numbers.formatDecimal(p.giaBan,0,'COMMA',0,'POINT')}]] <strong>vnđ</strong> </span>
-												</div>
-													</h5>
+        <section class="feature-area">
+            <div class="container pb-1">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-icon-box">
+                            <div class="inner-content">
+                                <div class="icon-box">
+                                    <i class="icon zmdi zmdi-pin"></i>
+                                </div>
+                                <div class="content">
+                                    <h5 class="title">Miễn phí giao hàng nội thành</h5>
+                                    <p>Miễn phí giao hàng cho đơn từ 1000k</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-icon-box">
+                            <div class="inner-content">
+                                <div class="icon-box">
+                                    <i class="icon zmdi zmdi-headset"></i>
+                                </div>
+                                <div class="content">
+                                    <h5 class="title">Hỗ trợ 24/7</h5>
+                                    <p>Kết nối với chúng tôi 24/24</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-icon-box">
+                            <div class="inner-content mb-0">
+                                <div class="icon-box">
+                                    <i class="icon zmdi zmdi-card"></i>
+                                </div>
+                                <div class="content">
+                                    <h5 class="title">Bảo mật thông tin thanh toán</h5>
+                                    <p>Thông tin của bạn được bảo vệ bởi chúng tôi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<div class="row">
-			<div class="col-12">
-				<div class="pagination-content-wrap border-bottom">
-					<nav class="pagination-nav">
-						<ul class="pagination justify-content-center">
-							<li>
-								<button class="prev" ng-click="pager.first()">First</button>
-							</li>
-							<li>
-								<button class="prev" ng-click="pager.prev()">
-									<i class="fa fa-chevron-left"></i>
-								</button>
-							</li>
-							<li>
-								<a class="active">{{pager.page+1}} of {{pager.count?pager.count:'1'}}</a>
-							</li>
-							<li>
-								<button class="next" ng-click="pager.next()">
-									<i class="fa fa-chevron-right"></i>
-								</button>
-							</li>
-							<li>
-								<button class="next" ng-click="pager.last()">Last</button>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-
-		<section class="feature-area">
-			<div class="container pb-1">
-				<div class="row">
-					<div class="col-md-6 col-lg-4">
-						<div class="feature-icon-box">
-							<div class="inner-content">
-								<div class="icon-box">
-									<i class="icon zmdi zmdi-pin"></i>
-								</div>
-								<div class="content">
-									<h5 class="title">Miễn phí giao hàng nội thành</h5>
-									<p>Miễn phí giao hàng cho đơn từ 1000k</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4">
-						<div class="feature-icon-box">
-							<div class="inner-content">
-								<div class="icon-box">
-									<i class="icon zmdi zmdi-headset"></i>
-								</div>
-								<div class="content">
-									<h5 class="title">Hỗ trợ 24/7</h5>
-									<p>Kết nối với chúng tôi 24/24</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4">
-						<div class="feature-icon-box">
-							<div class="inner-content mb-0">
-								<div class="icon-box">
-									<i class="icon zmdi zmdi-card"></i>
-								</div>
-								<div class="content">
-									<h5 class="title">Bảo mật thông tin thanh toán</h5>
-									<p>Thông tin của bạn được bảo vệ bởi chúng tôi</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-	</div>
+    </div>
 </main>
 </body>
 </html>
