@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-check-inline">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio"  class="custom-control-input" id="no" name="available"
+                                    <input type="radio" class="custom-control-input" id="no" name="available"
                                            ng-model="form.tt" ng-value="1">
                                     <label class="custom-control-label" for="no">Ngưng hoạt động</label>
                                 </div>
@@ -75,18 +75,21 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in items">
-                        <td class="align-center">{{$index+1}}</td>
-                        <td hidden class="align-center">{{item.id}}</td>
-                        <td class="align-center">{{item.code}}</td>
-                        <td class="align-center">{{item.name}}</td>
-                        <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
-                        <td class="align-center">
+                        <td>{{$index + 1}}</td>
+                        <td hidden>{{item.id}}</td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.tt == 0 ? 'Hoạt động' : 'Ngưng hoạt động'}}</td>
+                        <td>
                             <div class="btn-group btn-group-xs">
                                 <button ng-click="edit(item)" class="btn btn-icon">
                                     <i class="fa fa-xs fa-pen"></i>
                                 </button>
-                                <button ng-click="delete(item)"  class="btn btn-danger">
-                                    <i class="fa fa-xs fa-times"></i>
+                                <button ng-click="doiTT(item)" class="btn btn-success">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </button>
+                                <button ng-click="doiTT2(item)" class="btn btn-danger">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </td>

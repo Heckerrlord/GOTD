@@ -1,73 +1,103 @@
 <div class="row">
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Chỉnh sửa thông tin</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form for editing -->
-                    <form class="form p-3">
-                        <!-- Your form fields for editing -->
-                        <!-- For example: -->
-                        <div class="form-group row">
-                            <label class="form-label">Code</label>
-                            <input type="text" class="form-control" ng-model="editForm.code" placeholder="Enter code">
+    <div class="col-6">
+        <div class="row mx-0 bg-white">
+            <div class="col-md-4 text-center">
+		<span ng-if="form.image == null">
+			<img ng-src="{{'/assets/images/cloud-upload.jpg'}}" style="max-width: 100%; margin-top: 5rem">
+		</span>
+                <span ng-if="form.image != null">
+			<img ng-src="{{'/assets/images/'+form.image}}" style="max-width: 100%; margin-top: 5rem">
+		</span>
+            </div>
+            <div class="col-md-8">
+                <form class="form p-3">
+                    <div class="form-group row">
+                        <label class="form-label">Code</label>
+                        <input type="text" class="form-control" ng-model="form.code" placeholder="Enter code">
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-label">Name</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="form.name" placeholder="Enter name">
                         </div>
-                        <div class="form-group row">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-control" ng-model="editForm.name" placeholder="Enter name">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 px-0 control-label">Status</label>
+                        <div class="col-md-10">
+                            <div class="form-check-inline pr-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" checked class="custom-control-input" id="yes" name="available"
+                                           ng-model="form.tt" ng-value="0">
+                                    <label class="custom-control-label" for="yes">Hoạt động</label>
+                                </div>
+                            </div>
+                            <div class="form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="no" name="available"
+                                           ng-model="form.tt" ng-value="1">
+                                    <label class="custom-control-label" for="no">Ngưng hoạt động</label>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Add other fields as needed -->
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="update()">Save changes</button>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
+        <div class="card-header text-center">
+            <button ng-click="create()" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create
+            </button>
+            <button ng-click="update()" class="btn btn-success">
+                <i class="far fa-save"></i> Update
+            </button>
+            <button ng-click="delete(form)" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+            <button ng-click="reset()" class="btn btn-secondary">
+                <i class="fas fa-redo"></i> Reset
+            </button>
+        </div>
     </div>
-
-    <div class="col-12">
+    <div class="col-6">
         <div class="row mx-0 bg-white" ng-if="items">
 
-            <table id="datatable-buttons" class="table table-collapse table-bordered dt-responsive">
-                <thead>
-                <tr>
-                    <th>STT</th>
-                    <th hidden>Id</th>
-                    <th>Mã thương hiệu</th>
-                    <th>Tên thương hiệu</th>
-                    <th>Trạng thái</th>
-                    <th>#</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="item in items">
-                    <td >{{$index+1}}</td>
-                    <td hidden >{{item.id}}</td>
-                    <td >{{item.code}}</td>
-                    <td >{{item.name}}</td>
-                    <td class="badges bg-lightgreen" style="color: #f0f0f0">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
-                    <td>
-                        <div class="btn-group btn-group-xs">
-                            <button ng-click="edit(item)" class="btn btn-icon">
-                                <i class="fa fa-xs fa-pen"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-
+            <div class="col-12 py-3">
+                <table id="datatable-buttons" class="table table-collapse table-bordered dt-responsive">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th hidden>Id</th>
+                        <th>Mã thương hiệu</th>
+                        <th>Tên thương hiệu</th>
+                        <th>Trạng thái</th>
+                        <th>#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in items">
+                        <td>{{$index + 1}}</td>
+                        <td hidden>{{item.id}}</td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.tt == 0 ? 'Hoạt động' : 'Ngưng hoạt động'}}</td>
+                        <td>
+                            <div class="btn-group btn-group-xs">
+                                <button ng-click="edit(item)" class="btn btn-icon">
+                                    <i class="fa fa-xs fa-pen"></i>
+                                </button>
+                                <button ng-click="doiTT(item)" class="btn btn-success">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </button>
+                                <button ng-click="doiTT2(item)" class="btn btn-danger">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <script src="/assetss/js/init.js"></script>
     </div>
-
-
 </div>
