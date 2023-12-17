@@ -54,7 +54,7 @@ app.controller("order-ctrl", function ($scope, $http) {
         item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
         item.trangThai = 1;
         $http.put(`${url}/update/${item.id}`, item).then(resp => {
-            sweetalert("Đơn hàn đã được xác nhận!");
+            sweetalert("Đơn hàng đã được xác nhận!");
         }).catch(error => {
             sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
             console.log("Error", error);
@@ -90,6 +90,7 @@ app.controller("order-ctrl", function ($scope, $http) {
             console.log("Error", error);
         });
     }
+    
 
 
     $.doiHang = function (item){

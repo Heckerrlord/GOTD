@@ -11,23 +11,24 @@
                 <th>Phí giao hàng</th>
                 <th>Tổng tiền</th>
                 <th>Duyệt đơn</th>
+                <th>d</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="item in items">
-                <td class="align-center">{{item.id}}</td>
-                <td class="align-center">{{item.account.username}}</td>
-                <td class="align-center">{{item.tinh}},{{item.huyen}},{{item.xa}},{{item.dcChiTiet}}</td>
-                <td class="align-center">{{item.ngayDatHang}}</td>
-                <td class="align-center">
+                <td>{{item.id}}</td>
+                <td>{{item.account.username}}</td>
+                <td>{{item.tinh}},{{item.huyen}},{{item.xa}},{{item.dcChiTiet}}</td>
+                <td>{{item.ngayDatHang}}</td>
+                <td>
                     {{item.maGiamGia ? item.maGiamGia : 'Không có'}}
                 </td>
 
-                <td class="align-center">
+                <td>
                     {{item.phiGiaoHang}}
                 </td>
-                <td class="align-center">{{item.tongTien}}</td>
-                <td class="align-center">
+                <td>{{item.tongTien}}</td>
+                <td>
                     <div class="btn-group btn-group-xs">
                         <button ng-click="giaoHang(item)" class="btn btn-icon">
                             <i class="fas fa-truck"></i>
