@@ -1,166 +1,263 @@
-<div class="row">
-    <div class="col-6"> <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#user-form-modal">
-        New User
-    </button>
-    </div>
-
-</div>
-    <div class="row flex-lg-nowrap">
-
-        <div class="col mb-3">
-            <div class="e-panel card">
-                <div class="card-body">
-                    <div class="e-table">
-                        <div class="table-responsive">
-                            <table id="datatable-buttons" class="table dataTable no-footer" ng-if="items">
-                                <thead>
-                                <tr>
-                                    <th class="align-top">ID
-                                    </th>
-                                    <th>Ảnh</th>
-                                    <th class="sortable">Tên sản phẩm</th>
-                                    <th class="max-width">Mã sản phẩm</th>
-                                    <th>Trạng thái</th>
-                                    <th>#</th>
-                                </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="item in items">
-                                            <td>{{item.id}}</td>
-                                            <td style="width: 150px"><img style="width: 120px"
-                                                                          ng-src="/assets/images/{{item.image[0].ma}}">
-                                            </td>
-                                            <td> {{item.ten}}</td>
-                                            <td>{{item.ma}}</td>
-                                            <td>
-                                                <span ng-if="item.trangThai == 0">Hoạt động</span>
-                                                <span ng-if="item.trangThai == 1">Dừng hoạt động</span></td>
-                                            <td class="text-center align-middle">
-                                                <div class="btn-group align-top">
-                                                    <button class="btn btn-sm btn-outline-secondary badge" type="button"
-                                                            data-toggle="modal" data-target="#user-form-modal">Edit
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-secondary badge"
-                                                            type="button"><i class="fa fa-trash"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                            </table>
-                        </div>
+<div class="row flex-lg-nowrap">
+    <div class="col mb-3">
+        <div class="e-panel card">
+            <div class="card-body">
+                <div class="e-table">
+                    <div class="table-responsive">
+                        <table id="datatable-buttons" class="table dataTable no-footer" ng-if="items">
+                            <thead>
+                            <tr>
+                                <th class="align-top">ID
+                                </th>
+                                <th>Mã SP</th>
+                                <th>Ảnh</th>
+                                <th class="sortable">Tên sản phẩm</th>
+                                <th>Mô tả</th>
+                                <th>Trạng thái</th>
+                                <th>#</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in items">
+                                <td>{{item.id}}</td>
+                                <td>{{item.ma}}</td>
+                                <td style="width: 150px"><img style="width: 120px"
+                                       ng-src="/assets/images/{{item.image[0].ma}}">
+                                </td>
+                                <td>{{item.ten}}</td>
+                                <td>{{item.moTa}}</td>
+                                <td>
+                                    <span ng-if="item.trangThai == 1" class="badges bg-lightred">Ngừng hoạt động</span>
+                                    <span ng-if="item.trangThai == 0" class="badges bg-lightgreen">Đang hoạt động</span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <div class="btn-group align-top">
+                                        <button style="color: #0a0a0a" class="btn btn-sm btn-outline-secondary badge"
+                                                type="button"
+                                                ng-click="editProduct(item)">Edit
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-            <!-- User Form Modal -->
-            <div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Create User</h5>
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">×</span>
-                            </button>
+<!-- User Form Modal -->
+
+<div class="modal fade" role="dialog" tabindex="-1" id="product-update-modal">
+    <div class="modal-dialog" style="max-width: 85%;"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">CHỈNH SỬA THÔNG TIN SẢN PHẨM</h5>
+                <button type="button" class="close" data-dismiss="modal" ng-click="reset()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="py-1">
+                    <form class="form" novalidate="">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>MÃ SẢN PHẨM</label>
+                                    <input type="text" class="form-control" ng-model="selectedProduct.ma" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>TÊN SẢN PHẨM</label>
+                                    <input type="text" class="form-control" ng-model="selectedProduct.ten">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>MÔ TẢ SẢN PHẨM</label>
+                                    <textarea class="form-control" ng-model="selectedProduct.moTa"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>THƯƠNG HIỆU</label>
+                                    <select class="select form-control" ng-init="brands()"
+                                            ng-model="selectedProduct.thuongHieu.code">
+                                        <option>Chọn</option>
+                                        <option ng-repeat="item in thuonghieu" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>CHẤT LIỆU</label>
+                                    <select class="select form-control" ng-init="chat()"
+                                            ng-model="selectedProduct.chatLieu.code">
+                                        <option>Chọn</option>
+                                        <option ng-repeat="item in chatlieu" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>LOẠI ÁO</label>
+                                    <select class="select form-control" ng-init="loai()"
+                                            ng-model="selectedProduct.loaiKhachHang.code">
+                                        <option>Chọn</option>
+                                        <option ng-repeat="item in loaiao" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>CỔ ÁO</label>
+                                    <select class="select form-control" ng-init="cao()"
+                                            ng-model="selectedProduct.coAo.code">
+                                        <option>Chọn</option>
+                                        <option ng-repeat="item in coao" value="{{item.code}}">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-5">
+                                <label class="form-label mb-5">HÌNH ẢNH SẢN PHẨM</label>
+                                <div class="row">
+                                    <div class="col-3 mr-5 ml-3 mb-5" style="padding-right: 70px;">
+                                        <div class="image-upload">
+                                            <input id="photo-upload" type="file" multiple onchange="angular.element(this).scope().onFileChange(this)" />
+                                            <div class="image-uploads">
+                                                <img src="/assetss/img/icons/upload.svg"
+                                                        alt="img">
+                                                <h4>Nhấp để chọn ảnh</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3" ng-repeat="preview in imagePreviews">
+                                        <div class="img-wrap img-upload">
+                                            <img class="w-50" ng-src="{{preview}}" alt="Xem trước" />
+                                            <span class="btn-danger" ng-click="removeImagePreview($index)"><i class="fa fa-trash"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--CHI TIẾT SẢN PHẨM-->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="text-dark">Chi tiết sản phẩm</span>
+                                        </button>
+                                    </h4>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="kichCo">Kích cỡ</label>
+                                            <select id="kichCo" class="form-control" ng-init="size()"
+                                                    ng-model="selecteDetail.kichCo.code">
+                                                <option>Chọn</option>
+                                                <option ng-repeat="item in kichco" value="{{item.code}}">{{item.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="mauSac">Màu sắc</label>
+                                            <select id="mauSac" class="form-control" ng-init="mau()"
+                                                    ng-model="selecteDetail.mauSac.code">
+                                                <option>Chọn</option>
+                                                <option ng-repeat="item in color" value="{{item.code}}">{{item.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="soLuong">Số lượng</label>
+                                            <input id="soLuong" type="text" class="form-control"
+                                                   ng-model="selecteDetail.soLuong">
+                                        </div> </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="giaNhap">Giá nhập</label>
+                                            <input id="giaNhap" type="text" class="form-control"
+                                                   ng-model="selecteDetail.giaNhap">
+                                        </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="giaBan">Giá bán</label>
+                                            <input id="giaBan" type="text" class="form-control"
+                                                   ng-model="selecteDetail.giaBan">
+                                        </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <a href="javascript:void(0);" class="btn btn-submit me-2"
+                                       ng-click="update()">Lưu</a>
+                                    <a class="btn btn-cancel" ng-click="reset()">Hủy</a>
+                                </div>
+                                <br><br>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <div class="py-1">
-                                <form class="form" novalidate="">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Full Name</label>
-                                                        <input class="form-control" type="text" name="name" placeholder="John Smith" value="John Smith">
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Username</label>
-                                                        <input class="form-control" type="text" name="username" placeholder="johnny.s" value="johnny.s">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Email</label>
-                                                        <input class="form-control" type="text" placeholder="user@example.com">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col mb-3">
-                                                    <div class="form-group">
-                                                        <label>About</label>
-                                                        <textarea class="form-control" rows="5" placeholder="My Bio"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 col-sm-6 mb-3">
-                                            <div class="mb-2"><b>Change Password</b></div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Current Password</label>
-                                                        <input class="form-control" type="password" placeholder="••••••">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>New Password</label>
-                                                        <input class="form-control" type="password" placeholder="••••••">
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                        <input class="form-control" type="password" placeholder="••••••"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-5 offset-sm-1 mb-3">
-                                            <div class="mb-2"><b>Keeping in Touch</b></div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label>Email Notifications</label>
-                                                    <div class="custom-controls-stacked px-2">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="notifications-blog" checked="">
-                                                            <label class="custom-control-label" for="notifications-blog">Blog posts</label>
-                                                        </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="notifications-news" checked="">
-                                                            <label class="custom-control-label" for="notifications-news">Newsletter</label>
-                                                        </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="notifications-offers" checked="">
-                                                            <label class="custom-control-label" for="notifications-offers">Personal Offers</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col d-flex justify-content-end">
-                                            <button class="btn btn-primary" type="submit">Save Changes</button>
-                                        </div>
-                                    </div>
-                                </form>
+                    </form>
+                </div>
 
+                <div class="row flex-lg-nowrap">
+                    <div class="col mb-3">
+                        <div class="e-panel card">
+                            <div class="card-body">
+                                <div class="e-table">
+                                    <div class="table-responsive">
+                                        <table id="datatable-buttons" class="table dataTable no-footer" ng-if="selectedProduct.chiTietSanPhams">
+                                            <thead>
+                                            <tr>
+                                                <th class="align-top">ID
+                                                </th>
+                                                <th>Size</th>
+                                                <th>Màu</th>
+                                                <th>Số lượng</th>
+                                                <th>Gía bán</th>
+                                                <th>Gía nhập</th>
+                                                <th>Trạng thái</th>
+                                                <th>#</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="item in selectedProduct.chiTietSanPhams">
+                                                <td>{{item.id}}</td>
+                                                <td>{{item.kichCo.name}}</td>
+                                                <td>{{item.mauSac.name}}</td>
+                                                <td>{{item.soLuong}}</td>
+                                                <td>{{item.giaBan}}</td>
+                                                <td>{{item.giaNhap}}</td>
+                                                <td>
+                                                    <span ng-if="item.trangthai === 1" class="badges bg-lightred">Ngừng hoạt động</span>
+                                                    <span ng-if="item.trangthai === 0" class="badges bg-lightgreen">Đang hoạt động</span>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <div class="btn-group align-top">
+                                                        <button style="color: #0a0a0a" class="btn btn-sm btn-outline-secondary badge" type="button"
+                                                                ng-click="editDetail(item)">Edit
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
+    </div>
+</div>

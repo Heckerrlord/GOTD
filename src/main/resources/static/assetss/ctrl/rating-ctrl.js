@@ -1,4 +1,5 @@
 app.controller("rating-ctrl", function ($scope, $http) {
+
     var url = "/rest/danhgia";
 
     $scope.items = []

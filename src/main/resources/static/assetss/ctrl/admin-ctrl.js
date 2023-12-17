@@ -10,11 +10,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/admin/rating/rating.html",
             controller: "rating-ctrl"
         })
-        .when("/doanhthu", {
-            templateUrl: "/admin/doanhthu/index.html",
-            controller: "an-ctrl"
+        .when("/chitietsp", {
+            templateUrl: "/admin/chitietsp/addproduct.html",
+            controller: "chitietsp-ctrl"
         })
-        //bd
         .when("/color", {
             templateUrl: "/admin/phu/color/index.html",
             controller: "colors-ctrl"
@@ -66,7 +65,7 @@ app.config(function ($routeProvider) {
         })
         .when("/sanpham", {
             templateUrl: "/admin/sanpham/_table.html",
-            controller: "sanpham-ctrl"
+            controller: "chitietsp-ctrl"
         })
 
         .otherwise({

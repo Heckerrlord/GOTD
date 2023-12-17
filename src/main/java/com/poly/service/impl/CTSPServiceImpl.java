@@ -31,6 +31,7 @@ public class CTSPServiceImpl implements CTSPService {
 
 	@Override
 	public ChiTietSanPham update(ChiTietSanPham product) {
+
 		return pdao.save(product);
 	}
 
