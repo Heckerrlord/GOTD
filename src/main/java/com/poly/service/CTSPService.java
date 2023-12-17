@@ -3,6 +3,7 @@ package com.poly.service;
 import java.util.List;
 
 import com.poly.entity.ChiTietSanPham;
+import com.poly.model.dto.ChiTietSanPhamDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,11 +26,14 @@ public interface CTSPService {
 	Page<ChiTietSanPham> findByFilters(String brandNames,
 									   String sizes,
 									   String colors,
+									   String categories,
 									   Long minPrice,
 									   Long maxPrice,
+									   String sortType,
 									   Pageable pageable);
 
 	Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable);
 
-	Page<ChiTietSanPham> findAllOrderByGiaBanAsc(Pageable pageable);
+	List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
+
 }

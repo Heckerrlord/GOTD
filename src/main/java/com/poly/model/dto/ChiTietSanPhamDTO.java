@@ -7,18 +7,21 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ChiTietSanPhamDTO {
-    private Long id;
 
-    private String sanPham;
+    private String ma;
 
-    private String thuongHieu;
+    private String ten;
 
-    private String mauSac;
+    private String anh;
 
-    private String kichCo;
+    private long tongSoLuong;
 
-    private BigDecimal GiaBan;
+    public ChiTietSanPhamDTO(String ma, String ten,String anh, long tongSoLuong) {
+        this.ma = ma;
+        this.ten = ten;
+        this.anh = anh;
+        this.tongSoLuong = tongSoLuong;
+    }
 }

@@ -31,6 +31,6 @@ public class ChatLieu implements Serializable {
 
     @OneToMany(mappedBy = "chatLieu")
     @JsonIgnore
-    private List<ChiTietSanPham> Lchatlieu;
+    private List<SanPham> Lchatlieu;
 
 }

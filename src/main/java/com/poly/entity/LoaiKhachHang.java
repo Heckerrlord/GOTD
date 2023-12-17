@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "LoaiKhachHang")
+@Table(name = "LoaiAo")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -35,5 +35,5 @@ public class LoaiKhachHang implements Serializable {
 
     @OneToMany(mappedBy = "loaiKhachHang", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("loaiKhachHang")
-    private List<ChiTietSanPham> ctsplkh;
+    private List<SanPham> ctsplkh;
 }

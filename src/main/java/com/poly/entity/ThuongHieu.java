@@ -33,5 +33,5 @@ public class ThuongHieu implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "thuongHieu", cascade = CascadeType.ALL)
-    private List<ChiTietSanPham> lThuongHieu;
+    private List<SanPham> lThuongHieu;
 }

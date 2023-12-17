@@ -3,7 +3,6 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     var  urlSp = '/rest/sanPham/soluong';
     var urlAc = '/rest/accounts/soluong'
 
-
     $scope.years = [];
     $scope.selectedYear = null;
     $scope.doanhThuNam = null;
@@ -14,16 +13,6 @@ app.controller("diachi-ctrl", function ($scope, $http,$q) {
     $scope.soLuongSanPham = null;
     $scope.soLuongTaiKhoan = null;
     $scope.soLuongDon = null;
-    $scope.tkSPTuan = null
-
-
-    $scope.tkSanPhamTuan = function (){
-        $http.get(apiUrl + '/tksanpham/tuan').then(function (resp){
-            $scope.tkSPTuan = resp.data;
-            console.log("thu thao" + $scope.tkSPTuan)
-        });
-    }
-    $scope.tkSanPhamTuan()
 
     $scope.getYears = function () {
         $http.get(apiUrl + '/nam').then(function (resp) {
