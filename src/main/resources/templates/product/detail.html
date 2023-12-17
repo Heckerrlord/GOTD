@@ -92,12 +92,15 @@
                                                     <span th:if="${averageRating % 1 != 0}">
                                                         <i class="fa fa-star-half" style="font-size: 24px; color: #ffd43b;"></i>
                                                     </span>
+
+                                                    </span>
                                                 </span>
                                                     <!-- Xử lý khi averageRating là null -->
                                                 <span th:unless="${averageRating != null}">
                                                     <p>No rating available</p>
                                                 </span>
                                         </div>
+                                        <span>([[${countRT}]])</span>
                                     </div>
 
 

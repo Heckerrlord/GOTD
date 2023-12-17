@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(username -> {
 			try {
 				Account user = accountService.findById(username);
-				String password = pe.encode(user.getPassword()); // Mã hóa mật khấu
+				String password = pe.encode(user.getPassword());
 				String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId())
 						.collect(Collectors.toList()).toArray(new String[0]);
 				Map<String, Object> authentication = new HashMap<>();
@@ -82,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Đăng nhập
 		http.formLogin().loginPage("/auth/login/form").loginProcessingUrl("/auth/login")
 				.defaultSuccessUrl("/auth/login/success", false).failureUrl("/auth/login/error");
+
 		http.rememberMe().tokenValiditySeconds(3600);
 			// remember me
 		// Điều khiển lỗi truy cập không đúng quyền

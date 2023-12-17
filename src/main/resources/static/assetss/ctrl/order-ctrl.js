@@ -30,9 +30,11 @@ app.controller("order-ctrl", function ($scope, $http) {
         $scope.selectedOrder = angular.copy(item);
         $('#orderDetailModal').modal('show');
     };
+
     $scope.closeModal = function () {
         $('#orderDetailModal').modal('hide'); // Đóng modal
     };
+
     $scope.formatDate = function(dateString) {
         var date = new Date(dateString);
         var formattedDate = ('0' + date.getHours()).slice(-2) + ':' +

@@ -66,6 +66,7 @@ public class ProductController {
 	) {
 		Double averageRating = danhGiaDAO.findAverageRatingByMaSanPham(sanPhamMa);
 		averageRating = (averageRating != null) ? averageRating : 5;
+		Integer countRT = danhGiaDAO.countRating(sanPhamMa);
 		ChiTietSanPham item;
 		if (size != null && color != null) {
 			item = pdao.findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(sanPhamMa,size,color);
@@ -83,6 +84,7 @@ public class ProductController {
 		model.addAttribute("kc", kcdao.findAll());
 		model.addAttribute("item", item);
 		model.addAttribute("averageRating",averageRating);
+		model.addAttribute("countRT",countRT);
 		return "product/detail";
 	}
 

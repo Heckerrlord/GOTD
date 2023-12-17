@@ -63,6 +63,17 @@ public interface DonHangDAO extends JpaRepository<DonHang, Long> {
 //            "WHERE YEAR(DonHang.NgayDatHang) = YEAR(CURRENT_TIMESTAMP) AND DATEPART(WEEK, DonHang.NgayDatHang) = DATEPART(WEEK, CURRENT_TIMESTAMP) " +
 //            "GROUP BY SanPham.Ma, SanPham.Ten, DonHangChiTiet.DonGia, YEAR(DonHang.NgayDatHang), DATEPART(WEEK, DonHang.NgayDatHang) " +
 //            "ORDER BY SUM(DonHangChiTiet.SoLuong) DESC", nativeQuery = true)
+@Query(value = "SELECT A.Ma AS MaAnhDauTien, SanPham.Ma, SanPham.Ten, SUM(DonHangChiTiet.SoLuong) AS 'Số lượng bán ra', DonHangChiTiet.DonGia * SUM(DonHangChiTiet.SoLuong) AS 'Doanh Thu' \n" +
+        "        FROM SanPham JOIN ChiTietSanPham ON SanPham.Ma = ChiTietSanPham.MaSanPham \n" +
+        "        JOIN DonHangChiTiet ON DonHangChiTiet.MaSanPham = ChiTietSanPham.id  \n" +
+        "        JOIN DonHang ON DonHang.id = DonHangChiTiet.MaDonHang \n" +
+        "        LEFT JOIN (SELECT MaSP, MIN(Ma) AS Ma FROM Anh GROUP BY MaSP) A ON SanPham.Ma = A.MaSP \n" +
+        "       WHERE NgayDatHang BETWEEN :sevenDaysAgo AND :currentDate  AND DonHang.TrangThai = 4 \n" +
+        "        GROUP BY A.Ma, SanPham.Ma, SanPham.Ten, DonHangChiTiet.DonGia, NgayDatHang\n" +
+        "         ORDER BY SUM(DonHangChiTiet.SoLuong) DESC", nativeQuery = true)
+List<Object[]> thongKeSPTheoKhoang(Timestamp sevenDaysAgo, Timestamp currentDate);
+
+
 @Query(value = "SELECT A.Ma AS MaAnhDauTien, SanPham.Ma, SanPham.Ten, SUM(DonHangChiTiet.SoLuong) AS 'Số lượng bán ra', DonHangChiTiet.DonGia * SUM(DonHangChiTiet.SoLuong) AS 'Doanh Thu' " +
         "FROM SanPham JOIN ChiTietSanPham ON SanPham.Ma = ChiTietSanPham.MaSanPham " +
         "JOIN DonHangChiTiet ON DonHangChiTiet.MaSanPham = ChiTietSanPham.id " +

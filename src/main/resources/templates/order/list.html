@@ -8,14 +8,14 @@
 							<div class="table-responsive" th:if="${not #lists.isEmpty(orders)}">
 								<table class="table table-bordered">
 									<thead>
-											<th class="text-center">STT</th>
+											<th >STT</th>
 											<th>Mã đặt hàng.</th>
 											<th>Ngày mua</th>
-											<th class="text-center">Tiền giảm</th>
-											<th class="text-center">Phí ship</th>
-											<th class="text-center">Tổng tiền</th>
-											<th class="text-center">Trạng thái</th>
-											<th class="text-center">#</th>
+											<th >Tiền giảm</th>
+											<th >Phí ship</th>
+											<th >Tổng tiền</th>
+											<th >Trạng thái</th>
+											<th >#</th>
 									</thead>
 									<tbody>
 										<tr th:each="order,state : *{orders}" class="custom-row-height">
@@ -53,7 +53,7 @@
 									</tbody>
 								</table>
 							</div>
-							<div th:unless="${not #lists.isEmpty(orders)}" class="text-center">
+							<div th:unless="${not #lists.isEmpty(orders)}" >
 								<h3>Chưa có đơn hàng.</h3>
 							</div>
 						</div>

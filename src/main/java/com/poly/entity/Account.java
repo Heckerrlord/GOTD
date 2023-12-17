@@ -37,6 +37,7 @@ public class Account implements Serializable {
 	String photo;
 	String token;
 	int TrangThai;
+
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "account")
 //	List<Order> orders;
