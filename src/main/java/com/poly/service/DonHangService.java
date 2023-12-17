@@ -27,5 +27,6 @@ public interface DonHangService {
     List<Object[]> thongkeNgay();
     List<Object[]> thongKeTheoKhoang(LocalDateTime sevenDaysAgo, LocalDateTime currentDate);
     List<Object[]> thongKeSanPhamTuan();
+    List<Object[]> thongKeSPTheoKhoang(LocalDateTime sevenDaysAgo, LocalDateTime currentDate);
 
 }

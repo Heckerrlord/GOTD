@@ -85,4 +85,14 @@ public class HomeController {
     public String contact() {
         return "contact";
     }
+
+    @RequestMapping("ctabout")
+    public String ctabout() {
+        return "ctabout";
+    }
+
+    @RequestMapping("blogs")
+    public String blogs() {
+        return "blogs";
+    }
 }

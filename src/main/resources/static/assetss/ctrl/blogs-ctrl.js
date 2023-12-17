@@ -3,9 +3,10 @@ app.controller("blogs-ctrl", function ($scope, $http) {
     var url2 = "/rest/upload/images";
     $scope.items = [];
     $scope.cates = [];
-    $scope.form = {};
+    $scope.form = {  };
 
     $scope.blogs = null
+
     $scope.create = function () {
         var item = angular.copy($scope.form);
         $http.post(`${url}`, item).then(resp => {
@@ -18,17 +19,6 @@ app.controller("blogs-ctrl", function ($scope, $http) {
             sweetalert("Lỗi đăng bài!");
             console.log("Error", error);
         });
-    }
-    $scope.imageChanged = function (files) {
-        var data = new FormData();
-        data.append('file', files[0]);
-        $http.post(url2, data, {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
-        }).then(resp => {
-            $scope.form.image = resp.data.name;
-        })
-
     }
 
     $scope.listBlogs = function (){
@@ -129,22 +119,19 @@ app.controller("blogs-ctrl", function ($scope, $http) {
     // upload hinh
 
 
-    // $scope.imageChanged = function (files) {
-    //     var formData = new FormData();
-    //     formData.append('file', files[0]);
-    //
-    //     $http.post('/upload', formData, {
-    //         headers: {
-    //             'Content-Type': undefined
-    //         }
-    //     }).then(function (response) {
-    //         // Xử lý phản hồi từ máy chủ sau khi tải lên thành công
-    //         $scope.form.image = response.data.filename;
-    //     }).catch(function (error) {
-    //         // Xử lý các lỗi xảy ra trong quá trình tải lên
-    //         console.log('Lỗi tải lên ảnh:', error);
-    //     });
-    // };
+    $scope.imageChanged = function (files) {
+        var data = new FormData();
+        data.append('file', files[0]);
+        $http.post(url2, data, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).then(resp => {
+            $scope.form.anh = resp.data.name;
+        }).catch(error => {
+            sweetalert("Lỗi tải lên hình ảnh!");
+            console.log("Error", error);
+        })
+    }
     function closeModal() {
         // Đóng modal
         $('#user-form-modal').modal('hide');
