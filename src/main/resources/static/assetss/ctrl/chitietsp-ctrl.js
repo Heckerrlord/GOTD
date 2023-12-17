@@ -64,7 +64,7 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
 
     $scope.editProduct = function(item) {
         $scope.selectedProduct = angular.copy(item);
-        $scope.ct = $scope.selectedProduct.chiTietSanPhams;
+        $scope.ct = $scope.selectedProduct.ctsp;
         console.log("ct"+ $scope.ct);
         console.log($scope.selectedProduct); // In ra để kiểm tra dữ liệu
         $('#product-update-modal').modal('show');
@@ -108,8 +108,8 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
 
         // Kiểm tra xem có chi tiết sản phẩm hay không
         if ($scope.selecteDetail) {
-            // Nếu có chi tiết sản phẩm, thêm trường chiTietSanPhams vào dataToSend
-            dataToSend.chiTietSanPhams =[{
+            // Nếu có chi tiết sản phẩm, thêm trường ctsp vào dataToSend
+            dataToSend.ctsp =[{
                 kichCo: {
                     code: $scope.selecteDetail.kichCo.code
                 },
@@ -206,7 +206,7 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
                 ma: "",
             }
         ],
-        chiTietSanPhams: []
+        ctsp: []
     };
 
     $scope.productDetail = {
@@ -225,7 +225,7 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
         ngaySua: new Date(),
     };
     $scope.addProductDetail = function () {
-        $scope.productData.chiTietSanPhams.push(angular.copy($scope.productDetail));
+        $scope.productData.ctsp.push(angular.copy($scope.productDetail));
     };
     function findIdByCode(array, code) {
         var foundItem = array.find(function (item) {
@@ -255,8 +255,8 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
         }
         var hasImages = $scope.productData.image.length > 0;
 
-        // Kiểm tra xem productData.chiTietSanPhams có tồn tại không và có ít nhất một phần tử không
-        if ($scope.productData.chiTietSanPhams && $scope.productData.chiTietSanPhams.length > 0) {
+        // Kiểm tra xem productData.ctsp có tồn tại không và có ít nhất một phần tử không
+        if ($scope.productData.ctsp && $scope.productData.ctsp.length > 0) {
 
             if (isMaSanPhamExists($scope.productData.ma)) {
                 sweetalert('Mã sản phẩm đã tồn tại. Vui lòng chọn mã khác.');
@@ -286,11 +286,11 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
                 image: hasImages ? $scope.productData.image : [],
             };
 
-            angular.forEach(dataToSend.chiTietSanPhams, function (productDetail) {
+            angular.forEach(dataToSend.ctsp, function (productDetail) {
                 $scope.updateIds(productDetail);
             });
 
-            dataToSend.chiTietSanPhams = angular.copy($scope.productData.chiTietSanPhams);
+            dataToSend.ctsp = angular.copy($scope.productData.ctsp);
 
             console.log(JSON.stringify($scope.productData));
             console.log(JSON.stringify(dataToSend));
@@ -317,7 +317,7 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
 
 
     $scope.removeProductDetail = function (index) {
-        $scope.productData.chiTietSanPhams.splice(index, 1);
+        $scope.productData.ctsp.splice(index, 1);
     };
     $scope.imagePreviews = [];
     $scope.selectedFiles = [];

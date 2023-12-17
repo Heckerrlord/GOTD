@@ -73,7 +73,7 @@ public class CTSPRestController {
 
 
 	@GetMapping("detail/{sanPhamMa}")
-public ResponseEntity<Object> detailSanPham(
+    public ResponseEntity<Object> detailSanPham(
 		@PathVariable String sanPhamMa,
 		@RequestParam(required = false) String kichCoCode,
 		@RequestParam(required = false) String mauSacCode

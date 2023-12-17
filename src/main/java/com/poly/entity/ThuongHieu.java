@@ -1,5 +1,6 @@
 package com.poly.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.poly.entity.ChiTietSanPham;
@@ -31,7 +32,7 @@ public class ThuongHieu implements Serializable {
     @Column(name = "TrangThai")
     private Integer tt;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "thuongHieu", cascade = CascadeType.ALL)
-    private List<ChiTietSanPham> lThuongHieu;
+    @OneToMany(mappedBy = "thuongHieu")
+    @JsonIgnore
+    private List<SanPham> Lthuonghieu;
 }

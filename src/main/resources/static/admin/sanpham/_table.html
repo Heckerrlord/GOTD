@@ -12,7 +12,10 @@
                                 <th>Mã SP</th>
                                 <th>Ảnh</th>
                                 <th class="sortable">Tên sản phẩm</th>
-                                <th>Mô tả</th>
+                                <th>Thương hiệu</th>
+                                <th>Loại áo</th>
+                                <th>Loại cổ</th>
+                                <th>Chất liệu</th>
                                 <th>Trạng thái</th>
                                 <th>#</th>
                             </tr>
@@ -25,7 +28,10 @@
                                        ng-src="/assets/images/{{item.image[0].ma}}">
                                 </td>
                                 <td>{{item.ten}}</td>
-                                <td>{{item.moTa}}</td>
+                                <td>{{item.thuongHieu.name}}</td>
+                                <td>{{item.loaiKhachHang.name}}</td>
+                                <td>{{item.coAo.name}}</td>
+                                <td>{{item.chatLieu.name}}</td>
                                 <td>
                                     <span ng-if="item.trangThai == 1" class="badges bg-lightred">Ngừng hoạt động</span>
                                     <span ng-if="item.trangThai == 0" class="badges bg-lightgreen">Đang hoạt động</span>
@@ -215,7 +221,7 @@
                             <div class="card-body">
                                 <div class="e-table">
                                     <div class="table-responsive">
-                                        <table id="datatable-buttons" class="table dataTable no-footer" ng-if="selectedProduct.chiTietSanPhams">
+                                        <table id="datatable-buttons" class="table dataTable no-footer" ng-if="selectedProduct.ctsp">
                                             <thead>
                                             <tr>
                                                 <th class="align-top">ID
@@ -230,7 +236,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="item in selectedProduct.chiTietSanPhams">
+                                            <tr ng-repeat="item in selectedProduct.ctsp">
                                                 <td>{{item.id}}</td>
                                                 <td>{{item.kichCo.name}}</td>
                                                 <td>{{item.mauSac.name}}</td>

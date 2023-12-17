@@ -17,8 +17,8 @@ public class Anh implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
     private String ma;
+
     @ManyToOne
     @JoinColumn(name = "MaSP",referencedColumnName = "Ma")
     @JsonIgnore

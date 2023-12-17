@@ -22,6 +22,8 @@ public interface DanhGiaDAO extends JpaRepository<DanhGia,Integer> {
     Double findAverageRatingByMaSanPham(String maSanPham);
 
 
+    @Query(value = "SELECT COUNT(DanhGia) AS luotDG FROM  DanhGia WHERE  MaSanPham=:maSanPham and TrangThai=1", nativeQuery = true)
+    Integer countRating(String maSanPham);
 
 
      @Query("SELECT a FROM DanhGia a WHERE a.sanPham.id =:id")

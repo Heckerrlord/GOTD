@@ -26,4 +26,7 @@ public interface SanPhamDAO extends JpaRepository<SanPham,Integer> {
 
     @Query("SELECT p FROM SanPham p WHERE p.id IN :productIds ORDER BY p.id DESC")
     List<SanPham> getTrending(@Param("productIds") List<Integer> productIds, Pageable pageable);
+
+
+    List<SanPham> findByThuongHieuCode(String maThuongHieu);
 }

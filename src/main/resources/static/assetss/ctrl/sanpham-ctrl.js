@@ -18,7 +18,6 @@ app.controller("sanpham-ctrl", function ($scope, $http,$timeout) {
     $scope.initialize = function () {
         $http.get(url).then(function (resp) {
             $scope.items = resp.data;
-            // Sử dụng $timeout để chờ cho digest cycle hoàn tất
             $timeout(function () {
                 // Đây là nơi bạn khởi tạo DataTables và niceScroll
                 $(".boxscroll").niceScroll({

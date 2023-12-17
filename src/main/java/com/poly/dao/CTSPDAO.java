@@ -91,4 +91,20 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
 
     @Query("SELECT c FROM ChiTietSanPham c ORDER BY c.GiaBan ASC")
     Page<ChiTietSanPham> findAllOrderByGiaBanAsc(Pageable pageable);
+
+
+
+
+
+
+
+
+
+
+
+
+    List<ChiTietSanPham> findBySanPhamThuongHieuCode(String maThuongHieu);
+
+
+
 }

@@ -35,5 +35,5 @@ public class CoAo implements Serializable {
 
     @OneToMany(mappedBy = "coAo")
     @JsonIgnore
-    private List<ChiTietSanPham> LCoAo;
+    private List<SanPham> LCoAo;
 }

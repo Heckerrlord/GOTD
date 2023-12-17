@@ -49,8 +49,8 @@ public class SanPhamServiceImpl implements SanPhamService {
         // Lưu thông tin cơ bản của sản phẩm
         SanPham savedSanPham = pdao.save(sanPham);
         // Lưu danh sách chi tiết sản phẩm
-        if (sanPham.getChiTietSanPhams() != null && !sanPham.getChiTietSanPhams().isEmpty()) {
-            for (ChiTietSanPham chiTiet : sanPham.getChiTietSanPhams()) {
+        if (sanPham.getCtsp() != null && !sanPham.getCtsp().isEmpty()) {
+            for (ChiTietSanPham chiTiet : sanPham.getCtsp()) {
                 chiTiet.setSanPham(savedSanPham);
                 ctspdao.save(chiTiet);
             }
@@ -78,7 +78,7 @@ public class SanPhamServiceImpl implements SanPhamService {
             SanPham savedSanPham = pdao.save(currentSanPham);
 
             // Cập nhật danh sách chi tiết sản phẩm
-            for (ChiTietSanPham chiTiet : updatedSanPham.getChiTietSanPhams()) {
+            for (ChiTietSanPham chiTiet : updatedSanPham.getCtsp()) {
                 Optional<ChiTietSanPham> existingChiTiet = ctspdao.findExistingChiTiet(
                         chiTiet.getMauSac().getCode(), chiTiet.getKichCo().getCode(), savedSanPham.getMa());
 

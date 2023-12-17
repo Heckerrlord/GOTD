@@ -89,10 +89,6 @@ public class DonHangServiceImpl implements DonHangService {
 		return dao.thongKeTheoKhoang(sevenDaysAgoTimestamp,currentDateTimestamp);
 	}
 
-	@Override
-	public List<Object[]> thongKeSanPhamTuan() {
-		return dao.thongKeSanPhamTuan();
-	}
 
 	@Override
 	public List<Object[]> thongKeSPTheoKhoang(LocalDateTime sevenDaysAgo, LocalDateTime currentDate) {
