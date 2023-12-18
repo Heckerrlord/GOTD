@@ -71,17 +71,13 @@
 
                             <div class="col-lg-6">
                                 <div class="product-single-info">
-
-
                                     <h4 class="title">[[*{SanPham.ten}]]</h4>
                                     <div class="prices">[[*{SanPham.ThuongHieu.name}]] <p class="text-success">Số lượng:
-                                    <div class="prices">[[*{SanPham.ThuongHieu.name}]] <p class="text-success">Số lượng:
-                                        {{p.soLuong}}</p></div>
-                                    <div class="prices">
+                                        {{p.soLuong}}</p>
                                         <span class="price"> {{ p.giaBan | number:0 }} <strong>vnđ</strong></span>
                                     </div>
-                                    <div class="prices">Tag: [[*{SanPham.CoAo.name}]], [[*{SanPham.LoaiKhachHang.name}]]</div>
 
+                                    <div class="prices">Tag: [[*{SanPham.CoAo.name}]], [[*{SanPham.LoaiKhachHang.name}]]</div>
                                     <div class="rating-box-wrap">
                                         <div class="rating-box">
                                             <!-- Kiểm tra xem averageRating có phải là null hay không -->
@@ -93,7 +89,6 @@
                                                     <span th:if="${averageRating % 1 != 0}">
                                                         <i class="fa fa-star-half" style="font-size: 24px; color: #ffd43b;"></i>
                                                     </span>
-
                                                     </span>
                                                 </span>
                                                     <!-- Xử lý khi averageRating là null -->
@@ -117,6 +112,7 @@
                                         </select>
 
                                     </div>
+
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="btn-group" data-toggle="buttons">

@@ -1,11 +1,10 @@
 <div class="row mx-0 bg-white" ng-if="items">
     <div class="col-12 py-3">
-        <table id="datatable-buttons3" class="table table-collapse table-bordered dt-responsive">
+        <table id="datatable-buttons-3" class="table table-collapse table-bordered dt-responsive">
             <thead>
             <tr>
                 <th>Id</th>
                 <th>Khách hàng</th>
-                <th>Địa chỉ</th>
                 <th>Ngày đặt hàng</th>
                 <th>Mã giảm giá</th>
                 <th>Phí giao hàng</th>
@@ -13,15 +12,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in items">
+            <tr ng-repeat="item in items2">
                 <td>{{item.id}}</td>
                 <td>{{item.account.username}}</td>
-                <td>{{item.tinh}},{{item.huyen}},{{item.xa}},{{item.dcChiTiet}}</td>
-                <td>{{item.ngayDatHang}}</td>
+                <td>{{ item.ngayDatHang | date:'mm:HH dd-MM-yyyy' }}</td>
                 <td>
                     {{item.maGiamGia ? item.maGiamGia : 'Không có'}}
                 </td>
-
                 <td>
                     {{item.phiGiaoHang}}
                 </td>
@@ -31,19 +28,4 @@
         </table>
     </div>
 </div>
-<!-- <div class="card-header text-center">
-	<button ng-click="pager.first()" class="btn btn-danger">
-		<i class="fas fa-arrow-to-left"></i>
-	</button>
-	<button ng-click="pager.prev()" class="btn btn-primary">
-		<i class="fas fa-arrow-left"></i>
-	</button>
-	<button class="btn btn-success">{{pager.page + 1}} of {{pager.count?pager.count:'1'}}</button>
-	<button ng-click="pager.next()" class="btn btn-primary">
-		<i class="fas fa-arrow-right"></i>
-	</button>
-	<button ng-click="pager.last()" class="btn btn-danger">
-		<i class="fas fa-arrow-to-right"></i>
-	</button>
-</div> -->
-<script src="/assetss/js/init.js"></script>
+

@@ -1,14 +1,12 @@
 <!-- Modal -->
 <div>
-    <p>Id: {{selectedOrder.id}}</p>
-    <p>Khách hàng: {{selectedOrder.account.username}}</p>
     <div class="text-white p-3" style="background-color: #f27474;">THÔNG TIN MUA HÀNG</div>
     <div class="row mt-2 mx-2">
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-2">
             <label class="form-label">Mã mua:</label>
             <input ng-model="selectedOrder.id" class="form-control" readonly>
         </div>
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-5">
             <label class="form-label">Tên người đặt:</label>
             <input type="text" ng-model="selectedOrder.account.fullname" class="form-control" readonly>
         </div>
@@ -26,16 +24,6 @@
         </div>
         <div class="form-group ">
             <p class="form-label">Địa chỉ mua hàng:</p>
-            <div class="row mt-2 mx-2">
-                <div class="col-sm-4"><input ng-model="selectedOrder.tinh" class="form-control"></div>
-                <div class="col-sm-4"><input ng-model="selectedOrder.huyen" class="form-control"></div>
-                <div class="col-sm-4"><input ng-model="selectedOrder.xa" class="form-control"></div>
-            </div>
-            <div>
-                Ghi chú:
-                <div class="col-sm-4"><input ng-model="selectedOrder.dcChiTiet" class="form-control"></div>
-
-            </div>
             <div class="row ">
                 <div class="col-lg-4">
                     <label class="form-label" style="font-size: 14px;">Tỉnh-Thành phố<sup
@@ -61,6 +49,11 @@
                 </div>
 
                 <p id="result"></p>
+                Địa chỉ chi tiết:
+
+<textarea ng-model="selectedOrder.dcChiTiet" class="form-control">
+
+</textarea>
             </div>
         </div>
         <div class="form-group col-sm-5">
@@ -76,7 +69,7 @@
         <div>
             <label class="form-label">Danh sách sản phẩm:</label>
             <div class="table-responsive">
-                <table class="table ">
+                <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">Tên sản phẩm</th>

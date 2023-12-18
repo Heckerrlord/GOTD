@@ -1,4 +1,4 @@
-app.controller("order-ctrl", function ($scope, $http) {
+app.controller("order-ctrl", function ($scope, $http,$timeout) {
     var url = "/rest/order";
     $scope.roles = [];
     $scope.items = [];
@@ -22,14 +22,105 @@ app.controller("order-ctrl", function ($scope, $http) {
     }
 
     $scope.initialize = function (trangThai) {
+        // Gọi API hoặc lấy dữ liệu tương ứng cho từng bảng dựa vào trạng thái (trangThai) được truyền vào
+        // Sử dụng các biến $scope.items1, $scope.items2, $scope.items3 để lưu trữ dữ liệu cho từng bảng
+
         $http.get(url, { params: { tt: trangThai } })
             .then(function (response) {
-                $scope.items = response.data;
+                if (trangThai === 0) {
+                    $scope.items = response.data;
+
+                    $timeout(function () {
+                        $(".boxscroll").niceScroll({
+                            cursorborder: "",
+                            cursorcolor: "#eff3f6",
+                            boxzoom: true
+                        });
+                        $('#datatable-buttons-1').DataTable().destroy();
+                        var table = $('#datatable-buttons-1').DataTable({
+                            pagingType: 'full_numbers',
+                            lengthChange: false,
+                            buttons: ['excel', 'pdf', 'print']
+                        });
+                        table.buttons().container().appendTo('#datatable-buttons-1_wrapper .col-md-6:eq(0)');
+                    }, 0);
+                } else if (trangThai === 1) {
+                    $scope.items1 = response.data;
+                    $timeout(function () {
+                        $(".boxscroll").niceScroll({
+                            cursorborder: "",
+                            cursorcolor: "#eff3f6",
+                            boxzoom: true
+                        });
+                        $('#datatable-buttons-2').DataTable().destroy();
+                        var table = $('#datatable-buttons-2').DataTable({
+                            pagingType: 'full_numbers',
+                            lengthChange: false,
+                            buttons: ['excel', 'pdf', 'print']
+                        });
+                        table.buttons().container().appendTo('#datatable-buttons-2_wrapper .col-md-6:eq(0)');
+                    }, 0);
+
+                } else if (trangThai === 2) {
+                    $scope.items2 = response.data;
+                    $timeout(function () {
+                        $(".boxscroll").niceScroll({
+                            cursorborder: "",
+                            cursorcolor: "#eff3f6",
+                            boxzoom: true
+                        });
+                        $('#datatable-buttons-3').DataTable().destroy();
+                        var table = $('#datatable-buttons-3').DataTable({
+                            pagingType: 'full_numbers',
+                            lengthChange: false,
+                            buttons: ['excel', 'pdf', 'print']
+                        });
+                        table.buttons().container().appendTo('#datatable-buttons-3_wrapper .col-md-6:eq(0)');
+                    }, 0);
+                }
+                else if (trangThai === 3) {
+                    $scope.items3 = response.data;
+                    $timeout(function () {
+                        $(".boxscroll").niceScroll({
+                            cursorborder: "",
+                            cursorcolor: "#eff3f6",
+                            boxzoom: true
+                        });
+                        $('#datatable-buttons-4').DataTable().destroy();
+                        var table = $('#datatable-buttons-4').DataTable({
+                            pagingType: 'full_numbers',
+                            lengthChange: false,
+                            buttons: ['excel', 'pdf', 'print']
+                        });
+                        table.buttons().container().appendTo('#datatable-buttons-4_wrapper .col-md-6:eq(0)');
+                    }, 0);
+                }
+                else if (trangThai === 4) {
+                    $scope.items4 = response.data;
+                    $timeout(function () {
+                        $(".boxscroll").niceScroll({
+                            cursorborder: "",
+                            cursorcolor: "#eff3f6",
+                            boxzoom: true
+                        });
+                        $('#datatable-buttons-5').DataTable().destroy();
+                        var table = $('#datatable-buttons-5').DataTable({
+                            pagingType: 'full_numbers',
+                            lengthChange: false,
+                            buttons: ['excel', 'pdf', 'print']
+                        });
+                        table.buttons().container().appendTo('#datatable-buttons-5_wrapper .col-md-6:eq(0)');
+                    }, 0);
+
+                }
+
             })
             .catch(function (error) {
                 console.error('Lỗi khi lấy dữ liệu đơn hàng', error);
             });
-    }
+    };
+
+
 
     //khoi dau
     $scope.initialize(0);
@@ -43,6 +134,9 @@ app.controller("order-ctrl", function ($scope, $http) {
                 }
             }
             sweetalert("Đã xóa khỏi giỏ hàng!");
+            if ($scope.selectedOrder.chiTietDonHangList.length==0){
+                $scope.tuChoi($scope.selectedOrder);
+            }
         }).catch(error => {
             sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
             console.log("Error", error);
