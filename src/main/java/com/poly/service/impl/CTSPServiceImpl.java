@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,8 +55,8 @@ public class CTSPServiceImpl implements CTSPService {
     }
 
     @Override
-    public Page<ChiTietSanPham> findByFilters(String brandNames, String sizes, String colors,String categories, Long minPrice, Long maxPrice,String sortType, Pageable pageable) {
-        return pdao.findByFilters(brandNames, sizes, colors,categories, minPrice, maxPrice,sortType, pageable);
+    public Page<ChiTietSanPham> findByFilters(String keywords,String brandNames, String sizes, String colors,String categories, Long minPrice, Long maxPrice,String sortType, Pageable pageable) {
+        return pdao.findByFilters(keywords,brandNames, sizes, colors,categories, minPrice, maxPrice,sortType, pageable);
     }
 
     @Override
@@ -64,7 +66,21 @@ public class CTSPServiceImpl implements CTSPService {
 
     @Override
     public List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable) {
-        return pdao.findTop5SanPhamBySoLuongBan(pageable);
+//        List<Object[]> results = pdao.findTop5SanPhamBySoLuongBan(pageable);
+//        List<ChiTietSanPhamDTO> dtos = new ArrayList<>();
+//
+//        for (Object[] result : results) {
+//            ChiTietSanPhamDTO dto = new ChiTietSanPhamDTO();
+//            dto.setMa((String) result[0]);
+//            dto.setTen((String) result[1]);
+//            dto.setAnh((String) result[2]);
+//            dto.setGia((BigDecimal) result[3]);
+//            dto.setTongSoLuong((Long) result[4]);
+//
+//            dtos.add(dto);
+//        }
+
+        return  pdao.findTop5SanPhamBySoLuongBan(pageable);
     }
 
 

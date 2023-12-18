@@ -43,8 +43,9 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
     List<ChiTietSanPham> findFavorite(String username);
 
     ChiTietSanPham findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(String sp, String kc, String ms);
+
     @Query("SELECT a FROM ChiTietSanPham a WHERE a.mauSac.code = :mau AND a.kichCo.code = :size AND a.sanPham.ma = :ma")
-    Optional<ChiTietSanPham> findExistingChiTiet(String mau,String size, String ma);
+    Optional<ChiTietSanPham> findExistingChiTiet(String mau, String size, String ma);
 
 
     ChiTietSanPham findFirstBySanPhamMaAndKichCoCode(String sp, String kc);
@@ -68,16 +69,17 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma " +
             "INNER JOIN MauSac ms ON c.MaMau = ms.Ma " +
             "INNER JOIN LoaiAo la ON sp.MaLoaiAo = la.Ma " +
-            "WHERE (th.Ten IN (SELECT value FROM STRING_SPLIT(?1,',')) OR COALESCE(?1, '') = '') " +
-            "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?2,',')) OR COALESCE(?2, '') = '') " +
-            "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '') " +
-            "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
-            "AND c.GiaBan BETWEEN COALESCE(?5, 0) AND COALESCE(?6, 999999999) " +
-            "AND (CASE WHEN ?7 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?7, '') != N'Hàng mới') " +
+            "WHERE (sp.Ten LIKE CONCAT('%', ?1, '%') OR COALESCE(?1, '') = '')" +
+            "AND (th.Ten IN (SELECT value FROM STRING_SPLIT(?2,',')) OR COALESCE(?2, '') = '') " +
+            "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '') " +
+            "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
+            "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?5,',')) OR COALESCE(?5, '') = '') " +
+            "AND c.GiaBan BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
+            "AND (CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?8, '') != N'Hàng mới') " +
             "ORDER BY " +
-            "CASE WHEN ?7 = N'Giá thấp đến cao' THEN c.GiaBan END ASC, " +
-            "CASE WHEN ?7 = N'Giá cao đến thấp' THEN c.GiaBan END DESC, " +
-            "CASE WHEN ?7 = N'Hàng mới' THEN c.NgayThem END DESC",
+            "CASE WHEN ?8 = N'Giá thấp đến cao' THEN c.GiaBan END ASC, " +
+            "CASE WHEN ?8 = N'Giá cao đến thấp' THEN c.GiaBan END DESC, " +
+            "CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END DESC",
             countQuery = "SELECT c.id AS ctsp_id, c.* " +
                     "FROM ChiTietSanPham c " +
                     "INNER JOIN SanPham sp ON c.MaSanPham = sp.Ma " +
@@ -85,34 +87,57 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
                     "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma " +
                     "INNER JOIN MauSac ms ON c.MaMau = ms.Ma " +
                     "INNER JOIN LoaiAo la ON sp.MaLoaiAo = la.Ma " +
-                    "WHERE (th.Ten IN (SELECT value FROM STRING_SPLIT(?1,',')) OR COALESCE(?1, '') = '') " +
-                    "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?2,',')) OR COALESCE(?2, '') = '') " +
-                    "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '') " +
-                    "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
-                    "AND c.GiaBan BETWEEN COALESCE(?5, 0) AND COALESCE(?6, 999999999) " +
-                    "AND (CASE WHEN ?7 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?7, '') != N'Hàng mới') " +
+                    "WHERE (sp.Ten LIKE CONCAT('%', ?1, '%') OR COALESCE(?1, '') = '')" +
+                    "AND (th.Ten IN (SELECT value FROM STRING_SPLIT(?2,',')) OR COALESCE(?2, '') = '') " +
+                    "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '') " +
+                    "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
+                    "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?5,',')) OR COALESCE(?5, '') = '') " +
+                    "AND c.GiaBan BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
+                    "AND (CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?8, '') != N'Hàng mới') " +
                     "ORDER BY " +
-                    "CASE WHEN ?7 = N'Giá thấp đến cao' THEN c.GiaBan END ASC, " +
-                    "CASE WHEN ?7 = N'Giá cao đến thấp' THEN c.GiaBan END DESC, " +
-                    "CASE WHEN ?7 = N'Hàng mới' THEN c.NgayThem END DESC",
+                    "CASE WHEN ?8 = N'Giá thấp đến cao' THEN c.GiaBan END ASC, " +
+                    "CASE WHEN ?8 = N'Giá cao đến thấp' THEN c.GiaBan END DESC, " +
+                    "CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END DESC",
             nativeQuery = true)
-    Page<ChiTietSanPham> findByFilters(String brandNames,
-                                       String sizes,
-                                       String colors,
-                                       String categories,
-                                       Long minPrice,
-                                       Long maxPrice,
-                                       String sortType,
-                                       Pageable pageable);
+    Page<ChiTietSanPham> findByFilters(
+            String keywords,
+            String brandNames,
+            String sizes,
+            String colors,
+            String categories,
+            Long minPrice,
+            Long maxPrice,
+            String sortType,
+            Pageable pageable);
 
 
-    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(sp.ma, sp.ten, a.ma, SUM(COALESCE(c.soLuong, 0))) " +
+    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(ct.sanPham.ma, ct.sanPham.ten, a.ma,ct.GiaBan, SUM(COALESCE(c.soLuong, 0))) " +
             "FROM DonHangChiTiet c " +
-            "INNER JOIN ChiTietSanPham ct ON ct.id = c.chiTietSanPham.sanPham.id " +
+            "INNER JOIN ChiTietSanPham ct ON ct.id = c.chiTietSanPham.id " +
             "INNER JOIN SanPham sp ON ct.sanPham.ma = sp.ma " +
             "INNER JOIN Anh a ON sp.ma = a.sanPham.ma " +
-            "GROUP BY sp.ma, sp.ten, a.ma " +
+            "GROUP BY ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan " +
             "ORDER BY SUM(COALESCE(c.soLuong, 0)) DESC")
     List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
+
+
+//    @Query("SELECT c FROM ChiTietSanPham c " +
+//            "INNER JOIN c.mauSac ms " +
+//            "INNER JOIN c.sanPham sp " +
+//            "INNER JOIN c.kichCo kc " +
+//            "INNER JOIN sp.thuongHieu th " +
+//            "INNER JOIN sp.loaiKhachHang la " +
+//            "WHERE sp.ten LIKE CONCAT('%', :name_product, '%') " +
+//            "   OR ms.name LIKE CONCAT('%', :color, '%') " +
+//            "   OR th.name LIKE CONCAT('%', :brand, '%') " +
+//            "   OR la.name LIKE CONCAT('%', :category, '%')")
+//    Page<ChiTietSanPham> findByKeyWord(
+//            @Param("tenSanPham") String name_product,
+//            @Param("tenMau") String color,
+//            @Param("tenThuongHieu") String brand,
+//            @Param("tenLoaiAo") String category,
+//            Pageable pageable
+//    );
+
 
 }

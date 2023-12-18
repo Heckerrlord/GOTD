@@ -108,6 +108,7 @@ public class ProductResContronller {
 
     @GetMapping("/getList")
     public ResponseEntity<Map<String, Object>> getAllSanPham(
+            @RequestParam(name = "product_name", required = false, defaultValue = "") String keywords,
             @RequestParam(name = "brandNames", required = false, defaultValue = "") String brandNames,
             @RequestParam(name = "sizes", required = false, defaultValue = "") String sizes,
             @RequestParam(name = "colors", required = false, defaultValue = "") String colors,
@@ -120,10 +121,10 @@ public class ProductResContronller {
 
         Page<ChiTietSanPham> pageResult;
 
-        if (brandNames.isEmpty() && sizes.isEmpty() && colors.isEmpty() && categories.isEmpty() && minPrice == null && maxPrice == null && (sortType.equals("Giá thấp đến cao")|| sortType.equals("Giá cao đến thấp") || sortType.equals("Hàng mới"))) {
+        if (keywords.isEmpty() && brandNames.isEmpty() && sizes.isEmpty() && colors.isEmpty() && categories.isEmpty() && minPrice == null && maxPrice == null && (sortType.equals("Giá thấp đến cao")|| sortType.equals("Giá cao đến thấp") || sortType.equals("Hàng mới"))) {
             pageResult = ctspService.findDistinctByMaspp(PageRequest.of(page, pageSize));
         } else {
-            pageResult = ctspService.findByFilters(brandNames, sizes, colors,categories, minPrice, maxPrice,sortType, PageRequest.of(page, pageSize));
+            pageResult = ctspService.findByFilters(keywords, brandNames, sizes, colors,categories, minPrice, maxPrice,sortType, PageRequest.of(page, pageSize));
         }
 
         List<ChiTietSanPham> items = pageResult.getContent();
@@ -139,7 +140,7 @@ public class ProductResContronller {
     }
 
     @GetMapping("/top5_best_seller")
-    public ResponseEntity<?> getTop5() {
+    public ResponseEntity<List<ChiTietSanPhamDTO>> getTop5() {
         List<ChiTietSanPhamDTO> ctsp = ctspService.findTop5SanPhamBySoLuongBan(PageRequest.of(0,5));
         return ResponseEntity.ok(ctsp);
     }
