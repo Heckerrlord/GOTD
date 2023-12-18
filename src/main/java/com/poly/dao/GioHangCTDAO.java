@@ -12,10 +12,7 @@ import java.util.List;
 
 public interface GioHangCTDAO extends JpaRepository<GioHangChiTiet, Long> {
     @Query("SELECT d FROM GioHangChiTiet d WHERE d.gioHang.id = :idGioHang AND d.trangThai = :trangThai")
-    List<GioHangChiTiet> findByIdGioHangAndTrangThai(
-             Long idGioHang,
-             Integer trangThai
-    );
+    List<GioHangChiTiet> findByIdGioHangAndTrangThai(Long idGioHang,Integer trangThai);
 
     GioHangChiTiet findByChiTietSanPhamIdAndGioHangIdAndTrangThai(Long idSP,Long idGH, int trangthai);
 

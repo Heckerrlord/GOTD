@@ -72,7 +72,30 @@ app.controller("kichco-ctrl", function ($scope, $http) {
             $scope.reset();
             sweetalert("Xóa kích cỡ thành công!");
         }).catch(error => {
-            sweetalert("Lỗi kích cỡ sắc!");
+            sweetalert("Lỗi cập nhật kích cỡ!");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.doiTT = function (item) {
+        item.tt = 0;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật kích cỡ thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật kích cỡ!");
+            console.log("Error", error);
+        });
+    }
+
+    //cap nhat sp
+    $scope.doiTT2 = function (item) {
+        item.tt = 1;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật kích cỡ thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật kích cỡ!");
             console.log("Error", error);
         });
     }

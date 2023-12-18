@@ -78,6 +78,29 @@ app.controller("colors-ctrl", function ($scope, $http) {
         });
     }
 
+    $scope.doiTT = function (item) {
+        item.tt = 0;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật màu sắc thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật màu sắc!");
+            console.log("Error", error);
+        });
+    }
+
+    //cap nhat sp
+    $scope.doiTT2 = function (item) {
+        item.tt = 1;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật màu sắc thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật màu sắc!");
+            console.log("Error", error);
+        });
+    }
+
     //upload hinh
     $scope.imageChanged = function (files) {
         var data = new FormData();

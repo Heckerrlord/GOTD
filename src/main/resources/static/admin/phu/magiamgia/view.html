@@ -39,7 +39,7 @@
                             </div>
                             <div class="form-check-inline">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio"  class="custom-control-input" id="no1" name="available"
+                                    <input type="radio" class="custom-control-input" id="no1" name="available"
                                            ng-model="form.htg" ng-value="1">
                                     <label class="custom-control-label" for="no1">Tiền mặt</label>
                                 </div>
@@ -57,19 +57,22 @@
                     <div class="form-group row">
                         <label class="form-label">Giảm tối thiểu</label>
                         <div class="input-group">
-                            <input type="number" min="0" max="1000000" step="1" class="form-control" ng-model="form.gtt" placeholder="Nhập giảm tối thiểu">
+                            <input type="number" min="0" max="1000000" step="1" class="form-control" ng-model="form.gtt"
+                                   placeholder="Nhập giảm tối thiểu">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="form-label">Giảm tối đa</label>
                         <div class="input-group">
-                            <input type="number" min="0" max="1000000" step="1" class="form-control" ng-model="form.gtd" placeholder="Nhập giảm tối đa">
+                            <input type="number" min="0" max="1000000" step="1" class="form-control" ng-model="form.gtd"
+                                   placeholder="Nhập giảm tối đa">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="form-label">Số lượng</label>
                         <div class="input-group">
-                            <input type="number" min="0" max="100" step="1" class="form-control" ng-model="form.sl" placeholder="Nhập số lượng">
+                            <input type="number" min="0" max="100" step="1" class="form-control" ng-model="form.sl"
+                                   placeholder="Nhập số lượng">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -84,7 +87,7 @@
                             </div>
                             <div class="form-check-inline">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio"  class="custom-control-input" id="no2" name="available1"
+                                    <input type="radio" class="custom-control-input" id="no2" name="available1"
                                            ng-model="form.tt" ng-value="1">
                                     <label class="custom-control-label" for="no2">Ngưng hoạt động</label>
                                 </div>
@@ -133,25 +136,28 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in items">
-                        <td class="align-center">{{$index+1}}</td>
-                        <td hidden class="align-center">{{item.id}}</td>
-                        <td class="align-center">{{item.ten}}</td>
-                        <td class="align-center">{{item.ma}}</td>
-                        <td class="align-center">{{item.sk}}</td>
-                        <td class="align-center">{{item.htg == 0 ?'Giảm phần trăm':'Giảm tiền mặt'}}</td>
-                        <td class="align-center">{{item.ngayBatDau | date:'dd/MM/yyyy'}}</td>
-                        <td class="align-center">{{item.ngayKetThuc | date:'dd/MM/yyyy'}}</td>
-                        <td class="align-center">{{item.gtt}}</td>
-                        <td class="align-center">{{item.gtd}}</td>
-                        <td class="align-center">{{item.sl}}</td>
-                        <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
-                        <td class="align-center">
+                        <td>{{$index + 1}}</td>
+                        <td hidden>{{item.id}}</td>
+                        <td>{{item.ten}}</td>
+                        <td>{{item.ma}}</td>
+                        <td>{{item.sk}}</td>
+                        <td>{{item.htg == 0 ? 'Giảm phần trăm' : 'Giảm tiền mặt'}}</td>
+                        <td>{{item.ngayBatDau | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.ngayKetThuc | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.gtt}}</td>
+                        <td>{{item.gtd}}</td>
+                        <td>{{item.sl}}</td>
+                        <td>{{item.tt == 0 ? 'Hoạt động' : 'Ngưng hoạt động'}}</td>
+                        <td>
                             <div class="btn-group btn-group-xs">
                                 <button ng-click="edit(item)" class="btn btn-icon">
                                     <i class="fa fa-xs fa-pen"></i>
                                 </button>
-                                <button ng-click="delete(item)"  class="btn btn-danger">
-                                    <i class="fa fa-xs fa-times"></i>
+                                <button ng-click="doiTT(item)" class="btn btn-success">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </button>
+                                <button ng-click="doiTT2(item)" class="btn btn-danger">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </td>

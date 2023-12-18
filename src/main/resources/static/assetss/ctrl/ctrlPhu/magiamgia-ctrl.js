@@ -49,9 +49,9 @@ app.controller("magiamgia-ctrl", function ($scope, $http) {
         $http.post(`${url}`, item).then(resp => {
             $scope.items.push(resp.data);
             $scope.reset();
-            sweetalert("Thêm mới mã giảm giá!");
+            sweetalert("Thêm mới voucher thành công!");
         }).catch(error => {
-            sweetalert("Lỗi thêm mới mã giảm giá!");
+            sweetalert("Lỗi thêm mới voucher!");
             console.log("Error", error);
         });
     }
@@ -63,9 +63,9 @@ app.controller("magiamgia-ctrl", function ($scope, $http) {
             var index = $scope.items.findIndex(p => p.id == item.id);
             $scope.items[index] = item;
             $scope.reset();
-            sweetalert("Cập nhật mã giảm giá thành công!");
+            sweetalert("Cập nhật voucher thành công!");
         }).catch(error => {
-            sweetalert("Lỗi cập nhật mã giảm giá!");
+            sweetalert("Lỗi cập nhật voucher!");
             console.log("Error", error);
         });
     }
@@ -76,12 +76,37 @@ app.controller("magiamgia-ctrl", function ($scope, $http) {
             var index = $scope.items.findIndex(p => p.id == item.id);
             $scope.items.splice(index, 1);
             $scope.reset();
-            sweetalert("Xóa mã giảm giá thành công!");
+            sweetalert("Xóa voucher thành công!");
         }).catch(error => {
-            sweetalert("Lỗi xóa mã giảm giá!");
+            sweetalert("Lỗi xóa voucher!");
             console.log("Error", error);
         });
     }
+
+    //cap nhat sp
+    $scope.doiTT = function (item) {
+        item.tt = 0;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật voucher thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật voucher!");
+            console.log("Error", error);
+        });
+    }
+
+    //cap nhat sp
+    $scope.doiTT2 = function (item) {
+        item.tt = 1;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật voucher thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật voucher!");
+            console.log("Error", error);
+        });
+    }
+
 
     //upload hinh
     $scope.imageChanged = function (files) {
