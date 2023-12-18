@@ -43,9 +43,9 @@ app.controller("loaikhachhang-ctrl", function ($scope, $http) {
         $http.post(`${url}`, item).then(resp => {
             $scope.items.push(resp.data);
             $scope.reset();
-            sweetalert("Thêm mới loại khách hàng!");
+            sweetalert("Thêm mới loại áo!");
         }).catch(error => {
-            sweetalert("Lỗi thêm mới loại khách hàng!");
+            sweetalert("Lỗi thêm mới loại áo!");
             console.log("Error", error);
         });
     }
@@ -57,9 +57,9 @@ app.controller("loaikhachhang-ctrl", function ($scope, $http) {
             var index = $scope.items.findIndex(p => p.id == item.id);
             $scope.items[index] = item;
             $scope.reset();
-            sweetalert("Cập nhật loại khách hàng thành công!");
+            sweetalert("Cập nhật loại áo thành công!");
         }).catch(error => {
-            sweetalert("Lỗi cập nhật loại khách hàng!");
+            sweetalert("Lỗi cập nhật loại áo!");
             console.log("Error", error);
         });
     }
@@ -70,9 +70,32 @@ app.controller("loaikhachhang-ctrl", function ($scope, $http) {
             var index = $scope.items.findIndex(p => p.id == item.id);
             $scope.items.splice(index, 1);
             $scope.reset();
-            sweetalert("Xóa loại khách hàng thành công!");
+            sweetalert("Xóa loại áo thành công!");
         }).catch(error => {
-            sweetalert("Lỗi xóa loại khách hàng!");
+            sweetalert("Lỗi xóa loại áo!");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.doiTT = function (item) {
+        item.tt = 0;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật loại áo thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật loại áo!");
+            console.log("Error", error);
+        });
+    }
+
+    //cap nhat sp
+    $scope.doiTT2 = function (item) {
+        item.tt = 1;
+        $http.put(`${url}/${item.id}`, item).then(resp => {
+            $scope.reset();
+            sweetalert("Cập nhật loại áo thành công!");
+        }).catch(error => {
+            sweetalert("Lỗi cập nhật loại áo!");
             console.log("Error", error);
         });
     }

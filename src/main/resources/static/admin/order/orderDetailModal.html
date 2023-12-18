@@ -1,46 +1,113 @@
 <!-- Modal -->
 <div>
-   <p>Id: {{selectedOrder.id}}</p>
-   <p>Khách hàng: {{selectedOrder.account.username}}</p>
-   <div class="text-white p-3" style="background-color: #f27474;">THÔNG TIN MUA HÀNG</div>
-   <div class="row mt-2 mx-2">
-      <div class="form-group col-sm-4">
-         <label class="form-label">Mã mua:</label>
-         <input ng-model="selectedOrder.id" class="form-control" readonly>
-      </div>
-      <div class="form-group col-sm-4">
-         <label class="form-label">Tên người đặt:</label>
-         <input ng-model="selectedOrder.account.fullname" class="form-control" readonly>
-      </div>
-      <div class="form-group col-sm-4">
-         <label class="form-label">Ngày đặt:</label>
-         <p>{{ formatDate(selectedOrder.ngayDatHang) }}</p>
-      </div>
-      <div class="form-group ">
-         <p class="form-label">Địa chỉ mua hàng:</p>
-         <div class="row mt-2 mx-2">
-         <div class="col-sm-4"><input ng-model="selectedOrder.tinh" class="form-control"></div>
-         <div class="col-sm-4"><input ng-model="selectedOrder.huyen" class="form-control"></div>
-         <div class="col-sm-4"><input ng-model="selectedOrder.xa" class="form-control"></div>
-         </div>
-      </div>
-      <div class="form-group col-sm-5">
-         <label class="form-label">Trạng thái:</label>
-         <p ng-if="selectedOrder.trangThai === 0">Chờ xác nhận</p>
-         <p ng-if="selectedOrder.trangThai === 1">Đang giao hàng</p>
-      </div>
-      <div class="form-group col-sm-5">
-         <label class="form-label">Thanh toán:</label>
-         <p ng-if="selectedOrder.thanhToan === 0">Chưa thanh toán</p>
-         <p ng-if="selectedOrder.thanhToan === 1">Đã thanh toán</p>
-      </div>
+    <p>Id: {{selectedOrder.id}}</p>
+    <p>Khách hàng: {{selectedOrder.account.username}}</p>
+    <div class="text-white p-3" style="background-color: #f27474;">THÔNG TIN MUA HÀNG</div>
+    <div class="row mt-2 mx-2">
+        <div class="form-group col-sm-4">
+            <label class="form-label">Mã mua:</label>
+            <input ng-model="selectedOrder.id" class="form-control" readonly>
+        </div>
+        <div class="form-group col-sm-4">
+            <label class="form-label">Tên người đặt:</label>
+            <input type="text" ng-model="selectedOrder.account.fullname" class="form-control" readonly>
+        </div>
+        <div class="form-group col-sm-4">
+            <label class="form-label">Số điện thoại:</label>
+            <input type="text" ng-model="selectedOrder.soDienThoai" class="form-control">
+        </div>
+        <div class="form-group col-sm-4">
+            <label class="form-label">Phí ship:</label>
+            <input type="text" ng-model="selectedOrder.phiGiaoHang" class="form-control">
+        </div>
+        <div class="form-group col-sm-4">
+            <label class="form-label">Ngày đặt:</label>
+            <p>{{ formatDate(selectedOrder.ngayDatHang) }}</p>
+        </div>
+        <div class="form-group ">
+            <p class="form-label">Địa chỉ mua hàng:</p>
+            <div class="row mt-2 mx-2">
+                <div class="col-sm-4"><input ng-model="selectedOrder.tinh" class="form-control"></div>
+                <div class="col-sm-4"><input ng-model="selectedOrder.huyen" class="form-control"></div>
+                <div class="col-sm-4"><input ng-model="selectedOrder.xa" class="form-control"></div>
+            </div>
+            <div>
+                Ghi chú:
+                <div class="col-sm-4"><input ng-model="selectedOrder.dcChiTiet" class="form-control"></div>
 
-   </div>
-   <tr >
-      <div class="row">
-        {{selectedOrder.chiTietDonHangList.chiTietSanPham}}
-      </div>
+            </div>
+            <div class="row ">
+                <div class="col-lg-4">
+                    <label class="form-label" style="font-size: 14px;">Tỉnh-Thành phố<sup
+                            class="text-danger">*</sup></label>
+                    <select class="form-control" id="thanhpho" ng-model="form.selectedOrder.tinh" name="thanhpho"
+                            ng-change="changeThanhPho()">
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label" style="font-size: 14px;">Quận-Huyện<sup
+                            class="text-danger">*</sup></label>
+                    <select class="form-control" id="huyen" ng-model="form.selectedOrder.huyen" name="huyen"
+                            ng-change="changeHuyen()">
+                        <option value="">Chọn quận</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label" style="font-size: 14px;">Phường-Xã<sup class="text-danger">*</sup></label>
+                    <select class="form-control" id="xa" ng-model="form.selectedOrder.xa" name="xa"
+                            ng-change="changeXa()">
+                        <option value="">Chọn phường</option>
+                    </select>
+                </div>
 
-   </tr>
+                <p id="result"></p>
+            </div>
+        </div>
+        <div class="form-group col-sm-5">
+            <label class="form-label">Trạng thái:</label>
+            <p ng-if="selectedOrder.trangThai === 0">Chờ xác nhận</p>
+            <p ng-if="selectedOrder.trangThai === 1">Đang giao hàng</p>
+        </div>
+        <div class="form-group col-sm-5">
+            <label class="form-label">Thanh toán:</label>
+            <p ng-if="selectedOrder.thanhToan === 0">Chưa thanh toán</p>
+            <p ng-if="selectedOrder.thanhToan === 1">Đã thanh toán</p>
+        </div>
+        <div>
+            <label class="form-label">Danh sách sản phẩm:</label>
+            <div class="table-responsive">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Xóa</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="obj in selectedOrder.chiTietDonHangList" class="">
+                        <td scope="row">{{obj.chiTietSanPham.sanPham.ten}}</td>
+                        <td><input type="number" ng-model="obj.soLuong" min="1" step="1" name="" id=""></td>
+                        <td>{{obj.donGia}}</td>
+                        <th scope="col">
+                            <button ng-click="xoaKhoiDonHang(obj.id)" onclick="return confirm('Có muốn xóa sản phẩm này không?')" class="btn btn-danger">
+                                <i class="fa fa-xs fa-times"></i>
+                            </button>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
+    </div>
+    <tr>
+        <div class="row">
+            {{selectedOrder.chiTietDonHangList.chiTietSanPham}}
+        </div>
+    </tr>
+    <button style="right: 500px;" ng-click="update()" class="btn btn-success">
+        <i class="far fa-save"></i> Update
+    </button>
 </div>

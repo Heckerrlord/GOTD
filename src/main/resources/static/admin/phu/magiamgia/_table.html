@@ -20,25 +20,28 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in items">
-                <td class="align-center">{{$index+1}}</td>
-                <td hidden class="align-center">{{item.id}}</td>
-                <td class="align-center">{{item.ten}}</td>
-                <td class="align-center">{{item.ma}}</td>
-                <td class="align-center">{{item.sk}}</td>
-                <td class="align-center">{{item.htg == 0 ?'Giảm phần trăm':'Giảm tiền mặt'}}</td>
-                <td class="align-center">{{item.ngayBatDau | date:'dd/MM/yyyy'}}</td>
-                <td class="align-center">{{item.ngayKetThuc | date:'dd/MM/yyyy'}}</td>
-                <td class="align-center">{{item.gtt}}</td>
-                <td class="align-center">{{item.gtd}}</td>
-                <td class="align-center">{{item.sl}}</td>
-                <td class="align-center">{{item.tt == 0 ?'Hoạt động':'Ngưng hoạt động'}}</td>
-                <td class="align-center">
+                <td>{{$index + 1}}</td>
+                <td hidden>{{item.id}}</td>
+                <td>{{item.ten}}</td>
+                <td>{{item.ma}}</td>
+                <td>{{item.sk}}</td>
+                <td>{{item.htg == 0 ? 'Giảm phần trăm' : 'Giảm tiền mặt'}}</td>
+                <td>{{item.ngayBatDau | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.ngayKetThuc | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.gtt}}</td>
+                <td>{{item.gtd}}</td>
+                <td>{{item.sl}}</td>
+                <td>{{item.tt == 0 ? 'Hoạt động' : 'Ngưng hoạt động'}}</td>
+                <td>
                     <div class="btn-group btn-group-xs">
                         <button ng-click="edit(item)" class="btn btn-icon">
                             <i class="fa fa-xs fa-pen"></i>
                         </button>
-                        <button ng-click="delete(item)"  class="btn btn-danger">
-                            <i class="fa fa-xs fa-times"></i>
+                        <button ng-click="doiTT(item)" class="btn btn-success">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                        <button ng-click="doiTT2(item)" class="btn btn-danger">
+                            <i class="fa fa-times-circle" aria-hidden="true"></i>
                         </button>
                     </div>
                 </td>
