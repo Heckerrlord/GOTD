@@ -5,7 +5,6 @@ import com.poly.dao.DonHangDAO;
 import com.poly.dao.GioHangCTDAO;
 import com.poly.dao.daoPhu.MaGiamGiaDAO;
 import com.poly.entity.*;
-import com.poly.entity.MaGiamGia;
 import com.poly.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +47,13 @@ public class OrderRestController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Object> createGioHang(@RequestBody GioHang gioHang){
+	public ResponseEntity<Object> createGioHang(@RequestBody GioHang gioHang) {
 		DonHang donHang = new DonHang(gioHang);
 		donHang.setTrangThai(0);
 
 		MaGiamGia mgg = mdao.findMaGiamGiaByMa(donHang.getMaGiamGia());
-		if (mgg !=null){
-			mgg.setSl(mgg.getSl()-1);
+		if (mgg != null) {
+			mgg.setSl(mgg.getSl() - 1);
 			mdao.save(mgg);
 		}
 
@@ -86,27 +85,30 @@ public class OrderRestController {
 		return ResponseEntity.created(URI.create(location)).build();
 	}
 
-	
 	@GetMapping
-	public List<DonHang> getAll(Model model,int tt) {
+	public List<DonHang> getAll(Model model, int tt) {
 		return orderDao.findAllByTrangThai(tt);
+	}
+
+	@PostMapping("/delete/{id}")
+	public void deleteDHCT(@PathVariable long id) {
+		orderDetailService.deleteById(id);
 	}
 
 	@PutMapping("/update/{id}")
 	public DonHang update(@PathVariable("id") Long id,
-						   @RequestBody DonHang donHang) {
+						  @RequestBody DonHang donHang) {
+		for (int i = 0; i < donHang.getChiTietDonHangList().size(); i++) {
+			DonHangChiTiet obj = donHang.getChiTietDonHangList().get(i);
+			obj.setDonHang(donHang);
+			orderDetailService.saveAndFlush(obj);
+		}
 		return orderDao.save(donHang);
 	}
+
 	@GetMapping("/discount/{ma}")
-		public MaGiamGia getmgg(@PathVariable("ma") String ma){
-			return mdao.findMaGiamGiaByMa(ma);
+	public MaGiamGia getmgg(@PathVariable("ma") String ma) {
+		return mdao.findMaGiamGiaByMa(ma);
 	}
 
-
 }
-
-
-
-
-
-
