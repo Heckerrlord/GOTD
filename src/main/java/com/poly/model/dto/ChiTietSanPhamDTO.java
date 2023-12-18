@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Builder
 public class ChiTietSanPhamDTO {
 
@@ -16,12 +15,18 @@ public class ChiTietSanPhamDTO {
 
     private String anh;
 
+    private BigDecimal gia;
+
     private long tongSoLuong;
 
-    public ChiTietSanPhamDTO(String ma, String ten,String anh, long tongSoLuong) {
+    public ChiTietSanPhamDTO() {
+    }
+
+    public ChiTietSanPhamDTO(String ma, String ten, String anh, BigDecimal gia, long tongSoLuong) {
         this.ma = ma;
         this.ten = ten;
         this.anh = anh;
+        this.gia = gia;
         this.tongSoLuong = tongSoLuong;
     }
 }

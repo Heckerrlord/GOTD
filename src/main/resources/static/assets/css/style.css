@@ -5191,6 +5191,28 @@ input[type="number"] {
   margin-top: 20px; /* Khoảng cách với các phần khác nếu cần */
 }
 
+.product-item.muted {
+  opacity: 0.7;
+  position: relative;
+}
+
+.product-item.muted:after {
+  content: "Hết hàng";
+  position: absolute;
+  padding: 10px;
+  border-radius: 5px;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  top: 40%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 20px 0;
+  background: rgb(0, 253, 254);
+  text-align: center;
+}
+
 .no-review-message p {
   font-style: italic;
   font-family: 'Be Vietnam Pro', sans-serif;
@@ -5251,6 +5273,13 @@ input[type="number"] {
   max-width: 100%;
   height: auto
 }
+
+.pagination button.current-page {
+  background-color: #3d3d3d; /* Màu nền của trang hiện tại */
+  color: #fff; /* Màu chữ của trang hiện tại */
+  border-color: #3d3d3d; /* Màu viền của trang hiện tại */
+}
+
 
 
 

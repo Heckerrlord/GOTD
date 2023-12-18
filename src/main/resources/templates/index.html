@@ -47,32 +47,42 @@
             </div>
         </div>
 
-<!--        <section class="products-showcase best-seller container">-->
-<!--            <div class="row">-->
-<!--                <div class="title col-12">-->
-<!--                    <h2 class="h2">Sản phẩm bán chạy</h2><a-->
-<!--                        class="see-more-btn-text text-uppercase" href="/sanpham">Xem Thêm</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="row product-row d-flex justify-content-md-between">-->
-<!--                <div ng-repeat="p in top5Items">-->
-<!--                    <a class="product position-relative" ng-href="/product/detail/{{ p.ma}}" ng-click="searchDetail()">-->
-<!--                        <div class="card">-->
-<!--                            <img class="card-img-top" ng-src="/assets/images/{{p.anh}}" alt="{{p.ten}}" />-->
-<!--                            <div class="card-body">-->
-<!--                                <h5 class="card-title" ng-bind="p.ten"></h5>-->
+        <!--  Best seller product -->
 
-<!--                                <p class="card-text sold">-->
-<!--                                    Đã bán <span ng-bind="p.tongSoLuong"></span> đôi-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="shadow mx-auto position-absolute"></div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--        </section>-->
+        <section class="products-showcases best-seller container">
+            <div class="row">
+                <div class="title col-12">
+                    <h2 class="h2">Sản phẩm bán chạy</h2><a
+                        class="see-more-btn-text text-uppercase" href="/sanpham">Xem Thêm</a>
+                </div>
+            </div>
+            <div class="row product-row d-flex justify-content-md-between">
+                <div ng-repeat="p in top5Items" style="max-width:230px">
+                    <a class="product position-relative" ng-href="/product/detail/{{ p.ma}}" ng-click="searchDetail()">
+                        <div class="card">
+                            <img class="card-img-top" ng-src="/assets/images/{{p.anh}}" alt="{{p.ma}}"/>
+                            <div class="card-body">
+                                <h5 class="card-title" ng-bind="p.ten"></h5>
+                                <h5>
+                                    <div class="prices">
+                                        <span class="price">{{ numbers.formatDecimal(p.gia, 0, ',', '.')}} <strong>vnđ</strong></span>
+                                    </div>
+                                </h5>
+<!--                                <div>-->
+<!--                                    <p class="price">-->
+<!--                                        <span class="text-price" ng-bind="p.gia"></span> ₫-->
+<!--                                    </p>-->
+<!--                                </div>-->
+                                <p class="card-text sold">
+                                    Đã bán <span ng-bind="p.tongSoLuong"></span> chiếc
+                                </p>
+                            </div>
+                        </div>
+                        <div class="shadow mx-auto position-absolute"></div>
+                    </a>
+                </div>
+            </div>
+        </section>
 
 
         <section class="product-area">

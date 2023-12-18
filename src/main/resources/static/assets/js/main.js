@@ -329,7 +329,7 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
             let user = userLogin;
 
             $http.delete(url12 + '?ma=' + ma + '&username=' + user).then(function (response) {
-                toastr.success("Xóa yêu thích thành công!");
+                toastr.info("Bỏ yêu thích thành công!");
                 console.log("Xóa yêu thích thành công");
                 $scope.getFavoriteProducts();
                 $scope.filterProducts();
@@ -651,7 +651,8 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
     $scope.selectedCategories = [];
     $scope.filterParams = {
         minPrice: '',
-        maxPrice: ''
+        maxPrice: '',
+        keywords: ''
     };
 
 
@@ -679,9 +680,18 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
         if (isValidPrice($scope.filterParams.minPrice) && isValidPrice($scope.filterParams.maxPrice)) {
             $scope.filterProducts();
         } else {
-            alert('Vui lòng nhập giá trị hợp lệ cho khoảng giá.');
+            toastr.error("Vui lòng nhập giá trị hợp lệ cho khoảng giá!");
         }
     };
+
+    $scope.applySearchByKeyWord = function () {
+        if (($scope.filterParams.keywords == null)) {
+            toastr.warning("Vui lòng nhập từ khóa tìm kiếm!");
+        } else {
+            $scope.filterProducts();
+        }
+    };
+
 
     function isValidPrice(value) {
         return /^\d+$/.test(value);
@@ -754,6 +764,8 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
         }
     };
 
+    // $scope.noResults = false;
+
     //  to filter
     $scope.filterProducts = function () {
         // Get the selected brands
@@ -780,11 +792,13 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
         console.log('Selected Categories:', selectedCategories);
         console.log('Min Price:', $scope.filterParams.minPrice);
         console.log('Max Price:', $scope.filterParams.maxPrice);
+        console.log('Key words:', $scope.filterParams.keywords);
         console.log('Date',$scope.sortType )
 
         // Construct the API endpoint with query parameters
         var url = '/api/products/getList';
         var queryParams = [
+            'keywords=' + encodeURIComponent($scope.filterParams.keywords),
             'brandNames=' + encodeURIComponent(selectedBrands.join(',')),
             'sizes=' + encodeURIComponent(selectedSizes.join(',')),
             'colors=' + encodeURIComponent(selectedColors.join(',')),
@@ -801,14 +815,20 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
 
         $http.get(urlWithParams)
             .then(function (response) {
-                $scope.items = response.data.items.map(el => {
-                    if ($scope.favoriteProducts.filter(fa => fa.id === el.id).length !== 0) {
-                        el.myFavorite = 1;
-                    } else {
-                        el.myFavorite = 0;
-                    }
-                    return el;
-                })
+                if (response.data.items.length === 0) {
+                    $scope.noResults = true;
+                }else {
+                    $scope.noResults = false;
+                    $scope.items = response.data.items.map(el => {
+
+                        if ($scope.favoriteProducts.filter(fa => fa.id === el.id).length !== 0) {
+                            el.myFavorite = 1;
+                        } else {
+                            el.myFavorite = 0;
+                        }
+                        return el;
+                    })
+                }
                 $scope.pager.itemCount = response.data.totalItems;
                 $scope.pager.pageCount = response.data.totalPages;
                 $scope.pager.currentPage = response.data.currentPage;
@@ -837,6 +857,7 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
         $scope.selectedColors = [];
         $scope.filterParams.minPrice = '';
         $scope.filterParams.maxPrice = '';
+        $scope.filterParams.keywords = '';
 
         angular.forEach($scope.colors, function (color) {
             color.selected = false;
@@ -852,56 +873,6 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
             ($scope.selectedColors && $scope.selectedColors.length > 0) ||
             ($scope.filterParams.minPrice !== '' && $scope.filterParams.maxPrice !== '');
     };
-
-
-    var urlblogs = "/rest/blogs";
-    $scope.blogs = null
-
-
-    $scope.listBlogs = function (){
-        $http.get(urlblogs+'/listBlogs').then(function (resp){
-            $scope.blogs = resp.data;
-            console.log("thu thao nee " + $scope.blogs)
-        });
-    }
-    $scope.listBlogs()
-
-    var urla = "/allAnh";
-    $scope.ah = null
-
-
-    $scope.lanh = function (){
-        $http.get(urlblogs).then(function (resp){
-            $scope.ah = resp.data;
-            console.log("thu thao nee " + $scope.ah)
-        });
-    }
-    $scope.lanh()
-
-    var urlblogs = "/rest/blogs";
-    $scope.blogs = null
-
-
-    $scope.listBlogs = function (){
-        $http.get(urlblogs+'/listBlogs').then(function (resp){
-            $scope.blogs = resp.data;
-            console.log("thu thao nee " + $scope.blogs)
-        });
-    }
-    $scope.listBlogs()
-
-    var urla = "/allAnh";
-    $scope.ah = null
-
-
-    $scope.lanh = function (){
-        $http.get(urlblogs).then(function (resp){
-            $scope.ah = resp.data;
-            console.log("thu thao nee " + $scope.ah)
-        });
-    }
-    $scope.lanh()
-
 
 
     //------------------todo:  Loc san pham-----------------------
@@ -965,6 +936,8 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
     };
     $scope.getListProductMain();
 
+
+
     //-------todo: list_product_main and paging------------------
 
 
@@ -980,4 +953,57 @@ app.controller("shopping-ctrl", function ($scope, $http, $timeout, $rootScope) {
             // Xử lý lỗi nếu có
             console.error('Error fetching top 5 items:', error);
         });
+
+
+    //-------todo: list_top5_best_seller_product------------------
+
+
+    var urlblogs = "/rest/blogs";
+    $scope.blogs = null
+
+
+    $scope.listBlogs = function (){
+        $http.get(urlblogs+'/listBlogs').then(function (resp){
+            $scope.blogs = resp.data;
+            console.log("thu thao nee " + $scope.blogs)
+        });
+    }
+    $scope.listBlogs()
+
+    var urla = "/allAnh";
+    $scope.ah = null
+
+
+    $scope.lanh = function (){
+        $http.get(urlblogs).then(function (resp){
+            $scope.ah = resp.data;
+            console.log("thu thao nee " + $scope.ah)
+        });
+    }
+    $scope.lanh()
+
+    var urlblogs = "/rest/blogs";
+    $scope.blogs = null
+
+
+    $scope.listBlogs = function (){
+        $http.get(urlblogs+'/listBlogs').then(function (resp){
+            $scope.blogs = resp.data;
+            console.log("thu thao nee " + $scope.blogs)
+        });
+    }
+    $scope.listBlogs()
+
+    var urla = "/allAnh";
+    $scope.ah = null
+
+
+    $scope.lanh = function (){
+        $http.get(urlblogs).then(function (resp){
+            $scope.ah = resp.data;
+            console.log("thu thao nee " + $scope.ah)
+        });
+    }
+    $scope.lanh()
+
 });

@@ -11,7 +11,7 @@
     <!-- Breadcrumb -->
     <div class="breadcrumb container">
         <a class="previous-page" href="/">Trang chủ</a>
-        <i class="fas fa-chevron-right arrow"></i>
+        <i class="zmdi zmdi-chevron-right"></i>
         <span class="current-page">Sản phẩm</span>
     </div>
     <!-- Main content -->
@@ -20,7 +20,7 @@
             <!-- Filter -->
             <div class="filter-bar col-lg-3">
                 <div class="filter-header content">
-                    <div class="left-side d-flex align-items-center"><i class="fas fa-sliders-h"></i>
+                    <div class="left-side d-flex align-items-center"><i class="zmdi zmdi-filter-list"></i>
                         <div class="text">Lọc</div>
                     </div>
                     <button class="clear-filter btn btn-primary" ng-click="clearFilters()" ng-disabled="!isAnyFilterSelected()">Bỏ lọc</button>
@@ -103,6 +103,29 @@
                            placeholder="Đến" />
                     <button class="btn btn-primary red-btn" ng-click="applyPriceFilter()">Áp dụng</button>
                 </div>
+
+                <div class="break-line"></div>
+
+                <div class="release-date content">
+                    <div class="title" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <div class="text">Danh mục</div><i class="zmdi zmdi-chevron-up"></i>
+                    </div>
+                    <div class="select-filter collapse show" id="collapseExample">
+                        <div class="date-row" style="display: flex; flex-wrap: wrap;" >
+                            <div class="item" ng-repeat="category in categories" style="flex: 0 0 50%; max-width: 50%;" >
+                                <div class="pretty p-svg p-curve">
+                                    <input class="filter-checkbox" type="checkbox" ng-model="selectedCategories[category.name]" ng-change="filterProducts()"/>
+                                    <div class="state p-success">
+                                        <svg class="svg svg-icon" viewbox="0 0 20 20">
+                                            <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                        </svg>
+                                        <label class="checkbox-label" ng-bind="category.name"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- List product -->
@@ -111,13 +134,13 @@
                     <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i
                             class="fas fa-filter"></i></div>
                 </div>
-                <div class="no-products">
-                    <img th:src="@{assetss/img/noresult.png}" alt="noresult.png">
+                <div class="no-products-cus show" ng-show="noResults">
+                    <img ng-src="/assetss/img/noresult.png" alt="noresult.png">
                     <h4>Không tìm thấy sản phẩm phù hợp</h4>
                 </div>
-                <div class="row">
+                <div class="row" ng-hide="noResults">
                     <div class="col-md-4" ng-repeat="p in favoriteProducts">
-                        <div class="product-item">
+                        <div class="product-item" ng-class="{ 'muted': p.sanPham.trangThai !== 1 }">
                             <div class="inner-content" >
                                 <div class="product-thumb">
                                     <a href="/product/detail/{{ p.sanPham.ma }}" ng-click="searchDetail()">
@@ -155,37 +178,6 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="pagination-content-wrap border-bottom">
-                            <nav class="pagination-nav">
-                                <ul class="pagination justify-content-center">
-                                    <li>
-                                        <button class="prev" ng-click="pager.first()">First</button>
-                                    </li>
-                                    <li>
-                                        <button class="prev" ng-click="pager.prev()">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>
-                                    </li>
-                                    <li ng-repeat="page in pager.pages">
-                                        <button ng-click="pager.setPage(page)">
-                                            {{page}}
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button class="next" ng-click="pager.next()">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button class="next" ng-click="pager.last()">Last</button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

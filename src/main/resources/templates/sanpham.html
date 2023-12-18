@@ -143,13 +143,13 @@
                     <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i class="zmdi zmdi-filter-list"></i></div>
                 </div>
 
-                <div class="no-products">
-                    <img th:src="@{assetss/img/noresult.png}" alt="noresult.png">
+                <div class="no-products-cus show" ng-show="noResults">
+                    <img ng-src="/assetss/img/noresult.png" alt="noresult.png">
                     <h4>Không tìm thấy sản phẩm phù hợp</h4>
                 </div>
-                <div class="row">
+                <div class="row" ng-hide="noResults">
                     <div class="col-md-4" ng-repeat="p in items" >
-                        <div class="product-item">
+                        <div class="product-item" ng-class="{ 'muted': p.sanPham.trangThai !== 1 }" >
                             <div class="inner-content" >
                                 <div class="product-thumb">
                                     <a href="/product/detail/{{ p.sanPham.ma }}" ng-click="searchDetail()">
@@ -210,8 +210,8 @@
                                             <i class="fa fa-chevron-left"></i>
                                         </button>
                                     </li>
-                                    <li ng-repeat="page in pager.pages">
-                                        <button ng-click="setPage(page)">
+                                    <li ng-repeat="page in pager.pages" >
+                                        <button  ng-click="setPage(page)" >
                                             {{page + 1}}
                                         </button>
                                     </li>
