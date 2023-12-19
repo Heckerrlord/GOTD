@@ -19,8 +19,6 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
 
     $scope.items = [];
     $scope.ctsp =[];
-    $scope.selectedProduct = {};
-    $scope.selectedDetail = {};
     $scope.selectedImage = {};
 
     var sweetalert = function (text) {
@@ -31,6 +29,25 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             timer: 2000,
         });
     }
+    var confirmAction = function (icon, title, text, confirmButtonText, cancelButtonText, callback) {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text,
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: confirmButtonText,
+            cancelButtonText: cancelButtonText,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Gọi hàm callback khi người dùng xác nhận
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }
+        });
+    };
 
 
     $scope.initialize = function () {
@@ -59,98 +76,280 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
         });
     };
 
+    // Trong controller của bạn
+    $scope.acceptSp = function (item) {
+        // Hàm callback để thực hiện duyệt đơn khi người dùng xác nhận
+        var acceptCallback = function () {
+            item.trangThai = 1;
+            // Gọi API để cập nhật trạng thái sản phẩm
+            $http.put(`${url}/update-trangthai/${item.id}?newTrangThai=${item.trangThai}`)
+                .then(function (resp) {
+                    // Xử lý khi cập nhật thành công
+                    sweetalert('Cập nhật trạng thái sản phẩm thành công');
+                })
+                .catch(function (error) {
+                    // Xử lý khi có lỗi
+                    sweetalert('Lỗi khi cập nhật trạng thái sản phẩm');
+                });
+        };
+
+        // Hiển thị hộp thoại xác nhận trước khi thực hiện duyệt đơn
+        confirmAction('warning', 'Xác nhận ngừng hoạt động sản phẩm này?', 'Bạn có chắc muốn ngừng hoạt động sản phẩm này?', 'Chấp nhận', 'Hủy', acceptCallback);
+    };
+
+    $scope.deceptSp = function (item) {
+        // Hàm callback để thực hiện duyệt đơn khi người dùng xác nhận
+        var acceptCallback = function () {
+            item.trangThai = 0;
+            // Gọi API để cập nhật trạng thái sản phẩm
+            $http.put(`${url}/update-trangthai/${item.id}?newTrangThai=${item.trangThai}`)
+                .then(function (resp) {
+                    // Xử lý khi cập nhật thành công
+                    sweetalert('Cập nhật trạng thái sản phẩm thành công');
+                })
+                .catch(function (error) {
+                    // Xử lý khi có lỗi
+                    sweetalert('Lỗi khi cập nhật trạng thái sản phẩm');
+                });
+        };
+        // Hiển thị hộp thoại xác nhận trước khi thực hiện duyệt đơn
+        confirmAction('warning', 'Xác nhận kích hoạt sản phẩm này?', 'Bạn có chắc muốn kích hoạt sản phẩm này?', 'Chấp nhận', 'Hủy', acceptCallback);
+    };
+    $scope.acceptCtSp = function (item){
+        // Hàm callback để thực hiện duyệt đơn khi người dùng xác nhận
+        var acceptCallback = function () {
+            item.Trangthai = 1;
+            $http.put(`${url1}/update-trangthai/${item.id}?newTrangThai=${item.Trangthai}`)
+                .then(function (resp){
+                    sweetalert( 'Cập nhật trạng thái sản phẩm thành công');
+                    $('#product-update-modal').modal('hide');
+                    $scope.initialize();
+                })
+                .catch(function(error) {
+                    sweetalert( 'Lỗi khi cập nhật trạng thái sản phẩm');
+                });
+        };
+        // Hiển thị hộp thoại xác nhận trước khi thực hiện duyệt đơn
+        confirmAction('warning', 'Xác nhận ngừng hoạt động sản phẩm này?', 'Bạn có chắc muốn ngừng hoạt động sản phẩm này?', 'Chấp nhận', 'Hủy', acceptCallback);
+    };
+    $scope.deacceptCtSp = function (item){
+        // Hàm callback để thực hiện duyệt đơn khi người dùng xác nhận
+        var acceptCallback = function () {
+            item.Trangthai = 0;
+            $http.put(`${url1}/update-trangthai/${item.id}?newTrangThai=${item.Trangthai}`)
+                .then(function (resp){
+                    sweetalert( 'Cập nhật trạng thái sản phẩm thành công');
+                    $('#product-update-modal').modal('hide');
+                    $scope.initialize();
+                })
+                .catch(function(error) {
+                    sweetalert( 'Lỗi khi cập nhật trạng thái sản phẩm');
+                });
+        };
+        // Hiển thị hộp thoại xác nhận trước khi thực hiện duyệt đơn
+        confirmAction('warning', 'Xác nhận kích hoạt lại sản phẩm này?', 'Bạn có chắc muốn kích hoạt lại sản phẩm này?', 'Chấp nhận', 'Hủy', acceptCallback);
+    };
 
     $scope.initialize();
 
     $scope.editProduct = function(item) {
         $scope.selectedProduct = angular.copy(item);
         $scope.ct = $scope.selectedProduct.ctsp;
-        console.log("ct"+ $scope.ct);
-        console.log($scope.selectedProduct); // In ra để kiểm tra dữ liệu
+        $scope.selecteDetail = angular.copy($scope.ct);
+        console.log("ct" + $scope.ct);
+        $scope.imagePreviews = item.image
+            .map(function (img) {
+                return "/assets/images/" + img.ma;
+            })
+            .filter(function (value, index, self) {
+                return self.indexOf(value) === index;
+            });
         $('#product-update-modal').modal('show');
     };
-    $scope.editDetail = function(itemct) {
+    $scope.editDetail = function (itemct) {
         $scope.selecteDetail = angular.copy(itemct);
-        console.log($scope.selecteDetail);
     };
 
 
+    $scope.selectedProduct = {
+        ma: "",
+        ten: "",
+        moTa: "",
+        thuongHieu: {
+            id: "",
+            code: ""
+        },
+        chatLieu: {
+            id: "",
+            code: ""
+        },
+        loaiKhachHang: {
+            id: "",
+            code: ""
+        },
+        coAo: {
+            id: "",
+            code: ""
+        },
+        image: [
+            {
+                ma: "",
+            }
+        ],
+        ctsp: []
+    }
+    $scope.selectedDetail = {
+        kichCo: {
+            code: ""
+        },
+        mauSac: {
+            code: ""
+        },
+        soLuong: "",
+        giaNhap: "",
+        giaBan: "",
+        ngaySua: "",
+    };
+    $scope.selectIds = function (selectedDetail) {
+        // Kiểm tra xem selectedDetail có tồn tại và có chứa kichCo không
+        if (selectedDetail && selectedDetail.kichCo && selectedDetail.kichCo.code &&
+            selectedDetail.mauSac && selectedDetail.mauSac.code) {
+            // Kiểm tra xem kichCo có thuộc tính code không
+            if (selectedDetail.kichCo.code) {
+                // Tìm và set giá trị id cho kichCo
+                selectedDetail.kichCo.id = findIdByCode($scope.kichco, selectedDetail.kichCo.code);
+            }
+            // Kiểm tra xem mauSac có thuộc tính code không
+            if (selectedDetail.mauSac.code) {
+                // Tìm và set giá trị id cho mauSac
+                selectedDetail.mauSac.id = findIdByCode($scope.color, selectedDetail.mauSac.code);
+            }
+        }
+    };
+    $scope.isValidInput = function (data) {
+        // Kiểm tra số lượng, giá nhập và giá bán không được bằng 0 hoặc bé hơn 0
+        if (data.ctsp && data.ctsp.length > 0) {
+            for (var i = 0; i < data.ctsp.length; i++) {
+                if (data.ctsp[i].soLuong <= 0 || data.ctsp[i].giaNhap <= 0 || data.ctsp[i].giaBan <= 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
     $scope.update = function () {
+        if (!$scope.selectedProduct.ma || !$scope.selectedProduct.ten || !$scope.selectedProduct.thuongHieu.code || !$scope.selecteDetail.kichCo.code || !$scope.selecteDetail.mauSac.code || !$scope.selecteDetail.soLuong || !$scope.selecteDetail.giaNhap || !$scope.selecteDetail.giaBan) {
+            // Hiển thị thông báo lỗi nếu có trường dữ liệu bị thiếu
+            sweetalert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+
         // Chuẩn bị dữ liệu từ form
-        var dataToSend ={
+        var dataToSend = {
             ma: $scope.selectedProduct.ma,
             moTa: $scope.selectedProduct.moTa,
             ten: $scope.selectedProduct.ten,
-            thuongHieu:{
+            thuongHieu: {
                 code: $scope.selectedProduct.thuongHieu.code
             },
-            chatLieu:{
+            chatLieu: {
                 code: $scope.selectedProduct.chatLieu.code
             },
-            loaiKhachHang:{
-                code :$scope.selectedProduct.loaiKhachHang.code
+            loaiKhachHang: {
+                code: $scope.selectedProduct.loaiKhachHang.code
             },
-            coAo:{
-                code :$scope.selectedProduct.coAo.code
+            coAo: {
+                code: $scope.selectedProduct.coAo.code
             },
-        }
-
-        // Kiểm tra xem có chọn ảnh mới hay không
-        if ($scope.images && $scope.images.length > 0) {
-            // Nếu có chọn ảnh mới, thêm trường image vào dataToSend
-            dataToSend.image = $scope.images.map(function (img) {
-                return {
-                    ma: img.ma,
-                    // Thêm các trường khác trong đối tượng Anh nếu cần
-                };
-            });
-        }
-
-        // Kiểm tra xem có chi tiết sản phẩm hay không
-        if ($scope.selecteDetail) {
-            // Nếu có chi tiết sản phẩm, thêm trường ctsp vào dataToSend
-            dataToSend.ctsp =[{
+            image: $scope.selectedProduct.image,
+            ctsp: [{
                 kichCo: {
+                    id: $scope.selecteDetail.kichCo.id,
                     code: $scope.selecteDetail.kichCo.code
                 },
                 mauSac: {
+                    id: $scope.selecteDetail.mauSac.id,
                     code: $scope.selecteDetail.mauSac.code
                 },
                 soLuong: $scope.selecteDetail.soLuong,
                 giaNhap: $scope.selecteDetail.giaNhap,
                 giaBan: $scope.selecteDetail.giaBan,
                 ngaySua: new Date(),
-            }];
+            }]
         }
 
-        console.log(JSON.stringify(dataToSend))
-
-        // Gửi dữ liệu đến Spring Boot
-        $http.put(url, dataToSend, {
-            headers: { 'Content-Type': 'application/json' }
-        })
-            .then(function (resp) {
-                // Xử lý khi cập nhật thành công
-                sweetalert("update sus")
-                $scope.reset();
-                $('#product-update-modal').modal('hide');
+        if ($scope.isValidInput(dataToSend)) {
+            // Gửi dữ liệu đến Spring Boot
+            $http.put(url, dataToSend, {
+                headers: {'Content-Type': 'application/json'}
             })
-            .catch(function (err) {
-                sweetalert("update false")
-                $scope.initialize()
-                console.log(err);
-            });
+                .then(function (resp) {
+                    // Xử lý khi cập nhật thành công
+                    sweetalert("Cập nhật thành công!!")
+                    $scope.reset();
+                    $scope.initialize()
+                    $('#product-update-modal').modal('hide');
+                })
+                .catch(function (err) {
+                    sweetalert("Lỗi khi cập nhật lại dữ liệu")
+                    console.log(err);
+                });
+        } else {
+            sweetalert("Vui lòng kiểm tra lại các trường số lượng, giá nhập và giá bán");
+        }
+    };
+
+    $scope.onFileChan = function (input) {
+        var files = input.files;
+
+        function generateImageCode(imageName) {
+            return imageName.toLowerCase().replace(/\s+/g, '_');
+        }
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageName = file.name;
+            var reader = new FileReader();
+
+            // Sử dụng hàm đóng để ghi lại đúng imageName
+            (function (currentImageName) {
+                reader.onload = function (e) {
+                    $scope.$apply(function () {
+                        var imageCode = generateImageCode(currentImageName);
+
+                        // Kiểm tra xem ảnh đã tồn tại trong mảng chưa
+                        var existingImage = $scope.selectedProduct.image.find(function (item) {
+                            return item.ma === imageCode;
+                        });
+
+                        // Thêm ảnh mới nếu chưa tồn tại
+                        if (!existingImage) {
+                            $scope.selectedProduct.image.push({ma: imageCode});
+                        }
+
+                        // Loại bỏ các đối tượng ảnh rỗng
+                        $scope.selectedProduct.image = $scope.selectedProduct.image.filter(function (item) {
+                            return item.ma !== "";
+                        });
+
+                        // Cập nhật mảng xem trước ảnh
+                        $scope.imagePreviews.push(e.target.result);
+                    });
+                };
+            })(imageName);
+
+            reader.readAsDataURL(file);
+        }
     };
 
 
-
-
-    $scope.reset = function (){
-        $scope.selectedProduct={};
-        $scope.selecteDetail={}
+    $scope.reset = function () {
+        $scope.selectedProduct = {};
+        $scope.selecteDetail = {}
     }
-    $scope.size = function (){
-        $http.get(urlkichco).then(function (resp){
+    $scope.size = function () {
+        $http.get(urlkichco).then(function (resp) {
             $scope.kichco = resp.data;
         })
     }
@@ -254,6 +453,12 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             });
         }
         var hasImages = $scope.productData.image.length > 0;
+        if (!$scope.productData.ma || !$scope.productData.ten || !$scope.productData.thuongHieu.code ||
+            !$scope.productData.kichCo.code || !$scope.productData.mauSac.code || !$scope.productDetail.soLuong
+            || !$scope.productDetail.giaNhap || !$scope.productDetail.giaBan || !$scope.productDetail.kichCo.code || !$scope.productDetail.mauSac.code) {
+            sweetalert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
 
         // Kiểm tra xem productData.ctsp có tồn tại không và có ít nhất một phần tử không
         if ($scope.productData.ctsp && $scope.productData.ctsp.length > 0) {
@@ -292,9 +497,7 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
 
             dataToSend.ctsp = angular.copy($scope.productData.ctsp);
 
-            console.log(JSON.stringify($scope.productData));
-            console.log(JSON.stringify(dataToSend));
-
+            if ($scope.isValidInput(dataToSend)) {
             $http.post(url, dataToSend, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -308,12 +511,15 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
                 .catch(function (error) {
                     console.error(error);
                     sweetalert('Có lỗi xảy ra khi thêm sản phẩm.');
-                });
+                })}
+            else {
+                sweetalert("Vui lòng kiểm tra lại các trường số lượng, giá nhập và giá bán không được bé hơn 0");
+            }
+
         } else {
             sweetalert('Vui lòng thêm ít nhất một chi tiết sản phẩm.');
         }
     };
-
 
 
     $scope.removeProductDetail = function (index) {

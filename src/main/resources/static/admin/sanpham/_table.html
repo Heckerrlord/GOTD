@@ -33,9 +33,14 @@
                                 <td>{{item.coAo.name}}</td>
                                 <td>{{item.chatLieu.name}}</td>
                                 <td>
-                                    <span ng-if="item.trangThai == 1" class="badges bg-lightred">Ngừng hoạt động</span>
-                                    <span ng-if="item.trangThai == 0" class="badges bg-lightgreen">Đang hoạt động</span>
+                                    <span ng-if="item.trangThai == 1" class="badges bg-lightred">
+                                        <a href="javascript:void(0);" ng-click="deceptSp(item)">Ngừng hoạt động</a>
+                                    </span>
+                                    <span ng-if="item.trangThai == 0" class="badges bg-lightgreen">
+                                      <a href="javascript:void(0);" ng-click="acceptSp(item)">Đang hoạt động</a>
+                                    </span>
                                 </td>
+
                                 <td class="text-center align-middle">
                                     <div class="btn-group align-top">
                                         <button style="color: #0a0a0a" class="btn btn-sm btn-outline-secondary badge"
@@ -137,7 +142,7 @@
                                 <div class="row">
                                     <div class="col-3 mr-5 ml-3 mb-5" style="padding-right: 70px;">
                                         <div class="image-upload">
-                                            <input id="photo-upload" type="file" multiple onchange="angular.element(this).scope().onFileChange(this)" />
+                                            <input id="photo-upload" type="file" multiple onchange="angular.element(this).scope().onFileChan(this)" />
                                             <div class="image-uploads">
                                                 <img src="/assetss/img/icons/upload.svg"
                                                         alt="img">
@@ -165,7 +170,7 @@
                                         <div class="form-group">
                                             <label for="kichCo">Kích cỡ</label>
                                             <select id="kichCo" class="form-control" ng-init="size()"
-                                                    ng-model="selecteDetail.kichCo.code">
+                                                    ng-model="selecteDetail.kichCo.code" ng-change="selectIds(selecteDetail)">
                                                 <option>Chọn</option>
                                                 <option ng-repeat="item in kichco" value="{{item.code}}">{{item.name}}
                                                 </option>
@@ -176,7 +181,7 @@
                                         <div class="form-group">
                                             <label for="mauSac">Màu sắc</label>
                                             <select id="mauSac" class="form-control" ng-init="mau()"
-                                                    ng-model="selecteDetail.mauSac.code">
+                                                    ng-model="selecteDetail.mauSac.code" ng-change="selectIds(selecteDetail)">
                                                 <option>Chọn</option>
                                                 <option ng-repeat="item in color" value="{{item.code}}">{{item.name}}
                                                 </option>
@@ -244,8 +249,8 @@
                                                 <td>{{item.giaBan}}</td>
                                                 <td>{{item.giaNhap}}</td>
                                                 <td>
-                                                    <span ng-if="item.trangthai === 1" class="badges bg-lightred">Ngừng hoạt động</span>
-                                                    <span ng-if="item.trangthai === 0" class="badges bg-lightgreen">Đang hoạt động</span>
+                                                    <span ng-if="item.trangthai === 1" class="badges bg-lightred"><a  ng-click="deacceptCtSp(item)">Ngừng hoạt động</a></span>
+                                                    <span ng-if="item.trangthai === 0" class="badges bg-lightgreen"><a  ng-click="acceptCtSp(item)">Đang hoạt động</a> </span>
                                                 </td>
                                                 <td class="text-center align-middle">
                                                     <div class="btn-group align-top">

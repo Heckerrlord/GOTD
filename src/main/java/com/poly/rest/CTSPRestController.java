@@ -15,8 +15,11 @@ import com.poly.service.CTSPService;
 import com.poly.service.serPhu.KichCoService;
 import com.poly.service.serPhu.MauSacService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 
 
 @CrossOrigin("*")
@@ -70,6 +73,17 @@ public class CTSPRestController {
 		return ResponseEntity.ok(favorites);
 	}
 
+	@PutMapping("/update-trangthai/{id}")
+	public ResponseEntity<String> updateTrangThai(@PathVariable Long id, @RequestParam Integer newTrangThai) {
+		try {
+			productService.udpateTT(id, newTrangThai);
+			return new ResponseEntity<>("Cập nhật trạng thái thành công", HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>("Không tìm thấy sản phẩm với ID: " + id, HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Lỗi khi cập nhật trạng thái", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 
 	@GetMapping("detail/{sanPhamMa}")

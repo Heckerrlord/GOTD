@@ -15,5 +15,7 @@ public interface SanPhamService {
 
     void delete(Integer id);
 
+    SanPham udpateTT(Integer id,Integer trangthai);
+
     Integer getSoLuongSp();
 }

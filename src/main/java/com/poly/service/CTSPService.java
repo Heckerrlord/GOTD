@@ -3,6 +3,7 @@ package com.poly.service;
 import java.util.List;
 
 import com.poly.entity.ChiTietSanPham;
+import com.poly.entity.SanPham;
 import com.poly.model.dto.ChiTietSanPhamDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public interface CTSPService {
     ChiTietSanPham create(ChiTietSanPham product);
 
     ChiTietSanPham update(ChiTietSanPham product);
+
+    ChiTietSanPham udpateTT(Long id, Integer trangthai);
 
     void delete(Long id);
 
