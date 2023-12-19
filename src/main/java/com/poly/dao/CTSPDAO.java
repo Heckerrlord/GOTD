@@ -2,7 +2,9 @@ package com.poly.dao;
 
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.MauSac;
+import com.poly.entity.SanPham;
 import com.poly.model.dto.ChiTietSanPhamDTO;
+import com.poly.model.dto.ChiTietSanPhamResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -205,38 +207,36 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
 
 
 
-
-
-//    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan, SUM(COALESCE(c.soLuong, 0))) " +
-//            "FROM DonHangChiTiet c " +
-//            "INNER JOIN ChiTietSanPham ct ON ct.id = c.chiTietSanPham.id " +
-//            "INNER JOIN SanPham sp ON ct.sanPham.ma = sp.ma " +
-//            "INNER JOIN Anh a ON sp.ma = a.sanPham.ma " +
-//            "GROUP BY ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan " +
-//            "HAVING SUM(COALESCE(c.soLuong, 0)) > 0 " +
-//            "ORDER BY SUM(COALESCE(c.soLuong, 0)) DESC")
-//    List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
-
-
-
-
-
-//    @Query("SELECT c FROM ChiTietSanPham c " +
-//            "INNER JOIN c.mauSac ms " +
-//            "INNER JOIN c.sanPham sp " +
-//            "INNER JOIN c.kichCo kc " +
-//            "INNER JOIN sp.thuongHieu th " +
-//            "INNER JOIN sp.loaiKhachHang la " +
-//            "WHERE sp.ten LIKE CONCAT('%', :name_product, '%') " +
-//            "   OR ms.name LIKE CONCAT('%', :color, '%') " +
-//            "   OR th.name LIKE CONCAT('%', :brand, '%') " +
-//            "   OR la.name LIKE CONCAT('%', :category, '%')")
-//    Page<ChiTietSanPham> findByKeyWord(
-//            @Param("tenSanPham") String name_product,
-//            @Param("tenMau") String color,
-//            @Param("tenThuongHieu") String brand,
-//            @Param("tenLoaiAo") String category,
-//            Pageable pageable
-//    );
+    @Query(value = "WITH RankedProducts AS (\n" +
+            "    SELECT \n" +
+            "        sp.Ma as ma,\n" +
+            "        sp.Ten as ten,\n" +
+            "        a.Ma AS anh_ma,\n" +
+            "        ct.GiaBan as gia_ban,\n" +
+            "        ISNULL(SUM(COALESCE(subquery.SoLuong, 0)), 0) AS total_so_luong,\n" +
+            "        ROW_NUMBER() OVER (PARTITION BY sp.Ma ORDER BY ISNULL(SUM(COALESCE(subquery.SoLuong, 0)), 0) DESC) AS row_number\n" +
+            "    FROM \n" +
+            "        SanPham sp\n" +
+            "    INNER JOIN \n" +
+            "        ChiTietSanPham ct ON sp.Ma = ct.MaSanPham\n" +
+            "    INNER JOIN \n" +
+            "        Anh a ON sp.Ma = a.MaSP\n" +
+            "    LEFT JOIN \n" +
+            "        (SELECT \n" +
+            "             sp.Ma AS MaSanPham,\n" +
+            "             SUM(COALESCE(c.SoLuong, 0)) AS SoLuong\n" +
+            "         FROM \n" +
+            "             DonHangChiTiet c\n" +
+            "         INNER JOIN \n" +
+            "             ChiTietSanPham ct ON c.MaSanPham = ct.id\n" +
+            "         INNER JOIN \n" +
+            "             SanPham sp ON ct.MaSanPham = sp.Ma\n" +
+            "         GROUP BY \n" +
+            "             sp.Ma) subquery ON sp.Ma = subquery.MaSanPham\n" +
+            "    GROUP BY \n" +
+            "        sp.Ma, sp.Ten, a.Ma, ct.GiaBan\n" +
+            ")\n" +
+            "SELECT TOP 5 * FROM RankedProducts WHERE row_number = 1;", nativeQuery = true)
+    List<ChiTietSanPhamResponse> findTop5SanPhamBySoLuongBan();
 
 }

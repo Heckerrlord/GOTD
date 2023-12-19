@@ -2,6 +2,7 @@ package com.poly.controller;
 
 import com.poly.entity.*;
 import com.poly.model.dto.ChiTietSanPhamDTO;
+import com.poly.model.dto.ChiTietSanPhamResponse;
 import com.poly.service.CTSPService;
 import com.poly.service.SanPhamService;
 import com.poly.service.serPhu.KichCoService;
@@ -144,8 +145,8 @@ public class ProductResContronller {
     }
 
     @GetMapping("/top5_best_seller")
-    public ResponseEntity<List<ChiTietSanPhamDTO>> getTop5() {
-        List<ChiTietSanPhamDTO> ctsp = ctspService.findTop5SanPhamBySoLuongBan(PageRequest.of(0,5));
+    public ResponseEntity<List<ChiTietSanPhamResponse>> getTop5() {
+        List<ChiTietSanPhamResponse> ctsp = ctspService.findTop5SanPhamBySoLuongBan();
         return ResponseEntity.ok(ctsp);
     }
 

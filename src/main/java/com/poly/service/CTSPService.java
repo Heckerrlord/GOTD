@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.poly.entity.ChiTietSanPham;
 import com.poly.model.dto.ChiTietSanPhamDTO;
+import com.poly.model.dto.ChiTietSanPhamResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -38,6 +39,8 @@ public interface CTSPService {
     Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable);
 
     List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
+
+    List<ChiTietSanPhamResponse> findTop5SanPhamBySoLuongBan();
 
 
 }

@@ -3,6 +3,7 @@ package com.poly.service.impl;
 import com.poly.dao.CTSPDAO;
 import com.poly.entity.ChiTietSanPham;
 import com.poly.model.dto.ChiTietSanPhamDTO;
+import com.poly.model.dto.ChiTietSanPhamResponse;
 import com.poly.service.CTSPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -81,6 +82,11 @@ public class CTSPServiceImpl implements CTSPService {
 //        }
 
         return  pdao.findTop5SanPhamBySoLuongBan(pageable);
+    }
+
+    @Override
+    public List<ChiTietSanPhamResponse> findTop5SanPhamBySoLuongBan() {
+        return pdao.findTop5SanPhamBySoLuongBan();
     }
 
 
