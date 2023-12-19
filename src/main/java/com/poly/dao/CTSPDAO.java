@@ -58,11 +58,77 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
 
     List<ChiTietSanPham> findAllByMauSac(MauSac mauSac);
 
-    @Query("SELECT c FROM ChiTietSanPham c WHERE c.id IN (SELECT MAX(c2.id) FROM ChiTietSanPham c2 GROUP BY c2.sanPham.ma)")
+    @Query(value = "SELECT " +
+            "MIN(c.id) AS id, " +
+            "c.maSanPham AS maSanPham, " +
+            "MIN(c.maMau) AS maMau, " +
+            "MIN(c.maKichCo) AS maKichCo, " +
+            "MIN(sp.maChatLieu) AS maChatLieu, " +
+            "MIN(sp.maCoAo) AS maCoAo, " +
+            "MIN(sp.maLoaiAo) AS maLoaiAo, " +
+            "MIN(sp.maThuongHieu) AS maThuongHieu, " +
+            "SUM(c.soLuong) AS soLuong, " +
+            "MIN(c.giaNhap) AS giaNhap, " +
+            "MIN(c.giaBan) AS giaBan, " +
+            "MIN(c.moTa) AS moTa, " +
+            "MIN(c.ngayThem) AS ngayThem, " +
+            "MIN(c.ngaySua) AS ngaySua, " +
+            "MIN(c.trangThai) AS trangThai " +
+            "FROM ChiTietSanPham c " +
+            "INNER JOIN SanPham sp ON c.MaSanPham = sp.Ma " +
+            "INNER JOIN ThuongHieu th ON sp.MaThuongHieu = th.Ma " +
+            "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma " +
+            "INNER JOIN MauSac ms ON c.MaMau = ms.Ma " +
+            "INNER JOIN LoaiAo la ON sp.MaLoaiAo = la.Ma " +
+            "GROUP BY c.maSanPham " +
+            "ORDER BY MIN(c.ngayThem) DESC ",
+            countQuery = "SELECT " +
+                    "MIN(c.id) AS id, " +
+                    "c.maSanPham AS maSanPham, " +
+                    "MIN(c.maMau) AS maMau, " +
+                    "MIN(c.maKichCo) AS maKichCo, " +
+                    "MIN(sp.maChatLieu) AS maChatLieu, " +
+                    "MIN(sp.maCoAo) AS maCoAo, " +
+                    "MIN(sp.maLoaiAo) AS maLoaiAo, " +
+                    "MIN(sp.maThuongHieu) AS maThuongHieu, " +
+                    "SUM(c.soLuong) AS soLuong, " +
+                    "MIN(c.giaNhap) AS giaNhap, " +
+                    "MIN(c.giaBan) AS giaBan, " +
+                    "MIN(c.moTa) AS moTa, " +
+                    "MIN(c.ngayThem) AS ngayThem, " +
+                    "MIN(c.ngaySua) AS ngaySua, " +
+                    "MIN(c.trangThai) AS trangThai " +
+                    "FROM ChiTietSanPham c " +
+                    "INNER JOIN SanPham sp ON c.MaSanPham = sp.Ma " +
+                    "INNER JOIN ThuongHieu th ON sp.MaThuongHieu = th.Ma " +
+                    "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma " +
+                    "INNER JOIN MauSac ms ON c.MaMau = ms.Ma " +
+                    "INNER JOIN LoaiAo la ON sp.MaLoaiAo = la.Ma " +
+                    "GROUP BY c.maSanPham " +
+                    "ORDER BY MIN(c.ngayThem) DESC ", nativeQuery = true)
     Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable);
 
 
-    @Query(value = "SELECT c.id AS ctsp_id, c.* " +
+
+
+
+
+    @Query(value = "SELECT " +
+            "MIN(c.id) AS id, " +
+            "c.maSanPham AS maSanPham, " +
+            "MIN(c.maMau) AS maMau, " +
+            "MIN(c.maKichCo) AS maKichCo, " +
+            "MIN(sp.maChatLieu) AS maChatLieu, " +
+            "MIN(sp.maCoAo) AS maCoAo, " +
+            "MIN(sp.maLoaiAo) AS maLoaiAo, " +
+            "MIN(sp.maThuongHieu) AS maThuongHieu, " +
+            "SUM(c.soLuong) AS soLuong, " +
+            "MIN(c.giaNhap) AS giaNhap, " +
+            "MIN(c.giaBan) AS giaBan, " +
+            "MIN(c.moTa) AS moTa, " +
+            "MIN(c.ngayThem) AS ngayThem, " +
+            "MIN(c.ngaySua) AS ngaySua, " +
+            "MIN(c.trangThai) AS trangThai " +
             "FROM ChiTietSanPham c " +
             "INNER JOIN SanPham sp ON c.MaSanPham = sp.Ma " +
             "INNER JOIN ThuongHieu th ON sp.MaThuongHieu = th.Ma " +
@@ -74,13 +140,29 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '') " +
             "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
             "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?5,',')) OR COALESCE(?5, '') = '') " +
-            "AND c.GiaBan BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
             "AND (CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?8, '') != N'Hàng mới') " +
+            "GROUP BY c.maSanPham " +
+            "HAVING MIN(c.giaBan) BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
             "ORDER BY " +
-            "CASE WHEN ?8 = N'Giá thấp đến cao' THEN c.GiaBan END ASC, " +
-            "CASE WHEN ?8 = N'Giá cao đến thấp' THEN c.GiaBan END DESC, " +
-            "CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END DESC",
-            countQuery = "SELECT c.id AS ctsp_id, c.* " +
+            "CASE WHEN ?8 = N'Giá thấp đến cao' THEN MIN(c.giaBan) END ASC, " +
+            "CASE WHEN ?8 = N'Giá cao đến thấp' THEN MIN(c.giaBan) END DESC, " +
+            "CASE WHEN ?8 = N'Hàng mới' THEN MIN(c.ngayThem) END DESC",
+            countQuery = "SELECT " +
+                    "MIN(c.id) AS id, " +
+                    "c.maSanPham AS maSanPham, " +
+                    "MIN(c.maMau) AS maMau, " +
+                    "MIN(c.maKichCo) AS maKichCo, " +
+                    "MIN(sp.maChatLieu) AS maChatLieu, " +
+                    "MIN(sp.maCoAo) AS maCoAo, " +
+                    "MIN(sp.maLoaiAo) AS maLoaiAo, " +
+                    "MIN(sp.maThuongHieu) AS maThuongHieu, " +
+                    "SUM(c.soLuong) AS soLuong, " +
+                    "MIN(c.giaNhap) AS giaNhap, " +
+                    "MIN(c.giaBan) AS giaBan, " +
+                    "MIN(c.moTa) AS moTa, " +
+                    "MIN(c.ngayThem) AS ngayThem, " +
+                    "MIN(c.ngaySua) AS ngaySua, " +
+                    "MIN(c.trangThai) AS trangThai " +
                     "FROM ChiTietSanPham c " +
                     "INNER JOIN SanPham sp ON c.MaSanPham = sp.Ma " +
                     "INNER JOIN ThuongHieu th ON sp.MaThuongHieu = th.Ma " +
@@ -92,12 +174,13 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
                     "AND (kc.Ten IN (SELECT value FROM STRING_SPLIT(?3,',')) OR COALESCE(?3, '') = '') " +
                     "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
                     "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?5,',')) OR COALESCE(?5, '') = '') " +
-                    "AND c.GiaBan BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
                     "AND (CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?8, '') != N'Hàng mới') " +
+                    "GROUP BY c.maSanPham " +
+                    "HAVING MIN(c.giaBan) BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
                     "ORDER BY " +
-                    "CASE WHEN ?8 = N'Giá thấp đến cao' THEN c.GiaBan END ASC, " +
-                    "CASE WHEN ?8 = N'Giá cao đến thấp' THEN c.GiaBan END DESC, " +
-                    "CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END DESC",
+                    "CASE WHEN ?8 = N'Giá thấp đến cao' THEN MIN(c.giaBan) END ASC, " +
+                    "CASE WHEN ?8 = N'Giá cao đến thấp' THEN MIN(c.giaBan) END DESC, " +
+                    "CASE WHEN ?8 = N'Hàng mới' THEN MIN(c.ngayThem) END DESC",
             nativeQuery = true)
     Page<ChiTietSanPham> findByFilters(
             String keywords,
@@ -111,14 +194,31 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             Pageable pageable);
 
 
-    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(ct.sanPham.ma, ct.sanPham.ten, a.ma,ct.GiaBan, SUM(COALESCE(c.soLuong, 0))) " +
-            "FROM DonHangChiTiet c " +
-            "INNER JOIN ChiTietSanPham ct ON ct.id = c.chiTietSanPham.id " +
-            "INNER JOIN SanPham sp ON ct.sanPham.ma = sp.ma " +
+    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(sp.ma, sp.ten, a.ma, ct.GiaBan, SUM(COALESCE(c.soLuong, 0))) " +
+            "FROM SanPham sp " +
+            "INNER JOIN ChiTietSanPham ct ON sp.ma = ct.sanPham.ma " +
             "INNER JOIN Anh a ON sp.ma = a.sanPham.ma " +
-            "GROUP BY ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan " +
+            "LEFT JOIN DonHangChiTiet c ON ct.id = c.chiTietSanPham.id " +
+            "GROUP BY sp.ma, sp.ten, a.ma, ct.GiaBan " +
             "ORDER BY SUM(COALESCE(c.soLuong, 0)) DESC")
     List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
+
+
+
+
+
+//    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan, SUM(COALESCE(c.soLuong, 0))) " +
+//            "FROM DonHangChiTiet c " +
+//            "INNER JOIN ChiTietSanPham ct ON ct.id = c.chiTietSanPham.id " +
+//            "INNER JOIN SanPham sp ON ct.sanPham.ma = sp.ma " +
+//            "INNER JOIN Anh a ON sp.ma = a.sanPham.ma " +
+//            "GROUP BY ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan " +
+//            "HAVING SUM(COALESCE(c.soLuong, 0)) > 0 " +
+//            "ORDER BY SUM(COALESCE(c.soLuong, 0)) DESC")
+//    List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
+
+
+
 
 
 //    @Query("SELECT c FROM ChiTietSanPham c " +
@@ -138,6 +238,5 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
 //            @Param("tenLoaiAo") String category,
 //            Pageable pageable
 //    );
-
 
 }

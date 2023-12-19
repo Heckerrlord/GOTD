@@ -3,6 +3,7 @@ package com.poly.controller;
 import com.poly.entity.*;
 import com.poly.model.dto.ChiTietSanPhamDTO;
 import com.poly.service.CTSPService;
+import com.poly.service.SanPhamService;
 import com.poly.service.serPhu.KichCoService;
 import com.poly.service.serPhu.LoaiKhachHangService;
 import com.poly.service.serPhu.MauSacService;
@@ -27,6 +28,9 @@ public class ProductResContronller {
 
     @Autowired
     CTSPService ctspService;
+
+    @Autowired
+    SanPhamService sanPhamService;
 
     @Autowired
     ThuongHieuService thuongHieuService;
