@@ -85,8 +85,8 @@ public class AuthController {
         Account account1 = accountDAO.findByUsername(rq.getRemoteUser());
         String[] roles = account1.getAuthorities().stream()
                 .map(er -> er.getRole().getId())
-                .toArray(String[]::new); // Chuyển kết quả thành một mảng String[]
-        boolean hasDireRole = Arrays.asList(roles).contains("DIRE"); // Kiểm tra xem mảng roles có chứa role "DIRE" không
+                .toArray(String[]::new);
+        boolean hasDireRole = Arrays.asList(roles).contains("DIRE");
         if (hasDireRole) {
             return "redirect:/admin";
         } else {
