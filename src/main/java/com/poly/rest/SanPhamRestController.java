@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,17 @@ public class SanPhamRestController {
         sanPhamService.delete(id);
     }
 
+    @PutMapping("/update-trangthai/{id}")
+    public ResponseEntity<String> updateTrangThai(@PathVariable Integer id, @RequestParam Integer newTrangThai) {
+        try {
+            sanPhamService.udpateTT(id, newTrangThai);
+            return new ResponseEntity<>("Cập nhật trạng thái thành công", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("Không tìm thấy sản phẩm với ID: " + id, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Lỗi khi cập nhật trạng thái", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/soluong")
     public Integer getSoluong(){
         return sanPhamService.getSoLuongSp();

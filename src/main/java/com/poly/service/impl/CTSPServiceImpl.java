@@ -2,6 +2,7 @@ package com.poly.service.impl;
 
 import com.poly.dao.CTSPDAO;
 import com.poly.entity.ChiTietSanPham;
+import com.poly.entity.SanPham;
 import com.poly.model.dto.ChiTietSanPhamDTO;
 import com.poly.model.dto.ChiTietSanPhamResponse;
 import com.poly.service.CTSPService;
@@ -10,12 +11,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CTSPServiceImpl implements CTSPService {
+
+
     @Autowired
     CTSPDAO pdao;
 
@@ -38,6 +43,23 @@ public class CTSPServiceImpl implements CTSPService {
 
 		return pdao.save(product);
 	}
+
+    @Override
+    public ChiTietSanPham udpateTT(Long id, Integer trangthai) {
+        Optional<ChiTietSanPham> chiTietSanPham = pdao.findById(id);
+        if (chiTietSanPham.isPresent()) {
+            ChiTietSanPham existingSanPham = chiTietSanPham.get();
+
+            // Cập nhật trạng thái
+            existingSanPham.setTrangthai(trangthai);
+
+            // Lưu thay đổi vào cơ sở dữ liệu và trả về đối tượng đã được cập nhật
+            return pdao.save(existingSanPham);
+        } else {
+            // Xử lý trường hợp không tìm thấy đối tượng để cập nhật
+            throw new EntityNotFoundException("Không tìm thấy sản phẩm với ID: " + id);
+        }
+    }
 
     @Override
     public void delete(Long id) {
