@@ -51,7 +51,7 @@
             <td>{{a.sanPham.ten}}</td>
             <td>{{a.comment}}</td>
             <td>{{a.sao}}</td>
-            <td>{{a.ngayCmt | date:'mm:HH dd/MM/yyyy' }}</td>
+            <td>{{a.ngayCmt | date:'HH:mm dd/MM/yyyy' }}</td>
             <td>
                 <!-- Hiển thị trạng thái -->
                 <span ng-if="a.trangThai === 0" class="badges bg-lightred"><a ng-click="accept(a)">Chờ duyệt</a></span>

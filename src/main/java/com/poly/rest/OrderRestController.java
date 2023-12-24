@@ -1,5 +1,6 @@
 package com.poly.rest;
 
+import com.poly.dao.CTSPDAO;
 import com.poly.dao.DonHangCTDAO;
 import com.poly.dao.DonHangDAO;
 import com.poly.dao.GioHangCTDAO;
@@ -15,8 +16,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -31,7 +35,7 @@ public class OrderRestController {
 	@Autowired
 	GioHangService cartService;
 	@Autowired
-	CTSPService spservice;
+	CTSPDAO spservice;
 	@Autowired
 	AccountService accservice;
 	@Autowired
@@ -49,8 +53,8 @@ public class OrderRestController {
 	@Transactional
 	public ResponseEntity<Object> createGioHang(@RequestBody GioHang gioHang) {
 		DonHang donHang = new DonHang(gioHang);
-		donHang.setTrangThai(0);
 
+        donHang.setNgayDatHang(LocalDateTime.now());
 		MaGiamGia mgg = mdao.findMaGiamGiaByMa(donHang.getMaGiamGia());
 		if (mgg != null) {
 			mgg.setSl(mgg.getSl() - 1);
@@ -72,7 +76,27 @@ public class OrderRestController {
 			donHangChiTiet.setTrangThai(0);
 			donHangChiTietList.add(donHangChiTiet);
 			orderDetailService.saveAll(donHangChiTietList);
+
 		}
+
+		List<Long> chiTietSanPhamIds = donHangChiTietList.stream()
+				.map(donHangChiTiet -> donHangChiTiet.getChiTietSanPham().getId())
+				.collect(Collectors.toList());
+
+		List<ChiTietSanPham> chiTietSanPhamList = spservice.findAllById(chiTietSanPhamIds);
+
+		for (ChiTietSanPham chiTietSanPham : chiTietSanPhamList) {
+			for (DonHangChiTiet donHangChiTiet : donHangChiTietList) {
+				if (donHangChiTiet.getChiTietSanPham().getId().equals(chiTietSanPham.getId())) {
+					int soLuongHienTai = chiTietSanPham.getSoLuong();
+					int soLuongDaMua = donHangChiTiet.getSoLuong();
+					chiTietSanPham.setSoLuong(soLuongHienTai - soLuongDaMua);
+					spservice.save(chiTietSanPham);
+					break;
+				}
+			}
+		}
+
 
 		cartdetailService.deleteAllItemsInCart(gioHang1);
 		Long gioHangId = donHang.getId();
@@ -102,9 +126,48 @@ public class OrderRestController {
 			DonHangChiTiet obj = donHang.getChiTietDonHangList().get(i);
 			obj.setDonHang(donHang);
 			orderDetailService.saveAndFlush(obj);
+			ChiTietSanPham chiTietSanPham = obj.getChiTietSanPham();
+			int soluongform = obj.getSoLuong();
+			if (chiTietSanPham != null) {
+				int soLuongHienTai = chiTietSanPham.getSoLuong();
+				int soLuongMoi = soLuongHienTai - soluongform;
+				if (soLuongMoi >= 0) {
+					chiTietSanPham.setSoLuong(soLuongMoi);
+					spservice.save(chiTietSanPham);
+				} else {
+
+				}
+			}
 		}
+
 		return orderDao.save(donHang);
 	}
+
+	@PutMapping("/huydon/{id}")
+	public DonHang huydon(@PathVariable("id") Long id,
+						  @RequestBody DonHang donHang) {
+		for (int i = 0; i < donHang.getChiTietDonHangList().size(); i++) {
+			DonHangChiTiet obj = donHang.getChiTietDonHangList().get(i);
+			obj.setDonHang(donHang);
+			orderDetailService.saveAndFlush(obj);
+			ChiTietSanPham chiTietSanPham = obj.getChiTietSanPham();
+			int soluongform = obj.getSoLuong();
+			if (chiTietSanPham != null) {
+				int soLuongHienTai = chiTietSanPham.getSoLuong();
+				int soLuongMoi = soLuongHienTai + soluongform;
+				if (soLuongMoi >= 0) {
+					chiTietSanPham.setSoLuong(soLuongMoi);
+					spservice.save(chiTietSanPham);
+				} else {
+
+				}
+			}
+		}
+
+		return orderDao.save(donHang);
+	}
+
+
 
 	@GetMapping("/discount/{ma}")
 	public MaGiamGia getmgg(@PathVariable("ma") String ma) {

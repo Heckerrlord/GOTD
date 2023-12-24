@@ -85,7 +85,6 @@ public class ProductController {
 
  		List<SanPham> lsanpham =item.getSanPham().getThuongHieu().getLthuonghieu();
 		lsanpham.removeIf(sanPham -> sanPham.getMa().equals(sanPhamMa));
-
 		List<DanhSachYeuThich> list1 = dsytdao.findAll();
 		model.addAttribute("item", item);
 		model.addAttribute("favorite",list1);

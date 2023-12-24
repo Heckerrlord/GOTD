@@ -69,11 +69,12 @@
                             </div>
 
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-6"  ng-init="searchDetail()">
                                 <div class="product-single-info">
                                     <h4 class="title">[[*{SanPham.ten}]]</h4>
                                     <div class="prices">[[*{SanPham.ThuongHieu.name}]] <p class="text-success">Số lượng:
                                         {{p.soLuong}}</p>
+                                        <p> {{p.kichCo.name}}, {{p.mauSac.name}}</p>
                                         <span class="price"> {{ p.giaBan | number:0 }} <strong>vnđ</strong></span>
                                     </div>
 
@@ -104,27 +105,23 @@
 
                                     <div class="form-group">
                                         <select class="form-control" name="color" id="color" ng-model="selectedMauSac"
-                                                ng-change="searchDetail()">
+                                                ng-options="color.code as color.name for color in m" ng-selected="color.code === p.mauSac.code" ng-change="searchDetail()">
                                             <option value="" selected>Chọn màu</option>
-                                            <option th:each="color : ${m}" th:value="${color.code}"
-                                                    th:text="${color.name}"
-                                                    ng-selected="color.code === p.mauSac.code"></option>
                                         </select>
-
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-light" th:each="size : ${kc}">
-                                                    <input type="radio" name="size" th:value="${size.code}"
-                                                           ng-model="selectedKichCo" ng-change="searchDetail()"
-                                                           th:id="${'size' + size.code}"/>
-                                                    <span th:text="${size.name}"></span>
+                                                <label class="btn btn-light" ng-repeat="size in kc" ng-class="{'active': size.code === p.kichCo.code}">
+                                                    <input type="radio" name="sizee" ng-value="size.code" ng-model="$parent.selectedKichCo" ng-change="searchDetail()" ng-id="'size' + size.code" />
+                                                    <span ng-bind="size.name"></span>
                                                 </label>
+
                                             </div>
                                         </div>
                                     </div>
+
 
 
                                     <div class="product-action-simple">
@@ -139,9 +136,10 @@
                                             </a>
                                         </div>
                                         <div class="payment-button">
-                                            <a th:attr="ng-click=@{|addToCart(p.id)|}" th:href="@{/cart/view}"
-                                               class="btn-payment">Thêm vào giỏ</a>
+                                            <a ng-if="p.soLuong > 0" ng-click="addToCart(p)"  class="btn-payment">Thêm vào giỏ</a>
+                                            <span ng-if="p.soLuong === 0" class="btn-payment disabled">Hết hàng</span>
                                         </div>
+
                                         <div class="social-sharing">
                                             <span>Share:</span>
                                             <div class="social-icons">

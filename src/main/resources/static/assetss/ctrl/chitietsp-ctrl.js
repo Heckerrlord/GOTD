@@ -84,12 +84,9 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             // Gọi API để cập nhật trạng thái sản phẩm
             $http.put(`${url}/update-trangthai/${item.id}?newTrangThai=${item.trangThai}`)
                 .then(function (resp) {
-                    // Xử lý khi cập nhật thành công
-                    sweetalert('Cập nhật trạng thái sản phẩm thành công');
                 })
                 .catch(function (error) {
-                    // Xử lý khi có lỗi
-                    sweetalert('Lỗi khi cập nhật trạng thái sản phẩm');
+
                 });
         };
 
@@ -104,12 +101,8 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             // Gọi API để cập nhật trạng thái sản phẩm
             $http.put(`${url}/update-trangthai/${item.id}?newTrangThai=${item.trangThai}`)
                 .then(function (resp) {
-                    // Xử lý khi cập nhật thành công
-                    sweetalert('Cập nhật trạng thái sản phẩm thành công');
                 })
                 .catch(function (error) {
-                    // Xử lý khi có lỗi
-                    sweetalert('Lỗi khi cập nhật trạng thái sản phẩm');
                 });
         };
         // Hiển thị hộp thoại xác nhận trước khi thực hiện duyệt đơn
@@ -121,12 +114,11 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             item.Trangthai = 1;
             $http.put(`${url1}/update-trangthai/${item.id}?newTrangThai=${item.Trangthai}`)
                 .then(function (resp){
-                    sweetalert( 'Cập nhật trạng thái sản phẩm thành công');
-                    $('#product-update-modal').modal('hide');
-                    $scope.initialize();
+
                 })
                 .catch(function(error) {
-                    sweetalert( 'Lỗi khi cập nhật trạng thái sản phẩm');
+                    $('#product-update-modal').modal('hide');
+                    $scope.initialize();
                 });
         };
         // Hiển thị hộp thoại xác nhận trước khi thực hiện duyệt đơn
@@ -138,12 +130,11 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             item.Trangthai = 0;
             $http.put(`${url1}/update-trangthai/${item.id}?newTrangThai=${item.Trangthai}`)
                 .then(function (resp){
-                    sweetalert( 'Cập nhật trạng thái sản phẩm thành công');
-                    $('#product-update-modal').modal('hide');
-                    $scope.initialize();
+
                 })
                 .catch(function(error) {
-                    sweetalert( 'Lỗi khi cập nhật trạng thái sản phẩm');
+                    $('#product-update-modal').modal('hide');
+                    $scope.initialize();
                 });
         };
         // Hiển thị hộp thoại xác nhận trước khi thực hiện duyệt đơn
@@ -210,22 +201,7 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
         giaBan: "",
         ngaySua: "",
     };
-    $scope.selectIds = function (selectedDetail) {
-        // Kiểm tra xem selectedDetail có tồn tại và có chứa kichCo không
-        if (selectedDetail && selectedDetail.kichCo && selectedDetail.kichCo.code &&
-            selectedDetail.mauSac && selectedDetail.mauSac.code) {
-            // Kiểm tra xem kichCo có thuộc tính code không
-            if (selectedDetail.kichCo.code) {
-                // Tìm và set giá trị id cho kichCo
-                selectedDetail.kichCo.id = findIdByCode($scope.kichco, selectedDetail.kichCo.code);
-            }
-            // Kiểm tra xem mauSac có thuộc tính code không
-            if (selectedDetail.mauSac.code) {
-                // Tìm và set giá trị id cho mauSac
-                selectedDetail.mauSac.id = findIdByCode($scope.color, selectedDetail.mauSac.code);
-            }
-        }
-    };
+
     $scope.isValidInput = function (data) {
         // Kiểm tra số lượng, giá nhập và giá bán không được bằng 0 hoặc bé hơn 0
         if (data.ctsp && data.ctsp.length > 0) {
@@ -244,6 +220,22 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             sweetalert("Vui lòng nhập đầy đủ thông tin");
             return;
         }
+        $scope.selectIds = function (selectedDetail) {
+            // Kiểm tra xem selectedDetail có tồn tại và có chứa kichCo không
+            if (selectedDetail && selectedDetail.kichCo && selectedDetail.kichCo.code &&
+                selectedDetail.mauSac && selectedDetail.mauSac.code) {
+                // Kiểm tra xem kichCo có thuộc tính code không
+                if (selectedDetail.kichCo.code) {
+                    // Tìm và set giá trị id cho kichCo
+                    selectedDetail.kichCo.id = findIdByCode($scope.kichco, selectedDetail.kichCo.code);
+                }
+                // Kiểm tra xem mauSac có thuộc tính code không
+                if (selectedDetail.mauSac.code) {
+                    // Tìm và set giá trị id cho mauSac
+                    selectedDetail.mauSac.id = findIdByCode($scope.color, selectedDetail.mauSac.code);
+                }
+            }
+        };
 
         // Chuẩn bị dữ liệu từ form
         var dataToSend = {
@@ -453,9 +445,7 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             });
         }
         var hasImages = $scope.productData.image.length > 0;
-        if (!$scope.productData.ma || !$scope.productData.ten || !$scope.productData.thuongHieu.code ||
-            !$scope.productData.kichCo.code || !$scope.productData.mauSac.code || !$scope.productDetail.soLuong
-            || !$scope.productDetail.giaNhap || !$scope.productDetail.giaBan || !$scope.productDetail.kichCo.code || !$scope.productDetail.mauSac.code) {
+        if (!$scope.productData.ma || !$scope.productData.ten || !$scope.productData.thuongHieu.code) {
             sweetalert("Vui lòng nhập đầy đủ thông tin");
             return;
         }
@@ -498,20 +488,20 @@ app.controller("chitietsp-ctrl", function ($scope, $http,$timeout) {
             dataToSend.ctsp = angular.copy($scope.productData.ctsp);
 
             if ($scope.isValidInput(dataToSend)) {
-            $http.post(url, dataToSend, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(function (response) {
-                    sweetalert('Thêm sản phẩm thành công.');
-                    console.log(response.data);
-                    location.reload();
+                $http.post(url, dataToSend, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 })
-                .catch(function (error) {
-                    console.error(error);
-                    sweetalert('Có lỗi xảy ra khi thêm sản phẩm.');
-                })}
+                    .then(function (response) {
+                        sweetalert('Thêm sản phẩm thành công.');
+                        console.log(response.data);
+                        location.reload();
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                        sweetalert('Có lỗi xảy ra khi thêm sản phẩm.');
+                    })}
             else {
                 sweetalert("Vui lòng kiểm tra lại các trường số lượng, giá nhập và giá bán không được bé hơn 0");
             }

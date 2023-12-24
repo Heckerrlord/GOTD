@@ -45,6 +45,7 @@ public class HomeController {
     public String home(Model model, @RequestParam("cid") Optional<String> cid) {
         List<DanhSachYeuThich> list1 = dsytdao.findAll();
         List<ChiTietSanPham> list = pdao.findDistinctByMasp();
+        System.out.println("abc"+list.size());
         model.addAttribute("favorite", list1);
         model.addAttribute("items", list);
 

@@ -88,28 +88,10 @@ public class CTSPServiceImpl implements CTSPService {
     }
 
     @Override
-    public List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable) {
-//        List<Object[]> results = pdao.findTop5SanPhamBySoLuongBan(pageable);
-//        List<ChiTietSanPhamDTO> dtos = new ArrayList<>();
-//
-//        for (Object[] result : results) {
-//            ChiTietSanPhamDTO dto = new ChiTietSanPhamDTO();
-//            dto.setMa((String) result[0]);
-//            dto.setTen((String) result[1]);
-//            dto.setAnh((String) result[2]);
-//            dto.setGia((BigDecimal) result[3]);
-//            dto.setTongSoLuong((Long) result[4]);
-//
-//            dtos.add(dto);
-//        }
-
-        return  pdao.findTop5SanPhamBySoLuongBan(pageable);
-    }
-
-    @Override
     public List<ChiTietSanPhamResponse> findTop5SanPhamBySoLuongBan() {
         return pdao.findTop5SanPhamBySoLuongBan();
     }
+
 
 
 }

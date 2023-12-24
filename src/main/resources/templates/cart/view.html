@@ -45,7 +45,7 @@
 										<img class="w-50" ng-src="assets/images/{{item.chiTietSanPham.sanPham.image[0].ma}}">
 									</td>
 									<td class="indecor-product-name">
-										<h4 class="title">{{item.chiTietSanPham.sanPham.ten}}</h4>
+										<h4 class="title"><a ng-href="/product/detail/{{ item.chiTietSanPham.sanPham.ma}}">{{item.chiTietSanPham.sanPham.ten}}</a> </h4>
 									</td>
 									<td class="indecor-product-price">
 										<span class="price">{{item.donGia | number:0}}</span>
@@ -57,7 +57,7 @@
 										<span class="mauSac">{{item.chiTietSanPham.mauSac.name}}</span>
 									</td>
 									<td class="indecor-product-quantity">
-										<input type="number" pattern="[0-9]*" id="spinner" name="value" ng-model="item.soLuong" min="1" max="200" step="1" ng-change="updateCartItem(item)">
+											<input type="number" pattern="[0-9]*" id="spinner" name="value" ng-model="item.soLuong" min="1" max="99999" step="1" ng-change="updateCartItem(item)">
 									</td>
 									<td class="indecor-product-subtotal">
 										<span class="price">{{item.soLuong * item.donGia | number:0}}</span>

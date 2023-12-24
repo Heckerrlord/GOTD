@@ -1,31 +1,58 @@
 <div class="row mx-0 bg-white" ng-if="items">
     <div class="col-12 py-3">
-        <table id="datatable-buttons-3" class="table table-collapse table-bordered dt-responsive">
+        <table id="datatable-buttons-3" style="width:100%" class="table table-collapse table-bordered dt-responsive">
             <thead>
             <tr>
                 <th>Id</th>
                 <th>Khách hàng</th>
                 <th>Ngày đặt hàng</th>
                 <th>Mã giảm giá</th>
-                <th>Phí giao hàng</th>
+                <th>Thanh toán</th>
+                <th>Chi tiết</th>
                 <th>Tổng tiền</th>
+
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="item in items2">
                 <td>{{item.id}}</td>
                 <td>{{item.account.username}}</td>
-                <td>{{ item.ngayDatHang | date:'mm:HH dd-MM-yyyy' }}</td>
+                <td>{{ item.ngayDatHang | date:'HH:mm dd-MM-yyyy' }}</td>
                 <td>
                     {{item.maGiamGia ? item.maGiamGia : 'Không có'}}
                 </td>
+
                 <td>
-                    {{item.phiGiaoHang}}
+                    <span ng-if="item.thanhToan === 0">Chưa thanh toán</span>
+                    <span ng-if="item.thanhToan === 1">Đã thanh toán</span>
                 </td>
+
                 <td>{{item.tongTien}}</td>
+                <td>
+                    <a href="/order/detail/{{item.id}}" class="btn btn-sm btn-default border-0"
+                       title="View your Order Details" >
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 
+<div id="orderDetailModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chi tiết đơn hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include="'/admin/order/orderDetailModal2.html'"></div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

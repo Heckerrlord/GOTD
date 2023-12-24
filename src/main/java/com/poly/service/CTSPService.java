@@ -41,9 +41,9 @@ public interface CTSPService {
 
     Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable);
 
-    List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
 
     List<ChiTietSanPhamResponse> findTop5SanPhamBySoLuongBan();
+
 
 
 }

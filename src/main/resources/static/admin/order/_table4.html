@@ -1,38 +1,38 @@
 <div class="row mx-0 bg-white" ng-if="items">
     <div class="col-12 py-3">
-        <table id="datatable-buttons-5" class="table table-collapse table-bordered dt-responsive">
+        <table id="datatable-buttons-5" style="width:100%" class="table table-collapse table-bordered dt-responsive">
             <thead>
             <tr>
                 <th>Id</th>
                 <th>Khách hàng</th>
-                <th>Địa chỉ</th>
                 <th>Ngày đặt hàng</th>
                 <th>Mã giảm giá</th>
-                <th>Phí giao hàng</th>
+                <th>Thanh toán</th>
+                <th>Chi tiết</th>
                 <th>Tổng tiền</th>
-                <th>Đổi hàng</th>
+
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="item in items4">
                 <td>{{item.id}}</td>
                 <td>{{item.account.username}}</td>
-                <td>{{item.tinh}},{{item.huyen}},{{item.xa}},{{item.dcChiTiet}}</td>
-                <td>{{ item.ngayDatHang | date:'mm:HH dd-MM-yyyy' }}</td>
+                <td>{{ item.ngayDatHang | date:'HH:mm dd-MM-yyyy' }}</td>
                 <td>
                     {{item.maGiamGia ? item.maGiamGia : 'Không có'}}
                 </td>
 
                 <td>
-                    {{item.phiGiaoHang}}
+                    <span ng-if="item.thanhToan === 0">Chưa thanh toán</span>
+                    <span ng-if="item.thanhToan === 1">Đã thanh toán</span>
                 </td>
+
                 <td>{{item.tongTien}}</td>
                 <td>
-                    <div class="btn-group btn-group-xs">
-                        <button class="btn btn-icon">
-                            <i class="fa fa-exchange" aria-hidden="true"></i>
-                        </button>
-                    </div>
+                    <a href="/order/detail/{{item.id}}" class="btn btn-sm btn-default border-0"
+                       title="View your Order Details" >
+                        <i class="fa fa-eye"></i>
+                    </a>
                 </td>
 
             </tr>

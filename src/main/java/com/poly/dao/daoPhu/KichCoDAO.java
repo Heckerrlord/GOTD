@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface KichCoDAO extends JpaRepository<KichCo, Integer> {
-    @Query("SELECT DISTINCT m FROM KichCo m JOIN m.LkichCo c WHERE c.sanPham.ma = :maSanPham")
-    List<KichCo> findKichCoByMaSanPham(@Param("maSanPham") String maSanPham);
+    @Query("SELECT DISTINCT m FROM KichCo m JOIN m.LkichCo c WHERE c.sanPham.ma = :maSanPham and c.mauSac.code = :mausacCode")
+    List<KichCo> findKichCoByMaSanPhamAndMauSac(@Param("maSanPham") String maSanPham,@Param("mausacCode") String mausacCode);
     @Query("SELECT DISTINCT m FROM KichCo m JOIN m.LkichCo c WHERE c.sanPham.ma = :maSanPham and c.mauSac.code =:mauSac")
     List<KichCo> findKichCoByMaSanPhamaAndMauSac(@Param("maSanPham") String maSanPham, String mauSac);
 

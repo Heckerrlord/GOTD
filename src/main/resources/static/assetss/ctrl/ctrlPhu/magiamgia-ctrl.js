@@ -46,6 +46,10 @@ app.controller("magiamgia-ctrl", function ($scope, $http) {
     //them sp moi
     $scope.create = function () {
         var item = angular.copy($scope.form);
+        if($scope.form.gtd > 50000){
+            sweetalert("Số tiền phải bé hơn 50.000")
+            return;
+        }
         $http.post(`${url}`, item).then(resp => {
             $scope.items.push(resp.data);
             $scope.reset();

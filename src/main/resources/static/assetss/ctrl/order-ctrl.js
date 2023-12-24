@@ -1,4 +1,4 @@
-app.controller("order-ctrl", function ($scope, $http,$timeout) {
+app.controller("order-ctrl", function ($scope, $http,$timeout,$route) {
     var url = "/rest/order";
     $scope.roles = [];
     $scope.items = [];
@@ -22,14 +22,10 @@ app.controller("order-ctrl", function ($scope, $http,$timeout) {
     }
 
     $scope.initialize = function (trangThai) {
-        // Gọi API hoặc lấy dữ liệu tương ứng cho từng bảng dựa vào trạng thái (trangThai) được truyền vào
-        // Sử dụng các biến $scope.items1, $scope.items2, $scope.items3 để lưu trữ dữ liệu cho từng bảng
-
         $http.get(url, { params: { tt: trangThai } })
             .then(function (response) {
                 if (trangThai === 0) {
                     $scope.items = response.data;
-
                     $timeout(function () {
                         $(".boxscroll").niceScroll({
                             cursorborder: "",
@@ -143,8 +139,7 @@ app.controller("order-ctrl", function ($scope, $http,$timeout) {
         });
     }
     $scope.openModal = function (item) {
-        $scope.selectedOrder = angular.copy(item);
-        console.log("$scope.selectedOrder ", $scope.selectedOrder)
+        $scope.selectedOrder = angular.copy(item)
         $scope.getAddress();
         $('#orderDetailModal').modal('show');
 
@@ -219,7 +214,9 @@ app.controller("order-ctrl", function ($scope, $http,$timeout) {
         item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
         item.trangThai = 1;
         $http.put(`${url}/update/${item.id}`, item).then(resp => {
+            $scope.initialize(0);
             sweetalert("Đơn hàng đã được xác nhận!");
+            $route.reload();
         }).catch(error => {
             sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
             console.log("Error", error);
@@ -228,8 +225,10 @@ app.controller("order-ctrl", function ($scope, $http,$timeout) {
     $scope.tuChoi = function (item) {
         item.tongTien = parseFloat(item.tongTien) + parseFloat(item.phiGiaoHang);
         item.trangThai = 2;
-        $http.put(`${url}/update/${item.id}`, item).then(resp => {
+        $http.put(`${url}/huydon/${item.id}`, item).then(resp => {
             sweetalert("Đơn hàng đã bị từ chối!");
+            $scope.initialize(0);
+            $route.reload();
         }).catch(error => {
             sweetalert("Lỗi khi cập nhật trạng thái đơn hàng !");
             console.log("Error", error);
@@ -240,6 +239,8 @@ app.controller("order-ctrl", function ($scope, $http,$timeout) {
         item.trangThai = 3;
         $http.put(`${url}/update/${item.id}`, item).then(resp => {
             sweetalert("Đơn hàng đã được giao cho đơn vị vận chuyển !");
+            $scope.initialize(1);
+            $route.reload();
         }).catch(error => {
             sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
             console.log("Error", error);
@@ -250,6 +251,8 @@ app.controller("order-ctrl", function ($scope, $http,$timeout) {
         item.trangThai = 4;
         $http.put(`${url}/update/${item.id}`, item).then(resp => {
             sweetalert("Đơn hàng đã hoàn thành ! ");
+            $scope.initialize(3);
+            $route.reload();
         }).catch(error => {
             sweetalert("Lỗi khi cập nhật trạng thái đơn hàng!");
             console.log("Error", error);

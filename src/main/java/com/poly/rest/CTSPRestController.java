@@ -93,7 +93,6 @@ public class CTSPRestController {
 		@RequestParam(required = false) String mauSacCode
 ) {
 	ChiTietSanPham item;
-	// Lấy thông tin chi tiết sản phẩm từ các mã kích cỡ và màu sắc
 	if (kichCoCode != null && mauSacCode != null) {
 		item = pdao.findFirstBySanPhamMaAndKichCoCodeAndMauSacCode(sanPhamMa, kichCoCode, mauSacCode);
 	} else if (kichCoCode != null) {
@@ -103,11 +102,8 @@ public class CTSPRestController {
 	} else {
 		item = pdao.findFirstBySanPhamMa(sanPhamMa);
 	}
-
-	// Lấy danh sách màu sắc và kích cỡ
 	List<MauSac> m = mdao.findMauSacByMaSanPham(item.getSanPham().getMa());
-	List<KichCo> kc = kcdao.findKichCoByMaSanPham(item.getSanPham().getMa());
-
+	List<KichCo> kc = kcdao.findKichCoByMaSanPhamAndMauSac(item.getSanPham().getMa(),mauSacCode);
 	Map<String, Object> response = new HashMap<>();
 	response.put("item", item);
 	response.put("m", m);

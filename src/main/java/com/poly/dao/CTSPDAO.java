@@ -2,7 +2,6 @@ package com.poly.dao;
 
 import com.poly.entity.ChiTietSanPham;
 import com.poly.entity.MauSac;
-import com.poly.entity.SanPham;
 import com.poly.model.dto.ChiTietSanPhamDTO;
 import com.poly.model.dto.ChiTietSanPhamResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +16,7 @@ import java.util.Optional;
 
 public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
 
-    @Query("SELECT c FROM ChiTietSanPham c WHERE c.id IN (SELECT MAX(c2.id) FROM ChiTietSanPham c2 GROUP BY c2.sanPham.ma)")
+    @Query("SELECT c FROM ChiTietSanPham c WHERE  c.sanPham.trangThai = 0 AND c.id IN (SELECT MAX(c2.id)  FROM ChiTietSanPham  c2 GROUP BY c2.sanPham.ma) ")
     List<ChiTietSanPham> findDistinctByMasp();
 
 
@@ -82,6 +81,7 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma " +
             "INNER JOIN MauSac ms ON c.MaMau = ms.Ma " +
             "INNER JOIN LoaiAo la ON sp.MaLoaiAo = la.Ma " +
+            "WHERE sp.trangThai = 0 "+
             "GROUP BY c.maSanPham " +
             "ORDER BY MIN(c.ngayThem) DESC ",
             countQuery = "SELECT " +
@@ -106,8 +106,9 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
                     "INNER JOIN KichCo kc ON c.MaKichCo = kc.Ma " +
                     "INNER JOIN MauSac ms ON c.MaMau = ms.Ma " +
                     "INNER JOIN LoaiAo la ON sp.MaLoaiAo = la.Ma " +
+                    "WHERE sp.trangThai = 0 "+
                     "GROUP BY c.maSanPham " +
-                    "ORDER BY MIN(c.ngayThem) DESC ", nativeQuery = true)
+                    "ORDER BY MIN(c.ngayThem) DESC  ", nativeQuery = true)
     Page<ChiTietSanPham> findDistinctByMaspp(Pageable pageable);
 
 
@@ -143,6 +144,7 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
             "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?5,',')) OR COALESCE(?5, '') = '') " +
             "AND (CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?8, '') != N'Hàng mới') " +
+            "AND sp.trangThai = 0 "+
             "GROUP BY c.maSanPham " +
             "HAVING MIN(c.giaBan) BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
             "ORDER BY " +
@@ -177,6 +179,7 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
                     "AND (ms.Ten IN (SELECT value FROM STRING_SPLIT(?4,',')) OR COALESCE(?4, '') = '') " +
                     "AND (la.Ten IN (SELECT value FROM STRING_SPLIT(?5,',')) OR COALESCE(?5, '') = '') " +
                     "AND (CASE WHEN ?8 = N'Hàng mới' THEN c.NgayThem END < GETDATE() OR COALESCE(?8, '') != N'Hàng mới') " +
+                    "AND sp.trangThai = 0 "+
                     "GROUP BY c.maSanPham " +
                     "HAVING MIN(c.giaBan) BETWEEN COALESCE(?6, 0) AND COALESCE(?7, 999999999) " +
                     "ORDER BY " +
@@ -194,17 +197,6 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             Long maxPrice,
             String sortType,
             Pageable pageable);
-
-
-    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(sp.ma, sp.ten, a.ma, ct.GiaBan, SUM(COALESCE(c.soLuong, 0))) " +
-            "FROM SanPham sp " +
-            "INNER JOIN ChiTietSanPham ct ON sp.ma = ct.sanPham.ma " +
-            "INNER JOIN Anh a ON sp.ma = a.sanPham.ma " +
-            "LEFT JOIN DonHangChiTiet c ON ct.id = c.chiTietSanPham.id " +
-            "GROUP BY sp.ma, sp.ten, a.ma, ct.GiaBan " +
-            "ORDER BY SUM(COALESCE(c.soLuong, 0)) DESC")
-    List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
-
 
 
     @Query(value = "WITH RankedProducts AS (\n" +
@@ -238,5 +230,41 @@ public interface CTSPDAO extends JpaRepository<ChiTietSanPham, Long> {
             ")\n" +
             "SELECT TOP 5 * FROM RankedProducts WHERE row_number = 1;", nativeQuery = true)
     List<ChiTietSanPhamResponse> findTop5SanPhamBySoLuongBan();
+
+
+
+
+
+//    @Query("SELECT NEW com.poly.model.dto.ChiTietSanPhamDTO(ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan, SUM(COALESCE(c.soLuong, 0))) " +
+//            "FROM DonHangChiTiet c " +
+//            "INNER JOIN ChiTietSanPham ct ON ct.id = c.chiTietSanPham.id " +
+//            "INNER JOIN SanPham sp ON ct.sanPham.ma = sp.ma " +
+//            "INNER JOIN Anh a ON sp.ma = a.sanPham.ma " +
+//            "GROUP BY ct.sanPham.ma, ct.sanPham.ten, a.ma, ct.GiaBan " +
+//            "HAVING SUM(COALESCE(c.soLuong, 0)) > 0 " +
+//            "ORDER BY SUM(COALESCE(c.soLuong, 0)) DESC")
+//    List<ChiTietSanPhamDTO> findTop5SanPhamBySoLuongBan(Pageable pageable);
+
+
+
+
+
+//    @Query("SELECT c FROM ChiTietSanPham c " +
+//            "INNER JOIN c.mauSac ms " +
+//            "INNER JOIN c.sanPham sp " +
+//            "INNER JOIN c.kichCo kc " +
+//            "INNER JOIN sp.thuongHieu th " +
+//            "INNER JOIN sp.loaiKhachHang la " +
+//            "WHERE sp.ten LIKE CONCAT('%', :name_product, '%') " +
+//            "   OR ms.name LIKE CONCAT('%', :color, '%') " +
+//            "   OR th.name LIKE CONCAT('%', :brand, '%') " +
+//            "   OR la.name LIKE CONCAT('%', :category, '%')")
+//    Page<ChiTietSanPham> findByKeyWord(
+//            @Param("tenSanPham") String name_product,
+//            @Param("tenMau") String color,
+//            @Param("tenThuongHieu") String brand,
+//            @Param("tenLoaiAo") String category,
+//            Pageable pageable
+//    );
 
 }

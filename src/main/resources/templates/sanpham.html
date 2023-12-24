@@ -149,7 +149,7 @@
                 </div>
                 <div class="row" ng-hide="noResults">
                     <div class="col-md-4" ng-repeat="p in items" >
-                        <div class="product-item" ng-class="{ 'muted': p.sanPham.trangThai !== 1 }" >
+                        <div class="product-item" >
                             <div class="inner-content" >
                                 <div class="product-thumb">
                                     <a href="/product/detail/{{ p.sanPham.ma }}" ng-click="searchDetail()">

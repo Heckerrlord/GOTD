@@ -1,6 +1,6 @@
 <div class="row mx-0 bg-white" ng-if="items">
     <div class="col-12 py-3">
-        <table id="datatable-buttons-1" class="table table-collapse table-bordered dt-responsive">
+        <table id="datatable-buttons-1" style="width:100%" class="table table-collapse table-bordered dt-responsive">
             <thead>
             <tr>
                 <th>Id</th>
@@ -20,7 +20,7 @@
                 <td>
                     {{item.maGiamGia ? item.maGiamGia : 'Không có'}}
                 </td>
-                <td>{{ item.ngayDatHang | date:'HH:mm, dd-MM-yyyy' }}</td>
+                <td>{{ item.ngayDatHang | date:'HH:mm dd-MM-yyyy' }}</td>
 
 
                 <td>{{item.tongTien}}</td>

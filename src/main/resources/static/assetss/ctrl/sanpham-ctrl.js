@@ -33,7 +33,7 @@ app.controller("sanpham-ctrl", function ($scope, $http,$timeout) {
                     ],
                     pagingType: 'full_numbers',
                     lengthChange: false,
-                    buttons: ['excel', 'pdf', 'print',  'copyHtml5']
+                    buttons: ['excel', 'pdf', 'print']
                 });
                 table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
             }, 0);
